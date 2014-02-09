@@ -1,1 +1,1 @@
-This repo holds the code for teamworkout.com. The owners of this project are Rebecca Amato, KJ Fryauff, and Jeremy Hines.
+This repo holds the code for teamworkout.com. The owners of this project are Rebecca Amato, KJ Fryauff, and Jeremy Hines. This project is our group project for Stanford University's CS 147: Introduction to Human-Computer Interaction Design.

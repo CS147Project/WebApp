@@ -1,0 +1,94 @@
+Database Schemas
+
+User table
+'users' : [ {
+    'email': "test@test.com"
+    'firstName': 'jerry'
+    'lastName': 'white'
+    'nickname': 'big j'
+    'password': hashed & salted password
+    },
+]
+
+Athlete Table
+'athletes': [ {
+    'aid': 'test@test.com'
+    }, {
+    'aid': 'foo@bar.com'
+    }
+]
+
+Coach Table
+'coaches': [ {
+    'cid': 'test@test.com'
+    }, {
+    'cid': 'foo@bar.com'
+    }
+}
+]
+
+Team Table
+'teams': [ {
+    'tid': 1
+    'name': 'Stanford Club Soccer 2013'
+    'sport': 'soccer'
+    },
+]
+
+Team Athlete Table
+'teamAthletes': [ {
+    'tid': 1,
+    'aid': 'test@test.com'
+    }, {
+    'tid': 1,
+    'aid': 'foo@bar.com'
+    }
+]
+
+Team Coach Table
+'teamCoaches': [ {
+    'tid': 1,
+    'cid': 'coachy@mccoacherson.com'
+    }, {
+    'tid': 1,
+    'cid': 'asst@coach.com'
+    }
+]
+
+Messages Table
+'messages': [ {
+    'mid': 1,
+    'text': 'Hey coach, I sucked today!!!'
+    'datetime': '01/01/2014 01:01:01 UTC',
+    'fromid': 'test@test.com'
+    'toid': 'foo@bar.com'
+    },
+]
+
+Feedback Table
+'feedback': [ {
+    'fid': 1,
+    'text': 'Hey I sucked on this workout!!!'
+    'datetime': '01/01/2014 01:01:01 UTC',
+    'fromid': 'test@test.com'
+    'wid': 1
+    },
+]
+
+Invite Table
+'invites': [ {
+    'iid': 1,
+    'aid': 1,
+    'tid': 1,
+    'datetime': '01/01/2014 01:01:01 UTC',
+    },
+]
+
+Workout Table
+'workout': [ {
+    'wid': 1,
+    ...
+    ...
+    ...
+    },
+]

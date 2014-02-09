@@ -1,0 +1,34 @@
+{
+	"users": [
+		{
+			"name": "Doug Engelbart",
+			"email": "doug@stanford.edu",
+			"password": "doug"			
+		},
+		{
+			"name": "Ivan Sutherland",
+			"email": "ivan@stanford.edu",
+			"password": "ivan"			
+		},
+		{
+			"name": "Lucy Suchman",
+			"email": "lucy@stanford.edu",
+			"password": "lucy"			
+		},
+		{
+			"name": "Vannevar Bush",
+			"email": "vannevar@stanford.edu",
+			"password": "vannevar"			
+		},
+		{
+			"name": "Grace Hopper",
+			"email": "grace@stanford.edu",
+			"password": "grace"
+		},
+		{
+			"name": "Allen Newell",
+			"email": "allen@stanford.edu",
+			"password": "allen"
+		}
+	]
+}
