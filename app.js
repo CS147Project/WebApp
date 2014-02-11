@@ -53,6 +53,8 @@ if ('development' == app.get('env')) {
 
 // Add routes here
 app.get('/', index.login);
+app.get('/login', index.login);
+app.get('/loginHandler', index.loginHandler);
 app.get('/home', home.view)
 app.get('/add', add.addUser);
 // Example route

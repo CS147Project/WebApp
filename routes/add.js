@@ -21,9 +21,9 @@ exports.addUser = function(req, res) { 
     }
     if(uniqueAccount(data['users'], newUser)) {
         data['users'].push(newUser);
-        res.session.email = email;
+        req.session.email = email;
         console.log(email+' is logged in! Yay!!!');
         res.redirect('home'); // Send new user to the homepage
     }
-    res.redirect('/');
+    res.redirect('login');
  }

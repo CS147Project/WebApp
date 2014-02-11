@@ -1,7 +1,7 @@
 exports.view = function(req, res){
-    if(res.session.email !== undefined) {
+    if(req.session.email !== undefined) {
         res.render('home')
     } else {
-	   res.redirect('/');
+	   res.redirect('login');
     }
 };

@@ -9,7 +9,11 @@
     <!-- link CSS Files -->
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/index.css" rel="stylesheet">
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
 
+    <!-- Custom styles for this template -->
+    <link href="css/signin.css" rel="stylesheet">
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -29,7 +33,17 @@
 
       <!-- CONTENT -->
       <div id="content" class="content">
-        
+        <form class="form-signin" role="form" method="get" action="/loginHandler">
+          <h2 class="form-signin-heading">Please sign in</h2>
+          <input type="email" class="form-control" placeholder="Email address" name="email" required autofocus>
+          <input type="password" class="form-control" placeholder="Password" name="password" required>
+<!--           <label class="checkbox">
+            <input type="checkbox" value="remember-me"> Remember me
+          </label> -->
+          {{msg}}
+          <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        </form>
+      </div> <!-- END OF CONTENT -->
 <!-- 
 
 
@@ -43,22 +57,7 @@ EVENTUALLY PUT IN A FORGOT PASSWORD FORM
 
 
  -->
-      </div> <!-- END OF CONTENT -->
 
-      <!-- FOOTER -->
-      <div id="footer" class="footer navbar-fixed-bottom">
-        <!-- GENERAL NAVIGATION -->
-        <div id="genNav" >
-          <ul class="navbar">
-            <li><a href="#" id="home_btn" value="message" class="active btn"> <img src="img/home_icon.png" alt="Home"> </a></li>
-            <li><a href="#" id="message_btn" value="message" class="btn"> <img src="img/message_icon.png" alt="Messages"> </a></li>
-            <li><a href="#" id="workout_btn" value="workout" class="btn"> <img src="img/workout_icon.png" alt="Workouts"> </a></li>
-            <li><a href="#" id="analytics_btn" value="analytics" class="btn"> <img src="img/analytics_icon.png" alt="Analytics"> </a></li>
-            <li><a href="#" id="settings_btn" value="settings" class="btn"> <img src="img/settings_icon.png" alt="Settings"> </a></li>
-          </ul>
-        </div>
-      </div> <!-- END OF FOOTER -->
-    </div>
 
     <script src="https://code.jquery.com/jquery.js"></script>
     <script src="/js/bootstrap.js"></script>
