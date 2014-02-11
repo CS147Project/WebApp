@@ -2,7 +2,7 @@ Database Schemas
 
 User table
 'users' : [ {
-    'email': "test@test.com"
+    'email': 'test@test.com'
     'firstName': 'jerry'
     'lastName': 'white'
     'nickname': 'big j'

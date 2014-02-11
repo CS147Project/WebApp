@@ -8,27 +8,26 @@ var http = require('http');
 var path = require('path');
 var handlebars = require('express3-handlebars')
 
-var mysql = require('mysql');
 
-var connection = mysql.createConnection({
-  host     : 'localhost',
-  user     : 'root',
-  password : 'vagrant',
-  port     : '3000'
-});
+//////// MYSQL CONFIG CODE
 
-connection.connect();
+// var mysql = require('mysql');
+// var connection = mysql.createConnection({
+//   host     : 'localhost',
+//   user     : 'root',
+//   password : 'vagrant',
+//   port     : '3000'
+// });
+// connection.connect();
+// connection.query('SELECT 1 + 1 AS solution', function(err, rows, fields) {
+//   if (err) throw err;
+//   console.log('The solution is: ', rows[0].solution);
+// });
 
-connection.query('SELECT 1 + 1 AS solution', function(err, rows, fields) {
-  if (err) throw err;
 
-  console.log('The solution is: ', rows[0].solution);
-});
-
-
-var index = require('./routes/index');
-// Example route
+var index = require('./routes/login');
 var add = require('./routes/add');
+var home = require('./routes/home');
 
 var app = express();
 
@@ -53,8 +52,9 @@ if ('development' == app.get('env')) {
 }
 
 // Add routes here
-app.get('/', index.view);
-app.get('/add', add.addFriend);
+app.get('/', index.login);
+app.get('/home', home.view)
+app.get('/add', add.addUser);
 // Example route
 // app.get('/users', user.list);
 

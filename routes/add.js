@@ -1,13 +1,29 @@
 var data = require("../data.json");
 
-exports.addFriend = function(req, res) { 
-    newFriend = {
-        'name': req.query.name,
-        'description': req.query.description,
-        'imageURL': "http://lorempixel.com/400/400/people"
+function uniqueAccount(users, newUser) {
+    for (var user in users) {
+        if (user.email == newUser.email) {
+            return false;
+        }
     }
-    data['friends'].push(newFriend)
-    res.render('add', {
-        'friends': data['friends']
-    })
+    return true;
+}
+
+
+exports.addUser = function(req, res) { 
+    var crypto = require('crypto'); //used for hashing passwords
+    newUser = {
+        'email': req.query.email,
+        'firstName': req.query.firstName,
+        'lastName': req.query.lastName,
+        'nickname': req.query.nickname,
+        'password': req.query.password, //crypto.createHash('md5').update(req.query.name).digest('hex')    
+    }
+    if(uniqueAccount(data['users'], newUser)) {
+        data['users'].push(newUser);
+        res.session.email = email;
+        console.log(email+' is logged in! Yay!!!');
+        res.redirect('home'); // Send new user to the homepage
+    }
+    res.redirect('/');
  }
