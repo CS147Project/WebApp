@@ -6,16 +6,24 @@
 var express = require('express');
 var http = require('http');
 var path = require('path');
-var mysql = require('mysql');
 var handlebars = require('express3-handlebars')
+
+var mysql = require('mysql');
 
 var connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
-  password : 'password'
+  password : 'vagrant',
+  port     : '3000'
 });
 
-connection.query('USE test_database');
+connection.connect();
+
+connection.query('SELECT 1 + 1 AS solution', function(err, rows, fields) {
+  if (err) throw err;
+
+  console.log('The solution is: ', rows[0].solution);
+});
 
 
 var index = require('./routes/index');
