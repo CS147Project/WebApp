@@ -6,7 +6,17 @@
 var express = require('express');
 var http = require('http');
 var path = require('path');
+var mysql = require('mysql');
 var handlebars = require('express3-handlebars')
+
+var connection = mysql.createConnection({
+  host     : 'localhost',
+  user     : 'root',
+  password : 'password'
+});
+
+connection.query('USE test_database');
+
 
 var index = require('./routes/index');
 // Example route
