@@ -1,22 +1,48 @@
 var data = require("../data.json");
+var messages = require("../json/messages");
 
-
-exports.create = function(req, res) { 
-
-	sender = req.query.sender;
-	receiver = req.query.receiver;
-	text = req.query.text;
-//SQL add to database
-
-//where do we want to redirect?
-	res.redirect('messages');
+function parseDate(d) {
+	var newDate = "" + (d.getMonth()+1) + "/" + d.getDate() + "/" + d.getYear() + "";
+	return newDate;
 }
 
-exports.get = function(req, res) {
-	user = req.query.user;
-//query database to get messages for the user
-//return messages
+exports.create = function(req, res) { 
+	var mid = 1;
+	var d = new Date();
+	d = parseDate(d);
+	//HOW DO WE CALC IID?
 	
+	newMessage = {
+		"mid": 1,
+		"text": req.query.cid,
+		"datetime": d,
+		"fromid": req.query.fromid,
+		"toid": req.query.toid
 
-	res.redirect('messages');
+	}
+
+	console.log("m leng: " + messages["messages"].length);
+
+	console.log("messages: " + messages["messages"]);
+	messages["messages"].push(newMessage);
+	console.log("all messages: "+ messages["messages"]);
+	
+	console.log("m leng: " + messages["messages"].length);
+
+	res.redirect('home');
+}
+
+//not sure how to return array. Does one need to be passed in?
+exports.get = function(req, res) {
+	uid = req.query.uid;
+	var array = [];
+	for(message in messages["messages"]) {
+		if(message.fromid== uid || message.toid==uid) {
+			array.append(message);
+		}
+	}
+	return array;
+
+
+res.redirect('home');
 }
