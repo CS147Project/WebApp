@@ -4,7 +4,7 @@ var invites = require("../json/invites.json");
 
 
 function onRoster(tid, aid) {
-    for (var athlete in teamathletes[teamathletes]) {
+    for (var athlete in teamathletes["teamathletes"]) {
         if (athlete.tid == tid && athlete.aid==aid) {
             return true;
         }
@@ -65,9 +65,9 @@ exports.respondRequest = function(req, res) {
 		teamathletes["teamathletes"].push(teamathlete);
 	}
 	//remove request from array 
-	var index = invites[invites].indexof(invite);
+	var index = invites["allInvites"].indexof(invite);
 	if(index > -1) {
-		invites[invites].splice(index, 1);
+		invites["allInvites"].splice(index, 1);
 	}
 	res.redirect('home');
 }

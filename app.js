@@ -65,6 +65,7 @@ app.get('/team', team.respondRequest)
 
 app.get('/messages', messages.create);
 app.get('/messages', messages.get);
+
 // Example route
 // app.get('/users', user.list);
 
