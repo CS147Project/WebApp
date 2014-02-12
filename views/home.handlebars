@@ -1,6 +1,7 @@
 <!-- PROFILE NAVIGATION -->
 <div id="profileNav" class="">
   <ul class="navbar nav-tabs">
+    <!-- {{#if athlete}} -->
     <!-- Profile 1 -->
     <li>
       <a href="#" id="personal" class="profileLink btn">
@@ -8,6 +9,8 @@
         <h6>You</h6>
       </a>
     </li>
+    <!-- {{/end}} -->
+    <!-- {{#each teams}} -->
     <!-- Profile 2 -->
     <li>
       <a href="#" id="team1" class="profileLink btn">
@@ -15,6 +18,7 @@
         <h6>Team 1</h6>
       </a>
     </li>
+    <!-- {{/each}} -->
     <!-- Profile 3-->
     <li>
       <a href="#" id="team2" class="profileLink btn">
@@ -34,7 +38,7 @@
 <!-- PERSONAL DISPLAY -->
 <div id="personalBests" class="display">
   <div class="panel panel-default">
-    <a href="startWorkout"><div id="startWorkout" class="btn btn-success btn-block">
+    <a href="startworkout"><div id="startWorkout" class="btn btn-success btn-block">
       <span class="glyphicon glyphicon-play-circle glyphicons-lg"></span> Start Workout
     </div></a>
     <div class="panel-heading"> 

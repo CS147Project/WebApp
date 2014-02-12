@@ -22,12 +22,11 @@ var handlebars = require('express3-handlebars');
 //   console.log('The solution is: ', rows[0].solution);
 // });
 
-
 var admin = require('./routes/admin');
 var home = require('./routes/home');
 var team = require('./routes/team');
 var messages = require('./routes/messages');
-
+var workout = require('./routes/workout')
 
 var app = express();
 
@@ -64,6 +63,7 @@ app.get('/team/invite', team.sendRequest);
 app.get('/team/respond', team.respondRequest)
 app.get('/messages', messages.get);
 app.get('/messages/create', messages.create);
+app.get('/startworkout', workout.start);
 
 
 http.createServer(app).listen(app.get('port'), function(){
