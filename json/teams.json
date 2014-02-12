@@ -1,0 +1,16 @@
+{
+	"teams": [
+		{
+            "tid": 1,
+           "name": "Stanford Soccer",
+           "sport": "soccer"
+            }, {
+
+            "tid": 2,
+            "name": "The Winners",
+            "sport": "soccer"
+           
+    	}
+	]
+
+}

@@ -29,6 +29,7 @@ var index = require('./routes/login');
 var add = require('./routes/add');
 var home = require('./routes/home');
 var team = require('./routes/team');
+var messages = require('./routes/messages');
 
 
 var app = express();
@@ -60,6 +61,10 @@ app.get('/loginHandler', index.loginHandler);
 app.get('/home', home.view)
 app.get('/add', add.addUser);
 app.get('/team', team.sendRequest);
+app.get('/team', team.respondRequest)
+
+app.get('/messages', messages.create);
+app.get('/messages', messages.get);
 // Example route
 // app.get('/users', user.list);
 
