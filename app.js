@@ -25,8 +25,7 @@ var handlebars = require('express3-handlebars')
 // });
 
 
-var index = require('./routes/login');
-var add = require('./routes/add');
+var admin = require('./routes/admin');
 var home = require('./routes/home');
 var team = require('./routes/team');
 var messages = require('./routes/messages');
@@ -55,19 +54,17 @@ if ('development' == app.get('env')) {
 }
 
 // Add routes here
-app.get('/', index.login);
-app.get('/login', index.login);
-app.get('/loginHandler', index.loginHandler);
+app.get('/', admin.login);
+app.get('/login', admin.login);
+app.get('/loginAttempt', admin.loginHandler);
+app.get('/signup', admin.signup);
+app.get('/addUser', admin.addUser);
+app.get('/logout', admin.logout);
 app.get('/home', home.view)
-app.get('/add', add.addUser);
-app.get('/team', team.sendRequest);
-app.get('/team', team.respondRequest)
-
-app.get('/messages', messages.create);
-app.get('/messages', messages.get);
-
-// Example route
-// app.get('/users', user.list);
+app.get('/team/invite', team.sendRequest);
+app.get('/team/respond', team.respondRequest)
+app.get('/messages/create', messages.create);
+app.get('/messages/get', messages.get);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

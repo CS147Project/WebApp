@@ -1,0 +1,32 @@
+{
+	"users": [
+		{
+    		"email": "kj@f.com",
+    		"firstName": "Krista",
+    		"lastName": "Fryauff",
+    		"nickname": "KJ",
+    		"password": "password"
+    	}, 
+    	{
+    		"email": "jeremy@h.com",
+    		"firstName": "Jeremy",
+    		"lastName": "Hines",
+    		"nickname": "JC",
+    		"password": "password"
+    	}, 
+    	{
+    		"email": "rebecca@a.com",
+    		"firstName": "Rebecca",
+    		"lastName": "Amato",
+    		"nickname": "RA",
+    		"password": "password"
+    	}, 
+    	{
+    		"email": "rando@sketch.com",
+    		"firstName": "Rando",
+    		"lastName": "Sketch",
+    		"nickname": "GradStudent",
+    		"password": "password"
+    	}
+	]
+}

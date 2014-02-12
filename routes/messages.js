@@ -1,5 +1,5 @@
-var data = require("../data.json");
-var messages = require("../json/messages");
+var data = require("../json/users.json");
+var messages = require("../json/messages.json");
 
 function parseDate(d) {
 	var newDate = "" + (d.getMonth()+1) + "/" + d.getDate() + "/" + d.getYear() + "";
