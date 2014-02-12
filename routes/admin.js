@@ -14,14 +14,12 @@ function verifyAccount(users, req, res) {
     }
 }
 
-function noBlank(newUser) {
+function noBlank(newUser, req) {
     if(req.query.email == undefined || req.query.email == '') {
         return false;
     } else if(req.query.firstName == undefined || req.query.firstName == '') {
         return false;
     } else if(req.query.lastName == undefined || req.query.lastName == '') {
-        return false;
-    } else if(req.query.nickname == undefined || req.query.nickname == '') {
         return false;
     } else if(req.query.password == undefined || req.query.password == '') {
         return false;
@@ -46,7 +44,6 @@ exports.login = function(req, res) { 
     res.render('login');
  }
 
-// EXPORTED CONTROLLER METHODS
 exports.signup = function(req, res) { 
     if(req.session !== undefined && req.session.email !== undefined) {
         res.redirect('home');
@@ -79,11 +76,17 @@ exports.addUser = function(req, res) { 
         'nickname': req.query.nickname,
         'password': req.query.password, //crypto.createHash('md5').update(req.query.name).digest('hex')    
     }
-    if(uniqueAccount(data['users'], newUser) && noBlank(newUser)) {
+    if(uniqueAccount(data['users'], newUser) && noBlank(newUser, req)) {
         data['users'].push(newUser);
-        req.session.email = email;
-        console.log(email+' is logged in! Yay!!!');
+        req.session.email = req.query.email;
+        console.log(req.session.email+' is logged in! Yay!!!');
         res.redirect('home'); // Send new user to the homepage
     }
-    res.redirect('login');
+    res.render('signup', {
+        'msg': 'There was a problem creating your account. Please try again.'
+    });
  }
+
+exports.settings = function(req, res) { 
+    res.render('settings');
+}

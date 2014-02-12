@@ -59,6 +59,7 @@ app.get('/login', admin.login);
 app.get('/loginAttempt', admin.loginHandler);
 app.get('/signup', admin.signup);
 app.get('/addUser', admin.addUser);
+app.get('/settings', admin.settings);
 app.get('/logout', admin.logout);
 app.get('/home', home.view)
 app.get('/team/invite', team.sendRequest);
