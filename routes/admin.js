@@ -10,8 +10,10 @@ function verifyAccount(users, req, res) {
             req.session.email = email;
             console.log(email+' is logged in! Yay!!!');
             res.redirect('home');
+            return true;
         }
     }
+    return false;
 }
 
 function noBlank(newUser, req) {
@@ -41,30 +43,32 @@ exports.login = function(req, res) { 
     if(req.session !== undefined && req.session.email !== undefined) {
         res.redirect('home');
     }
-    res.render('login');
+    res.render('login', {layout: false});
  }
 
 exports.signup = function(req, res) { 
     if(req.session !== undefined && req.session.email !== undefined) {
         res.redirect('home');
     }
-    res.render('signup');
+    res.render('signup', {layout: false});
  }
 
 exports.logout = function(req, res) { 
     if(req.session !== undefined && req.session.email !== undefined) {
         req.session.email = undefined;
     }
-    res.redirect('login');
+    res.redirect('login', {layout: false});
 }
 
 exports.loginHandler = function(req, res) { 
     var crypto = require('crypto'); //used for hashing passwords
     users = data['users'];
-    verifyAccount(users, req, res); // Need to check if redirect end current function or allows continued execution
-    res.render('login', {
-        "msg": "I am sorry, but we were not ablt to find your account. Please try again."
-    })
+    if(!verifyAccount(users, req, res)) {
+        res.render('login', {
+            "msg": "I am sorry, but we were not ablt to find your account. Please try again.",
+            layout: false
+        });
+    }
  }
 
 exports.addUser = function(req, res) { 
@@ -83,7 +87,8 @@ exports.addUser = function(req, res) { 
         res.redirect('home'); // Send new user to the homepage
     }
     res.render('signup', {
-        'msg': 'There was a problem creating your account. Please try again.'
+        'msg': 'There was a problem creating your account. Please try again.',
+        layout: false
     });
  }
 

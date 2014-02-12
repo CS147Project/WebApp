@@ -32,17 +32,17 @@ exports.create = function(req, res) { 
 	res.redirect('home');
 }
 
-//not sure how to return array. Does one need to be passed in?
 exports.get = function(req, res) {
-	uid = req.query.uid;
-	var array = [];
+	uid = req.session.email;
+	var userMessages = [];
 	for(message in messages["messages"]) {
-		if(message.fromid== uid || message.toid==uid) {
-			array.append(message);
+		var curMessage = messages["messages"][message]
+		console.log(curMessage);
+		if(curMessage.fromid == uid || curMessage.toid == uid) {
+			userMessages.push(curMessage);
 		}
-	}
-	return array;
-
-
-res.redirect('home');
+	}	
+	res.render('messages', {
+		'messages': userMessages
+	});
 }

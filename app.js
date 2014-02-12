@@ -6,11 +6,9 @@
 var express = require('express');
 var http = require('http');
 var path = require('path');
-var handlebars = require('express3-handlebars')
-
+var handlebars = require('express3-handlebars');
 
 //////// MYSQL CONFIG CODE
-
 // var mysql = require('mysql');
 // var connection = mysql.createConnection({
 //   host     : 'localhost',
@@ -36,7 +34,7 @@ var app = express();
 // all environments
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
-app.engine('handlebars', handlebars());
+app.engine('handlebars', handlebars({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 app.use(express.favicon());
 app.use(express.logger('dev'));
@@ -64,8 +62,9 @@ app.get('/logout', admin.logout);
 app.get('/home', home.view)
 app.get('/team/invite', team.sendRequest);
 app.get('/team/respond', team.respondRequest)
+app.get('/messages', messages.get);
 app.get('/messages/create', messages.create);
-app.get('/messages/get', messages.get);
+
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

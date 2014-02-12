@@ -3,4 +3,11 @@
     <span class="glyphicon glyphicon-off glyphicons-lg"></span> Logout
   </button>
 </a>
-
+{{#each messages}}
+    <p>
+        Message: {{text}}<br>
+        From: {{fromid}}<br>
+        To: {{toid}}<br>
+        when: {{datetime}}
+    </p>
+{{/each}}
