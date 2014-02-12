@@ -28,6 +28,8 @@ var handlebars = require('express3-handlebars')
 var index = require('./routes/login');
 var add = require('./routes/add');
 var home = require('./routes/home');
+var team = require('./routes/team');
+
 
 var app = express();
 
@@ -57,6 +59,7 @@ app.get('/login', index.login);
 app.get('/loginHandler', index.loginHandler);
 app.get('/home', home.view)
 app.get('/add', add.addUser);
+app.get('/team', team.sendRequest);
 // Example route
 // app.get('/users', user.list);
 
