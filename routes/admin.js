@@ -57,7 +57,7 @@ exports.logout = function(req, res) { 
     if(req.session !== undefined && req.session.email !== undefined) {
         req.session.email = undefined;
     }
-    res.redirect('login', {layout: false});
+    res.redirect('login');
 }
 
 exports.loginHandler = function(req, res) { 
