@@ -7,13 +7,12 @@ function parseDate(d) {
 }
 
 exports.create = function(req, res) { 
-	var mid = 1;
 	var d = new Date();
 	d = parseDate(d);
 	//HOW DO WE CALC IID?
 	
 	newMessage = {
-		"mid": 1,
+		"mid": 3,
 		"text": req.query.cid,
 		"datetime": d,
 		"fromid": req.query.fromid,

@@ -1,4 +1,5 @@
 var data = require("../json/users.json");
+var teamCoachData = require("../json/teamcoaches.json");
 
 // HELPER FUNCTIONS
 function verifyAccount(users, req, res) {
@@ -14,6 +15,17 @@ function verifyAccount(users, req, res) {
         }
     }
     return false;
+}
+
+function findTeamsForCoach(email) {
+    var teams = [];
+    for(element in teamCoachData['teamCoaches']) {
+        var teamCoachElement = teamCoachData['teamCoaches'][element];
+        if(teamCoachElement['cid'] == email) {
+            teams.push(teamCoachElement);
+        }
+    }
+    return teams;
 }
 
 function noBlank(newUser, req) {
@@ -93,5 +105,13 @@ exports.addUser = function(req, res) { 
  }
 
 exports.settings = function(req, res) { 
-    res.render('settings');
+    if(req.query.email !== undefined) {
+        var teams = findTeamsForCoach(req.query.email);
+        console.log(teams);
+        res.render('settings', {
+            'teams': teams
+        });
+    } else {
+        res.render('settings');
+    }
 }

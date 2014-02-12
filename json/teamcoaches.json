@@ -1,0 +1,8 @@
+{ "teamCoaches": [ {
+        "tid": 1,
+        "cid": "coachy@mccoacherson.com"
+    }, {
+        "tid": 1,
+        "cid": "asst@coach.com"
+    } ]
+}
