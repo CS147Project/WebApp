@@ -1,17 +1,17 @@
 {
 	"exercises": [
   {
-      "wid": 1,
-      "eid": 1,
-      "name": "Bench Press",
-      "weight": -1,
-      "set": -1,
-      "rep": -1,
-      "distance": -1,
-      "time": -1
-      
+    "wid": 1,
+    "eid": 1,
+    "name": "Bench Press",
+    "weight": -1,
+    "set": -1,
+    "rep": -1,
+    "distance": -1,
+    "time": -1
+    
 
-      },  {
+    },  {
       "wid": 1,
       "eid": 2,
       "name": "Mile Run",
@@ -20,7 +20,7 @@
       "rep": -1,
       "distance": -1,
       "time": 1
-  }
+    }
 
-  ]
-}
+    ]
+  }
