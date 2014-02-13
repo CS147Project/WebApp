@@ -1,6 +1,8 @@
-var data = require("../data.json");
+var data = require("../json/users.json");
 var teamathletes = require("../json/teamathletes.json");
 var invites = require("../json/invites.json");
+var teamData = require("../json/teams.json");
+var athletes = require("../json/athletes.json");
 
 
 function onRoster(tid, aid) {
@@ -17,8 +19,21 @@ function parseDate(d) {
 	return newDate;
 }
 
+function getNameForTeamId(tid) {
+    for(team in teamData['teams']) {
+        if(teamData['teams'][team].tid == tid) return teamData['teams'][team].name;
+    }
+    return "TEAM NAME NOT FOUND";
+}
+
+function isAthlete(email) {
+    for(athlete in athletes['athletes']) {
+        if(athletes['athletes'][athlete].aid == email) return true;
+    }
+    return false;
+}
+
 exports.sendRequest = function(req, res) { 
-	tid = req.query.tid;
     if(req.session !== undefined && req.session.email !== undefined) {
         aid = req.session.email;        
     } else {
@@ -27,7 +42,7 @@ exports.sendRequest = function(req, res) { 
     }
 	var d = new Date();
 	d = parseDate(d);
-
+    tid = req.body.tid;
 	if(!onRoster(tid, aid)) {
 		newInvite = {
 			"iid": 1,
@@ -41,10 +56,12 @@ exports.sendRequest = function(req, res) { 
         // 	console.log("one: " + invite.aid);
         // }
         // console.log("invites: " + invites);
-    	
         invites['allInvites'].push(newInvite);
         console.log(newInvite);
-        res.redirect('home'); // Can also redirect to 'settings'
+        res.render('home', {
+            'msg': 'Your request to join '+getNameForTeamId(tid)+' has been sent!',
+            'athlete': isAthlete(req.session.email)
+        }); // Can also redirect to 'settings'
 
         //  console.log("size2 invites: " + invites['allInvites'].length);
         // 	console.log("all invites: "+ invites);

@@ -9,15 +9,13 @@ function parseDate(d) {
 exports.create = function(req, res) { 
 	var d = new Date();
 	d = parseDate(d);
-	//HOW DO WE CALC IID?
 	
 	newMessage = {
 		"mid": 3,
 		"text": req.query.cid,
 		"datetime": d,
-		"fromid": req.query.fromid,
+		"fromid": req.session.email,
 		"toid": req.query.toid
-
 	}
 
 	console.log("m leng: " + messages["messages"].length);

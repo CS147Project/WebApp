@@ -2,11 +2,8 @@
 	"athletes": [
 		{
             "aid": "kj@f.com"
-            }, {
-
-            "aid": "jeremy@h.com"
-           
+        }, {
+            "aid": "jeremy@h.com"   
     	}
 	]
-
 }
