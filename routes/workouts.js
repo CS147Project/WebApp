@@ -14,6 +14,12 @@ exports.create = function(req, res) { 
 	var d = new Date();
 	d = parseDate(d);
 	var wid = workouts["templateWorkouts"].length + 1;
+	var theseExercises = req.query.exercises;
+
+
+	for(exc: theseExercises) {
+		exc.wid=wid;
+	}
 
 	workout = {
 		"wid": wid,
