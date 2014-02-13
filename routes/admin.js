@@ -1,5 +1,6 @@
 var data = require("../json/users.json");
 var teamCoachData = require("../json/teamcoaches.json");
+var teamData = require("../json/teams.json");
 
 // HELPER FUNCTIONS
 function verifyAccount(users, req, res) {
@@ -17,14 +18,22 @@ function verifyAccount(users, req, res) {
     return false;
 }
 
+function searchTeams(tid) {
+    for(team in teamData['teams']) {
+        if(teamData['teams'][team].tid == tid) return teamData['teams'][team];
+    }
+    return undefined;
+}
+
 function findTeamsForCoach(email) {
     var teams = [];
     for(element in teamCoachData['teamCoaches']) {
         var teamCoachElement = teamCoachData['teamCoaches'][element];
         if(teamCoachElement['cid'] == email) {
-            teams.push(teamCoachElement);
+            teams.push(searchTeams(teamCoachElement['tid']));
         }
     }
+    console.log(teams);
     return teams;
 }
 
@@ -106,9 +115,11 @@ exports.addUser = function(req, res) { 
 
 exports.settings = function(req, res) { 
     if(req.query.email !== undefined) {
+        console.log(req.session.email);
         var teams = findTeamsForCoach(req.query.email);
         console.log(teams);
         res.render('settings', {
+            'email': req.session.email,
             'teams': teams
         });
     } else {

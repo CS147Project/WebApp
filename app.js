@@ -27,7 +27,6 @@ var home = require('./routes/home');
 var team = require('./routes/team');
 var messages = require('./routes/messages');
 var workout = require('./routes/workout');
-var invites = require('./routes/invites');
 
 var app = express();
 
@@ -60,8 +59,8 @@ app.get('/addUser', admin.addUser);
 app.get('/settings', admin.settings);
 app.get('/logout', admin.logout);
 app.get('/home', home.view);
-app.get('/team/invite', team.sendRequest);
-app.get('/team/respond', team.respondRequest)
+app.post('/inviteTeam', team.sendRequest);
+app.get('/respondTeam', team.respondRequest)
 app.get('/messages', messages.get);
 app.get('/messages/create', messages.create);
 app.get('/startworkout', workout.start);

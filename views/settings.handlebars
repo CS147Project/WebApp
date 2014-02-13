@@ -4,16 +4,21 @@
   </button>
 </a>
 
-<p>
-{{#each teams}}
-    <a href="#"><button class="btn btn-lg btn-primary" type="submit">Team #{{tid}}</button>
-{{/each}}
-<form class="form-signin" role="form" method="get" action="/settings">
+<form class="form" role="form" method="get" action="/settings">
     <h2 class="form-signin-heading">Enter Coach's Email</h2>
-
     <input type="email" class="form-control" placeholder="Email address" name="email" required autofocus>
 
-<!--     {{msg}}
- -->    <button class="btn btn-lg btn-primary" type="submit">Find Team</button>
-</form>
-</p>
+    <!--     {{msg}} -->
+    <button class="btn btn-lg btn-primary" type="submit">Find Team</button>
+ </form>
+
+{{#if teams}}
+    <h2>Select a Team</h2>
+{{/if}}
+
+{{#each teams}}
+    <form class="form" role="form" method="post" action="/inviteTeam">
+        <input type="hidden" name="tid" value="{{tid}}">
+        <button class="btn btn-lg btn-default" type="submit">{{name}}</button>
+    <form>
+{{/each}}
