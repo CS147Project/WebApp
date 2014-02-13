@@ -108,7 +108,7 @@ console.log("num workouts: " + workouts["templateWorkouts"].length);
 
 workout = {
 	"wid": wid,
-	"creatorid": req.query.creatorid,
+	"creatorid": req.session.email,
 	"created": d
 }
 
