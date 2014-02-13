@@ -1,0 +1,32 @@
+{
+	"templateWorkouts": [
+  {
+      "wid": 1,
+      "creatorid": "kj@f.com",
+      "created": "01/01/2014"
+
+
+      },  {
+        "wid": 2,
+      "creatorid": "kj@f.com",
+      "created": "01/02/2014"
+  }
+
+  ]
+}
+
+{
+    "assignedWorkout": [
+  {
+      
+      "assignedId": "kj@f.com",
+      "datetime": "01/01/2014 01:01:01 UTC"
+
+
+      },  {
+      "creatorid": "kj@f.com",
+     "datetime": "01/02/2014 01:01:01 UTC"
+  }
+
+  ]
+}
