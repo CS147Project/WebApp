@@ -1,0 +1,62 @@
+<a href="workout/pause">
+  <button type="button" class="btn btn-danger btn">
+    <span class="glyphicon glyphicon-pause glyphicons-lg"></span> Pause
+  </button>
+</a>
+
+
+<form class="form-horizontal center" role="form" onClick="save">
+    
+    <h2>{{exercise.name}}</h2>
+
+    {{#if weight}}
+        <div class="form-group">
+            <label for="inputWeight" class="col-sm-2 control-label">Weight:</label>
+            <div class="col-sm-5">
+                <input type="weight" class="form-control" id="inputWeight" placeholder="{{weight}}">
+            </div>
+        </div>
+    {{/if}}
+    {{#if set}}
+        <div class="form-group">
+            <label for="inputSet" class="col-sm-2 control-label">Set:</label>
+            <div class="col-sm-5">
+                <input type="set" class="form-control" id="inputSet" placeholder="{{set}}">
+            </div>
+        </div>
+    {{/if}}
+    {{#if rep}}
+        <div class="form-group">
+            <label for="inputReps" class="col-sm-2 control-label">Reps:</label>
+            <div class="col-sm-5">
+                <input type="reps" class="form-control" id="inputReps" placeholder="{{rep}}">
+            </div>
+        </div>
+    {{/if}}
+    {{#if distance}}
+        <div class="form-group">
+            <label for="inputDist" class="col-sm-2 control-label">Distance: </label>
+            <div class="col-sm-5">
+                <input type="distance" class="form-control" id="inputDist" placeholder="{{distance}}">
+            </div>
+        </div>
+    {{/if}}
+    {{#if time}}
+        <div class="form-group">
+            <label for="inputTime" class="col-sm-2 control-label">Time: </label>
+            <div class="col-sm-5">
+                <input type="time" class="form-control" id="inputTime" placeholder="{{time}}">
+            </div>
+        </div>
+    {{/if}}
+
+    <button class="btn btn-lg btn-success" type="submit">Done</button>
+
+</form>
+
+
+<div class="exerciseScroll">
+    
+</div>
+
+<script src="/js/goWorkout.js"></script> 

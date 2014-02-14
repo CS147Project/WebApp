@@ -10,6 +10,11 @@ html, body {
 	height: 100%;
 }
 
+.center{
+	margin: 0 auto;
+	text-align: center;
+}
+
 .container{
 	margin: 1% auto 1% auto;
 	padding: auto;
