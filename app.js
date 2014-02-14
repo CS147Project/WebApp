@@ -72,6 +72,7 @@ app.get('/workouts/getExercises', workouts.getExercises); //returns [] of exerci
 app.get('/workouts/getUserWorkouts', workouts.getUserWorkouts); //returns workouts assigned to a user
 app.post('/workouts/assignWorkout', workouts.assignWorkout);
 app.post('/workouts/addCompletedWorkout', workouts.addCompletedWorkout);
+app.get('/analytics', workouts.analytics);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
