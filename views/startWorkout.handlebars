@@ -4,13 +4,13 @@
   </button>
 </a>
 
-<form class="form" role="form" method="get" action="/workoutnow">
-    <ul class="list-unstyled">
-        <li>Exercise 1</li>
-        <li>Exercise 2</li>
-        <li>Exercise 3</li>
-        <li>Exercise 4</li>
-        <li>Exercise 5</li>
-    </ul>
-    <button class="btn btn-lg btn-success" type="submit">Start Now</button>
-</form>
+<div id="content">
+    <form class="form" role="form" method="get" action="/goWorkout0">
+        <ul class="list-unstyled">
+            {{#each exercises}}
+                <li>{{name}}</li>
+            {{/each}}
+        </ul>
+        <button class="btn btn-lg btn-success" type="submit">Start Now</button>
+    </form>
+</div>

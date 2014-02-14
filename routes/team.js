@@ -15,7 +15,7 @@ function onRoster(tid, aid) {
 }
 
 function parseDate(d) {
-	var newDate = "" + (d.getMonth()+1) + "/" + d.getDate() + "/" + d.getYear() + "";
+	var newDate = "" + (d.getMonth()+1) + "/" + d.getDate() + "/" + d.getFullYear() + "";
 	return newDate;
 }
 

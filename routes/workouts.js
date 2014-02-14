@@ -7,7 +7,7 @@ var completedworkouts = require("../json/completedworkouts.json")
 
 
 function parseDate(d) {
-	var newDate = "" + (d.getMonth()+1) + "/" + d.getDate() + "/" + d.getYear() + "";
+	var newDate = "" + (d.getMonth()+1) + "/" + d.getDate() + "/" + d.getFullYear() + "";
 	return newDate;
 }
 
@@ -97,26 +97,26 @@ exports.create = function(req, res) { 
 	var wid = workouts["templateWorkouts"].length + 1;
 	var theseExercises = req.query.exercises;
 
-//not sure about this loop.
-for(exc in theseExercises) {
-	theseExercises[exc].wid=wid;
-	exercises["exercises"].push(theseExercises[exc]);
-}
+	//not sure about this loop.
+	for(exc in theseExercises) {
+		theseExercises[exc].wid=wid;
+		exercises["exercises"].push(theseExercises[exc]);
+	}
 
-console.log("all exercises siae: " + exercises["exercises"].length);
-console.log("all exercises: " + exercises["exercises"]);
-console.log("num workouts: " + workouts["templateWorkouts"].length);
+	console.log("all exercises siae: " + exercises["exercises"].length);
+	console.log("all exercises: " + exercises["exercises"]);
+	console.log("num workouts: " + workouts["templateWorkouts"].length);
 
-workout = {
-	"wid": wid,
-	"creatorid": req.session.email,
-	"created": d
-}
+	workout = {
+		"wid": wid,
+		"creatorid": req.session.email,
+		"created": d
+	}
 
-workouts["templateWorkouts"].push(workout);
-console.log("num workouts: " + workouts["templateWorkouts"].length);
+	workouts["templateWorkouts"].push(workout);
+	console.log("num workouts: " + workouts["templateWorkouts"].length);
 
-res.redirect('home');
+	res.redirect('home');
 }
 
 exports.addCompletedWorkout = function(req, res) {  
@@ -139,5 +139,5 @@ exports.addCompletedWorkout = function(req, res) { 
 		console.log(completedworkouts["completedWorkouts"][w].aid + ": did workouts # " + completedworkouts["completedWorkouts"][w].wid);
 
 	 }
-res.redirect('home');
+	res.redirect('home');
 }
