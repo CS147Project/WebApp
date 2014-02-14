@@ -3,10 +3,11 @@ var messages = require("../json/messages.json");
 var exercises = require("../json/exercises.json");
 var workouts = require("../json/workouts.json");
 var assignedworkout = require("../json/assignedworkout.json");
+var completedworkouts = require("../json/completedworkouts.json")
 
 
 function parseDate(d) {
-	var newDate = "" + (d.getMonth()+1) + "/" + d.getDate() + "/" + d.getYear() + "";
+	var newDate = "" + (d.getMonth()+1) + "/" + d.getDate() + "/" + d.getFullYear() + "";
 	return newDate;
 }
 
@@ -27,7 +28,7 @@ exports.getAll = function(req, res) {
 	res.json(workouts["templateWorkouts"]);
 }
 
-exports.getUserWorkouts = function(req, res) {
+ exports.getUserWorkouts = function(req, res) {
 	var aid = req.query.aid;
 	var userWorkouts = [];
 
@@ -108,12 +109,35 @@ exports.create = function(req, res) { 
 
 	workout = {
 		"wid": wid,
-		"creatorid": req.query.creatorid,
+		"creatorid": req.session.email,
 		"created": d
 	}
 
 	workouts["templateWorkouts"].push(workout);
 	console.log("num workouts: " + workouts["templateWorkouts"].length);
 
+	res.redirect('home');
+}
+
+exports.addCompletedWorkout = function(req, res) {  
+	var d = new Date();
+	d = parseDate(d);
+
+	for(w in completedworkouts["completedWorkouts"]) {
+		console.log(completedworkouts["completedWorkouts"][w].aid + ": did workouts # " + completedworkouts["completedWorkouts"][w].wid);
+
+	}
+
+	var completedW = {
+		"wid": req.query.wid,
+		"aid": req.session.email,
+		"datetime": d
+	};
+	completedworkouts["completedWorkouts"].push(completedW);
+
+	for(w in completedworkouts["completedWorkouts"]) {
+		console.log(completedworkouts["completedWorkouts"][w].aid + ": did workouts # " + completedworkouts["completedWorkouts"][w].wid);
+
+	 }
 	res.redirect('home');
 }

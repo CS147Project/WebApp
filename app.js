@@ -67,10 +67,11 @@ app.get('/messages/create', messages.create);
 app.get('/startworkout', workout.start);
 app.get('/goWorkout:id', workout.goWorkout);
 app.post('/workouts/create', workouts.create);
-//app.get('/workouts/getAll', workouts.getAll);
+app.get('/workouts/getAll', workouts.getAll);
 app.get('/workouts/getExercises', workouts.getExercises); //returns [] of exercises for workout
 app.get('/workouts/getUserWorkouts', workouts.getUserWorkouts); //returns workouts assigned to a user
-//app.post('/workouts/assignWorkout', workouts.assignWorkout);
+app.post('/workouts/assignWorkout', workouts.assignWorkout);
+app.post('/workouts/addCompletedWorkout', workouts.addCompletedWorkout);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
