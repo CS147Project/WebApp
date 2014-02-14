@@ -9,11 +9,10 @@ $(document).ready(function() {
  * Function that is called when the document is ready.
  */
 function initializePage() {
-	console.log("init");
+	console.log("initWorkout");
+	$('#next').click(nextWorkout);
 }
 
-
-function save(req, res){
-	e.preventDefault();
-	console.log("saving...");
+function nextWorkout(){
+	
 }

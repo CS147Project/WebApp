@@ -7,14 +7,29 @@ exports.start = function(req, res) { 
 exports.goWorkout = function(req, res) {
 	var exID = parseInt(req.params.id);
 	var exercise = null;
-	console.log(exID);
-	console.log(exercises)
 	if(exercises["exercises"][exID] != null){
 		exercise = exercises["exercises"][exID];
 		console.log(exercise);
 	}else{
 		console.log("overgrown error");
 	}
-		
+	req.session.curr = exID;
+
 	res.render('goWorkout', exercise);
+}
+
+exports.save = function(req, res){
+
+}
+
+exports.next = function(req, res){
+	var nextIndex = parseInt(req.session.curr)+1;
+	var nextURL = 'goWorkout' + nextIndex;
+	res.redirect(nextURL);
+
+}
+exports.previous = function(req, res){
+	var prevIndex = parseInt(req.session.curr)-1;
+	var prevURL = 'goWorkout' + prevIndex;
+	res.redirect(prevURL);
 }

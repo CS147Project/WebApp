@@ -5,9 +5,9 @@
 </a>
 
 
-<form class="form-horizontal center" role="form" onClick="save">
+<form class="form-horizontal center" role="form" method="get" action="/goWorkout/save">
     
-    <h2>{{exercise.name}}</h2>
+    <h2>{{name}}</h2>
 
     {{#if weight}}
         <div class="form-group">
@@ -53,7 +53,12 @@
     <button class="btn btn-lg btn-success" type="submit">Done</button>
 
 </form>
-
+<a href="/goWorkout/previous">
+<button id="previous" type="button" class="btn" >Previous</button>
+</a>
+<a href="/goWorkout/next">
+<button id="next" type="button" class="btn btn-primary">Next</button>
+</a>
 
 <div class="exerciseScroll">
     

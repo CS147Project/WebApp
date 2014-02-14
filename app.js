@@ -66,6 +66,9 @@ app.get('/messages', messages.get);
 app.get('/messages/create', messages.create);
 app.get('/startworkout', workout.start);
 app.get('/goWorkout:id', workout.goWorkout);
+app.get('/goWorkout/save', workout.save);
+app.get('/goWorkout/next', workout.next);
+app.get('/goWorkout/previous', workout.previous);
 app.post('/workouts/create', workouts.create);
 app.get('/workouts/getAll', workouts.getAll);
 app.get('/workouts/getExercises', workouts.getExercises); //returns [] of exercises for workout
