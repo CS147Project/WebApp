@@ -13,10 +13,16 @@ function parseDate(d) {
 exports.analytics = function(req, res) { 
     if(req.session !== undefined && req.session.email !== undefined) {
     	var completedWorkouts = completedworkouts["completedWorkouts"];
+    	var myWorkouts = [];
+    	for(cw in completedworkouts["completedWorkouts"]) {
+    		if(completedworkouts["completedWorkouts"][cw].aid == req.session.email) {
+    			console.log("pushign workout");
+    			myWorkouts.push(completedworkouts["completedWorkouts"][cw]);
+    		}
+    	}
 
 
-
-        res.render('analytics', {'completedworkouts': completedworkouts["completedWorkouts"]});
+        res.render('analytics', {'completedworkouts': myWorkouts});
     }
     // else {
     // 	res.render('home', {layout: false});
