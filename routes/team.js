@@ -51,11 +51,6 @@ exports.sendRequest = function(req, res) { 
             "datetime": d
         }
 
-        //console.log("size invites: " + invites["allInvites"].size);
-        // for(var invite in invites["allInvites"]) {
-        // 	console.log("one: " + invite.aid);
-        // }
-        // console.log("invites: " + invites);
         invites['allInvites'].push(newInvite);
         console.log(newInvite);
         res.render('home', {
@@ -63,8 +58,6 @@ exports.sendRequest = function(req, res) { 
             'athlete': isAthlete(req.session.email)
         }); // Can also redirect to 'settings'
 
-        //  console.log("size2 invites: " + invites['allInvites'].length);
-        // 	console.log("all invites: "+ invites);
     } else {
         res.render('settings', {
             'msg': 'There was a problem sending your invite. Please try again.'

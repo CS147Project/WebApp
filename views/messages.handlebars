@@ -3,11 +3,19 @@
     <span class="glyphicon glyphicon-off glyphicons-lg"></span> Logout
   </button>
 </a>
-{{#each messages}}
-    <p>
-        Message: {{text}}<br>
-        From: {{fromid}}<br>
-        To: {{toid}}<br>
-        when: {{datetime}}
-    </p>
-{{/each}}
+{{#if messaages}}
+<ul>
+    {{#each messages}}
+        <a href="sendReply/{{mid}}">
+            <li class="list-unstyled">
+                <p class="text-left">
+                    "{{text}}"<br>
+                    {{fromid}} <span class="small">{{datetime}}</span>
+                </p>
+            </li>
+        </a>
+    {{/each}}
+</ul>
+{{else}}
+    <p>You have no messages at this time.</p>
+{{/if}}
