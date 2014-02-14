@@ -8,6 +8,7 @@
 
 html, body {
 	height: 100%;
+	background-image: url("../img/triangular_@2X.png");
 }
 
 .center{
@@ -16,7 +17,7 @@ html, body {
 }
 
 .container{
-	margin: 1% auto 1% auto;
+	margin: 0px auto 0px auto;
 	padding: auto;
 	text-align: center;
 	/*min-width: 300px;
@@ -24,19 +25,31 @@ html, body {
 	width: 60%;*/
 	width: 100%;
 	height: 100%;
-	background: #6E858D;
 	border-radius: 5px;
 }
 
 .header {
 	text-align: center;
-	margin: 0px;
+	margin: 0px 0px 10px 0px;
 	padding: 0px;
 	height: 10%;
 }
 
 .header h1{
 	font-family: alex-brush, cursive;
+}
+
+#logo {
+	float:left;
+	margin-left: 60px;
+	margin-top: 10px;
+	height: 100%;
+}
+
+#accountMenu {
+	float: right;
+	top: 0px;
+	right: 0px;
 }
 
 .content {
@@ -90,7 +103,8 @@ html, body {
 	height: 10%;
 	clear: both;
 	bottom: 0px;
-	background: #A9CEDA;
+	background-image: url("../img/footer-bg.png");
+	background-size: 100% 100%;
 }
 
 .navbar {

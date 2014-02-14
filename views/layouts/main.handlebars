@@ -10,6 +10,8 @@
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/index.css" rel="stylesheet">
 
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -22,10 +24,19 @@
     <div id="container" class="container">
       <!-- HEADER -->
       <div id="header" class="header">
-        <h1> TeamWorkout </h1>
+        <div id="logo">
+          <h1> TeamWorkout </h1>
+        </div>
+        <div id="accountMenu">
+          <a href="logout">
+            <button type="button" class="btn btn-default btn">
+              <span class="glyphicon glyphicon-off glyphicons-lg"></span> Logout
+            </button>
+          </a>
+        </div>
       </div> <!-- END OF HEADER -->
       <!-- CONTENT -->
-      <div id="content" class="content">
+      <div id="content" class="content clearfix">
 
         {{{body}}}
 
@@ -36,9 +47,9 @@
         <!-- GENERAL NAVIGATION -->
         <div id="genNav" >
           <ul class="navbar">
-            <li><a href="home" id="home_btn" class="active btn"> <span class="glyphicon glyphicon-home glyphicons-lg"></span> </a></li>
-            <li><a href="messages" id="message_btn" class="btn btn-lg"> <span class="glyphicon glyphicon-comment glyphicons-lg"></span> </a></li>
-            <li><a href="workouts" id="workout_btn" class="btn"> <img src="img/workout_icon.png" alt="Workouts"> </a></li>
+            <li><a href="home" id="home-btn" class="btn"> <img src="img/home_icon.png" alt="Home"> </a></li>
+            <li><a href="messages" id="message-btn" class="btn btn-lg"> <img src="img/message_icon.png" alt="Messages"> </a></li>
+            <li><a href="workouts" id="workout-btn" class="btn"> <img src="img/workout_icon.png" alt="Workouts"> </a></li>
             <li><a href="analytics" id="analytics_btn" class="btn"> <img src="img/analytics_icon.png" alt="Analytics"> </a></li>
             <li><a href="settings" id="settings_btn" class="btn btn-lg"> <span class="glyphicon glyphicon-cog glyphicons-lg"></span> </a></li>
           </ul>
@@ -49,7 +60,7 @@
 
     <script src="https://code.jquery.com/jquery.js"></script>
     <script src="/js/bootstrap.js"></script>
-    <script src="/js/index.js"></script>
+    <script src="/js/general.js"></script>
     <script src="//use.edgefonts.net/alex-brush:n4:all.js"></script> 
 
   </body>

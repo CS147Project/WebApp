@@ -1,31 +1,3 @@
-<!-- PROFILE NAVIGATION -->
-<div id="profileNav" class="">
-  <ul class="navbar nav-tabs">
-    {{#if athlete}}
-      <li>
-        <a href="#" id="personal" class="profileLink btn">
-          <img src="img/personal_profile_pic.png" alt="Personal profile">
-          <h6>You</h6>
-        </a>
-      </li>
-    {{/if}}
-    {{#each teams}}
-      <li>
-        <a href="#" id="team1" class="profileLink btn">
-          <img src="img/team1_profile_pic.png" alt="Team 1">
-          <h6>{{name}}</h6>
-        </a>
-      </li>
-    {{/each}}
-      <a href="logout">
-        <button type="button" class="btn btn-default btn">
-          <span class="glyphicon glyphicon-off glyphicons-lg"></span> Logout
-        </button>
-      </a>
-  </ul>
-</div>
-<!-- END OF PROFILE NAVIGATION -->
-
 <!-- PERSONAL DISPLAY -->
 <div id="personalBests" class="display">
   <div class="panel panel-default">
@@ -66,3 +38,5 @@
   </div>
 </div> 
 <!-- END OF PERSONAL DISPLAY -->
+
+

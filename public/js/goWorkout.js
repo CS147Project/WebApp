@@ -10,9 +10,4 @@ $(document).ready(function() {
  */
 function initializePage() {
 	console.log("initWorkout");
-	$('#next').click(nextWorkout);
-}
-
-function nextWorkout(){
-	
 }

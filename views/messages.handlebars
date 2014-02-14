@@ -1,31 +1,32 @@
 <!doctype html>
 
-<a href="logout">
-<button type="button" class="btn btn-default btn">
-<span class="glyphicon glyphicon-off glyphicons-lg"></span> Logout
-</button>
-</a>
+<h2> Messages </h2>
 
-<div id="content" class="content">
+{{#if messages}}
 
-{{#each messages}}
-<p>
-
-{{fromid}} to {{toid}} ({{datetime}}):<br>
-{{text}}<br>
+	{{#each messages}}
+		<p>
+		{{fromid}} to {{toid}} ({{datetime}}):<br>
+		{{text}}<br>
 
 
 
-        <form class="form-signin" role="form" method="get" action="/messages/create">
-          
-          <input type="text" class="form-control" placeholder="Message..." name="text" required autofocus>
-          <input type = "hidden" name="toid" value= {{fromid}}>
-          <input type = "hidden" name = "fromid" value = {{toid}}>
+		        <form class="form-signin" role="form" method="get" action="/messages/create">
+		          
+		          <input type="text" class="form-control" placeholder="Message..." name="text" required autofocus>
+		          <input type = "hidden" name="toid" value= {{fromid}}>
+		          <input type = "hidden" name = "fromid" value = {{toid}}>
 
-          
-          <button class="btn btn-lg btn-primary btn-block" type="submit">Reply</button>
-        </form>
-</p>
-{{/each}}
+		          
+		          <button class="btn btn-lg btn-primary btn-block" type="submit">Reply</button>
+		        </form>
+		</p>
+	{{/each}}
 
-</div>
+
+{{else}}
+No Messages!
+{{/if}}
+
+
+
