@@ -10,6 +10,18 @@ function parseDate(d) {
 	var newDate = "" + (d.getMonth()+1) + "/" + d.getDate() + "/" + d.getFullYear() + "";
 	return newDate;
 }
+exports.analytics = function(req, res) { 
+    if(req.session !== undefined && req.session.email !== undefined) {
+    	var completedWorkouts = completedworkouts["completedWorkouts"];
+
+
+
+        res.render('analytics', {'completedworkouts': completedworkouts["completedWorkouts"]});
+    }
+    // else {
+    // 	res.render('home', {layout: false});
+    // }
+ }
 
 //returns a collection of exercises, given a workout id
 exports.getExercises = function(req, res) {

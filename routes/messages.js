@@ -9,7 +9,6 @@ function parseDate(d) {
 exports.create = function(req, res) { 
 	var d = new Date();
 	d = parseDate(d);
-
 	console.log("from: "+ req.query.fromid + " to: " + req.query.toid + " text: " + req.query.text);
 	//HOW DO WE CALC IID?
 	var mid = messages["messages"].length + 1;
@@ -18,9 +17,8 @@ exports.create = function(req, res) { 
 		"mid": mid,
 		"text": req.query.text,
 		"datetime": d,
-		"fromid": req.query.fromid,
+		"fromid": req.session.email,
 		"toid": req.query.toid
-
 	}
 
 	console.log("m leng: " + messages["messages"].length);
