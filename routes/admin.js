@@ -117,10 +117,12 @@ exports.settings = function(req, res) { 
     if(req.query.email !== undefined) {
         console.log(req.session.email);
         var teams = findTeamsForCoach(req.query.email);
-        console.log(teams);
+        if(teams.length == 0) var msg = 'Sorry, we couldn\'t a coach by that email.'; 
         res.render('settings', {
             'email': req.session.email,
-            'teams': teams
+            'teams': teams,
+            'msg': msg,
+            'pending': pending
         });
     } else {
         res.render('settings');

@@ -12,13 +12,25 @@
     <button class="btn btn-lg btn-primary" type="submit">Find Team</button>
  </form>
 
+{{#if msg}}
+    <h5>{{msg}}</h5>
+{{/if}}
 {{#if teams}}
     <h2>Select a Team</h2>
+    {{#each teams}}
+        <form class="form" role="form" method="post" action="/inviteTeam">
+            <input type="hidden" name="tid" value="{{tid}}">
+            <button class="btn btn-lg btn-default" type="submit">{{name}}</button>
+        </form>
+    {{/each}}
 {{/if}}
 
-{{#each teams}}
-    <form class="form" role="form" method="post" action="/inviteTeam">
-        <input type="hidden" name="tid" value="{{tid}}">
-        <button class="btn btn-lg btn-default" type="submit">{{name}}</button>
-    </form>
-{{/each}}
+{{#if pending}}
+    {{#each pending}}
+        <form class="form" role="form" method="post" action="/respondTeam">
+            <input type="hidden" name="tid" value="{{tid}}">
+            <input type="hidden" name="aid" value="{{aid}}">
+            <button class="btn btn-lg btn-default" type="submit">{{aid}}</button>
+        </form>
+    {{/each}}
+{{/if}}
