@@ -11,7 +11,7 @@ exports.goWorkout = function(req, res) {
 		exercise = exercises["exercises"][exID];
 		console.log(exercise);
 	}else{
-		console.log("overgrown error");
+		res.render('home');
 	}
 	req.session.curr = exID;
 
