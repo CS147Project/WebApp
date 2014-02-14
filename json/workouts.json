@@ -1,0 +1,18 @@
+{
+	"templateWorkouts": [
+  {
+    "wid": 1,
+    "creatorid": "kj@f.com",
+    "created": "01/01/2014",
+    "description": "Do this workout hard"
+
+
+    },  {
+      "wid": 2,
+      "creatorid": "kj@f.com",
+      "created": "01/02/2014",
+      "description": "Try harder!!"
+    }
+
+    ]
+  }

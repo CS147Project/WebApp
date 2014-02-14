@@ -96,10 +96,18 @@ Template Workout Table
 Assigned Workout Table
 'assignedWorkout': [ {
     'assignedid': 'foo@bar.com',
-
+    'wid': 1,
     'datetime': '01/01/2014 01:01:01 UTC'
     }
 ]
+
+Completed Workout Table 
+'completedWorkouts' [ {
+    'aid': 'foo@bar.com',
+    'wid': 1,
+    'datetime': '01/01/2014 01:01:01 UTC'
+
+}]
 
 Exercise Table
 'exercises': {
