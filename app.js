@@ -66,7 +66,7 @@ app.get('/messages', messages.get);
 app.get('/messages/create', messages.create);
 app.get('/startworkout', workout.start);
 app.post('/workouts/create', workouts.create);
-//app.get('/workouts/getAll', workouts.getAll);
+app.get('/workouts/getAll', workouts.getAll);
 app.get('/workouts/getExercises', workouts.getExercises); //returns [] of exercises for workout
 app.get('/workouts/getUserWorkouts', workouts.getUserWorkouts); //returns workouts assigned to a user
 app.post('/workouts/assignWorkout', workouts.assignWorkout);
