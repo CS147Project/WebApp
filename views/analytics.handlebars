@@ -3,16 +3,11 @@
 <div id="content" class="content">
 <h3> My Completed Workouts </h3>
 
-{{#each completedworkouts}}
-
-
-
-
-
-
-<p> {{datetime}}: workout id: {{wid}}<br> </p>
-
-
-{{/each}}
-
+{{#if compledWorkouts}}
+	{{#each completedworkouts}}
+		<p> {{datetime}}: workout id: {{wid}}<br> </p>
+	{{/each}}
+{{else}}
+	No Completed Workouts!
+{{/if}}
 </div>
