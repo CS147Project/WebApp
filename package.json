@@ -10,7 +10,6 @@
   },
   "license": "CS147Project",
 
-  "main": "server.js",
   "private": true,
   "scripts": {
     "start": "node app.js"
