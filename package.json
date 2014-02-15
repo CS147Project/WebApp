@@ -1,8 +1,8 @@
 {
-  "name": "teamworkout02",
+  "name": "teamworkout",
   "description": "Serving static content via html files",
   "version": "0.0.1",
-  "author": "kfryauff <kfryauff@stanford.edu",
+  "author": "kfryauff <kfryauff@stanford.edu>",
 
   "repository": {
   	"type": "git",
