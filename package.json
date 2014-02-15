@@ -1,7 +1,7 @@
 {
   "name": "teamworkout",
-  "description": "Serving static content via html files",
-  "version": "0.0.1",
+  "description": "Web App",
+  "version": "0.0.3",
   "author": "kfryauff <kfryauff@stanford.edu>",
 
   "repository": {
