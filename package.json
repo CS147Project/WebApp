@@ -1,5 +1,6 @@
 {
   "name": "teamworkout",
+  "description": "Web App",
   "version": "0.0.3",
   "author": "kfryauff <kfryauff@stanford.edu>",
 
@@ -9,11 +10,7 @@
   },
   "license": "CS147Project",
 
-  "private": true,
-  "scripts": {
-    "start": "node app.js"
-  },
-
+  "main": "server.js",
   "dependencies": {
     "express": "3.x",
     "express3-handlebars": "*",
