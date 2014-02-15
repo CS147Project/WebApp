@@ -32,7 +32,7 @@ html, body {
 	text-align: center;
 	margin: 0px 0px 10px 0px;
 	padding: 0px;
-	height: 10%;
+	height: 8%;
 }
 
 .header h1{
@@ -40,26 +40,27 @@ html, body {
 }
 
 #logo {
-	float:left;
-	margin-left: 20px;
-	margin-top: 10px;
+	position: absolute;
+	top:5px;
+	left:20px;
 	height: 100%;
 }
 
 #accountMenu {
-	float: right;
-	top: 20px;
+	position: absolute;
+	top: 5px;
 	right: 10px;
+	height:50%;
 }
 
 .content {
 	position: relative;
-	overflow-y: hidden;
+	overflow-y: hidden scroll;
 	bottom, top:0px;
 	background: white;
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
-	height:75%;
+	height:90%;
 }
 
 .display {
@@ -70,8 +71,6 @@ html, body {
     background-color: rgba(255,255,255,0.9);
     width:100%;
     height:inherit;
-    overflow-y: scroll;
-    overflow-x: hidden;
 }
 
 .display ul li{
@@ -100,7 +99,7 @@ html, body {
 
 .footer {
 	position: static;
-	height: 10%;
+	height: 8%;
 	clear: both;
 	bottom: 0px;
 	background-image: url("../img/footer-bg.png");
@@ -116,7 +115,7 @@ html, body {
 }
 
 .navbar li {
-	margin: 0px;
+	margin: 0px 2px;
 	padding-bottom: 0px;
 	display: inline-block;
 }
