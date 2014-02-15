@@ -1,7 +1,10 @@
 {
 	"workouts": [
 		{
-			"title": "workout1"		
+			"title": "workout1",
+			"exercisesIndex": "1",
+			
+
 		}
 	]
 }
