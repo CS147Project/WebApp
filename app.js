@@ -7,21 +7,30 @@ var express = require('express');
 var http = require('http');
 var path = require('path');
 var handlebars = require('express3-handlebars');
-
+var mysql = require('mysql');
 
 //////// MYSQL CONFIG CODE
-// var mysql = require('mysql');
-// var connection = mysql.createConnection({
-//   host     : 'localhost',
-//   user     : 'root',
-//   password : 'vagrant',
-//   port     : '3000'
-// });
-// connection.connect();
-// connection.query('SELECT 1 + 1 AS solution', function(err, rows, fields) {
-//   if (err) throw err;
-//   console.log('The solution is: ', rows[0].solution);
-// });
+var connection = mysql.createConnection({
+  host     : 'localhost',
+  user     : 'root',
+  password : '', 
+});
+
+
+
+connection.query('CREATE DATABASE IF NOT EXISTS appdb');
+connection.query('USE appdb');
+
+// Create db tables for app. Add new tables below.
+connection.query("CREATE TABLE IF NOT EXISTS `users` (" +
+  "email varchar(40) NOT NULL," +
+  "firstName varchar(25) NOT NULL," +
+  "lastName varchar(25) NOT NULL," +
+  "nickname varchar(25)," +
+  "password varchar(25) NOT NULL," +
+  "PRIMARY KEY (`email`)" +
+  ")");
+
 
 var admin = require('./routes/admin');
 var home = require('./routes/home');
@@ -53,8 +62,23 @@ if ('development' == app.get('env')) {
 }
 
 // Add routes here
-app.get('/', admin.login);
-app.get('/login', admin.login);
+// app.get('/', admin.login);
+app.get('/', function(req, res){
+  console.log("hey");
+  connection.query('SELECT * FROM users', function(err, rows){
+    console.log(err);
+    console.log(rows);
+    res.render('login', {users : rows});
+  });
+});
+app.get('/login', function(req, res){
+  console.log("hey");
+  connection.query('SELECT * FROM users', function(err, rows){
+    console.log(err);
+    console.log(rows);
+    res.render('login', {users : rows});
+  });
+});
 app.get('/loginAttempt', admin.loginHandler);
 app.get('/signup', admin.signup);
 app.get('/addUser', admin.addUser);
