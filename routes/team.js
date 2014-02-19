@@ -34,7 +34,7 @@ function isAthlete(email) {
 }
 
 exports.createTeam = function(req, res) {
-    var tid = var.query.tid;
+    var tid = req.query.tid;
 //FILL THIS OUT
 
 
