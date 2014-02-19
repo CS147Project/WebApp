@@ -33,6 +33,30 @@ function isAthlete(email) {
     return false;
 }
 
+exports.createTeam = function(req, res) {
+    var tid = var.query.tid;
+//FILL THIS OUT
+
+
+
+}
+
+exports.getTeamsByUser =function(req, res) {
+    var user = req.session.email;
+    //TODO
+}
+
+exports.removeAthleteFromTeam = function(req, res) {
+    var aid = req.query.aid;
+    //TODO
+}
+
+exports.getPlayersCoaches = function(req, res) {
+    var aid = req.session.email;
+    //TODO
+    //return JSON object of all of the player's coaches (ID's)
+}
+
 exports.sendRequest = function(req, res) { 
     if(req.session !== undefined && req.session.email !== undefined) {
         aid = req.session.email;        
