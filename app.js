@@ -13,11 +13,11 @@ var mysql = require('mysql');
 var connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
-  password : '', 
+  password : ''
 });
 
 
-
+/*
 connection.query('CREATE DATABASE IF NOT EXISTS appdb');
 connection.query('USE appdb');
 
@@ -92,6 +92,7 @@ connection.query("CREATE TABLE IF NOT EXISTS teamcoaches (" +
   "FOREIGN KEY (tid) REFERENCES teams(tid),"+
   "FOREIGN KEY (cid) REFERENCES athletes(cid)"+
   ")");
+*/
 
 var admin = require('./routes/admin');
 var home = require('./routes/home');
