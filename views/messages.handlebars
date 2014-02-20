@@ -1,32 +1,58 @@
 <!doctype html>
 
 <h2> Messages </h2>
+<h4>
+	Create a New Message
+</h4>
+<div>
+	<form class="form-signin" role="form" method="get" action="/messages/create">
 
+		<select name = "toid">
+			{{#if friends}}
+			{{#each friends}}
+			<option value = {{aid}}> {{name}}</option>
+			{{/each}}
+			{{/if}}
+		</select>
+		{{#else}}
+		<input type = "text" class="form-control" name="toid2" placeholder="To: (E-mail address)" >
+		{{/else}}
+
+
+		<input type="text" class="form-control" placeholder="Message..." name="text" required autofocus>
+
+		<input type = "hidden" name = "fromid" value = {{toid}}>
+
+
+		<button class="btn btn-lg btn-primary btn-block" type="submit">Send</button>
+	</form>
+</div>
 {{#if messages}}
+<h4>
+	Previous Conversations
+</h4>
+{{#each messages}}
+<p>
+	{{fromid}} to {{toid}} ({{datetime}}):<br>
+	{{text}}<br>
 
-	{{#each messages}}
-		<p>
-		{{fromid}} to {{toid}} ({{datetime}}):<br>
-		{{text}}<br>
 
 
+	<form class="form-signin" role="form" method="get" action="/messages/create">
 
-		        <form class="form-signin" role="form" method="get" action="/messages/create">
-		          
-		          <input type="text" class="form-control" placeholder="Message..." name="text" required autofocus>
-		          <input type = "hidden" name="toid" value= {{fromid}}>
-		          <input type = "hidden" name = "fromid" value = {{toid}}>
+		<input type="text" class="form-control" placeholder="Message..." name="text" required autofocus>
+		<input type = "hidden" name="toid" value= {{fromid}}>
+		<input type = "hidden" name = "fromid" value = {{toid}}>
 
-		          
-		          <button class="btn btn-lg btn-primary btn-block" type="submit">Reply</button>
-		        </form>
-		</p>
-	{{/each}}
+
+		<button class="btn btn-lg btn-primary btn-block" type="submit">Reply</button>
+	</form>
+</p>
+{{/each}}
 
 
 {{else}}
 No Messages!
 {{/if}}
-
 
 
