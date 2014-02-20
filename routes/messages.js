@@ -1,5 +1,6 @@
 var data = require("../json/users.json");
 var messages = require("../json/messages.json");
+var invites = require("../json/invites.json");
 var teamathletes = require("../json/teamathletes.json");
 var teamcoaches = require("../json/teamcoaches.json");
 var users = require("../json/users.json");
@@ -29,7 +30,8 @@ function getFullNameByEmail(email) {
 	}
 
 }
-function findTeamsForCoach(email) {
+
+exports.findTeamsForCoach = function(email) {
 	var teams = [];
 	for(element in teamcoaches['teamCoaches']) {
 		var teamCoachElement = teamcoaches['teamCoaches'][element];

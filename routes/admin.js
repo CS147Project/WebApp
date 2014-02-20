@@ -18,23 +18,11 @@ function verifyAccount(users, req, res) {
     return false;
 }
 
-function searchTeams(tid) {
+exports.searchTeams = function(tid) {
     for(team in teamData['teams']) {
         if(teamData['teams'][team].tid == tid) return teamData['teams'][team];
     }
     return undefined;
-}
-
-function findTeamsForCoach(email) {
-    var teams = [];
-    for(element in teamCoachData['teamCoaches']) {
-        var teamCoachElement = teamCoachData['teamCoaches'][element];
-        if(teamCoachElement['cid'] == email) {
-            teams.push(searchTeams(teamCoachElement['tid']));
-        }
-    }
-    console.log(teams);
-    return teams;
 }
 
 function noBlank(newUser, req) {
@@ -113,18 +101,3 @@ exports.addUser = function(req, res) { 
     });
  }
 
-exports.settings = function(req, res) { 
-    if(req.query.email !== undefined) {
-        console.log(req.session.email);
-        var teams = findTeamsForCoach(req.query.email);
-        if(teams.length == 0) var msg = 'Sorry, we couldn\'t a coach by that email.'; 
-        res.render('settings', {
-            'email': req.session.email,
-            'teams': teams,
-            'msg': msg,
-            'pending': pending
-        });
-    } else {
-        res.render('settings');
-    }
-}

@@ -11,6 +11,7 @@ var mongoose = require('mongoose');
 
 
 var admin = require('./routes/admin');
+var settings = require('./routes/settings');
 var home = require('./routes/home');
 var team = require('./routes/team');
 var messages = require('./routes/messages');
@@ -53,7 +54,7 @@ app.get('/login', admin.login);
 app.get('/loginAttempt', admin.loginHandler);
 app.get('/signup', admin.signup);
 app.get('/addUser', admin.addUser);
-app.get('/settings', admin.settings);
+app.get('/settings', settings.index);
 app.get('/logout', admin.logout);
 app.get('/home', home.view);
 app.post('/inviteTeam', team.sendRequest);

@@ -1,8 +1,6 @@
 <form class="form" role="form" method="get" action="/settings">
     <h2 class="form-signin-heading">Enter Coach's Email</h2>
     <input type="email" class="form-control" placeholder="Email address" name="email" required autofocus>
-
-    <!--     {{msg}} -->
     <button class="btn btn-lg btn-primary" type="submit">Find Team</button>
  </form>
 
@@ -20,6 +18,7 @@
 {{/if}}
 
 {{#if pending}}
+    <h5>Respond to Requests</h5>
     {{#each pending}}
         <form class="form" role="form" method="post" action="/respondTeam">
             <input type="hidden" name="tid" value="{{tid}}">

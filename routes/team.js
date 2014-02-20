@@ -5,6 +5,18 @@ var teamData = require("../json/teams.json");
 var athletes = require("../json/athletes.json");
 
 
+exports.getRequestsForTeams = function(teams) {
+    var requests = [];
+    for(team in teams) {
+        for(invite in invites) {
+            if(teamData['teams'][team].tid == invites['allInvites'][invite].tid) {
+                requests.push(invites['allInvites'][invite]);
+            }
+        }
+    }
+    return requests;
+}
+
 function onRoster(tid, aid) {
     for (var athlete in teamathletes["teamathletes"]) {
         if (athlete.tid == tid && athlete.aid == aid) {
