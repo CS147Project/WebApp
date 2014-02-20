@@ -6,15 +6,16 @@ var messages = require("./messages");
 var teamsFns = require("./team");
 
 
-
 exports.index = function(req, res) { 
     if(req.session == undefined || req.session.email == undefined) {
         console.log("Please login for this page");
         return res.redirect('/');
     }
-    console.log(req.session.email);
-    var teams = messages.findTeamsForCoach(req.query.email);
+    console.log("user's email", req.session.email);
+    var teams = messages.findTeamsForCoach(req.session.email);
+    console.log("teams", teams);
     var requests = teamsFns.getRequestsForTeams(teams);
+    console.log("requests", requests);
     if(req.query.email !== undefined) {
         if(teams.length != 0 && req.query.msg !== undefined) {
             var msg = req.query.msg;

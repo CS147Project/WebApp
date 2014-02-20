@@ -7,8 +7,8 @@ var athletes = require("../json/athletes.json");
 
 exports.getRequestsForTeams = function(teams) {
     var requests = [];
-    for(team in teams) {
-        for(invite in invites) {
+    for(team in teamData['teams']) {
+        for(invite in invites['allInvites']) {
             if(teamData['teams'][team].tid == invites['allInvites'][invite].tid) {
                 requests.push(invites['allInvites'][invite]);
             }
