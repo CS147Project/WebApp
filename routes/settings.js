@@ -4,7 +4,8 @@ var teamData = require("../json/teams.json");
 var admin = require("./admin");
 var messages = require("./messages");
 var teamsFns = require("./team");
-
+//added
+var teamathletes = require("../json/teamathletes.json");
 
 
 exports.index = function(req, res) { 
@@ -13,11 +14,12 @@ exports.index = function(req, res) { 
         return res.redirect('/');
     }
     console.log(req.session.email);
-    var teams = messages.findTeamsForCoach(req.query.email);
+    var teams = messages.getTeamsByCoach(req.query.email);
     var requests = teamsFns.getRequestsForTeams(teams);
     if(req.query.email !== undefined) {
         if(teams.length != 0 && req.query.msg !== undefined) {
             var msg = req.query.msg;
+            //get team athletes here
         } else if(teams.length == 0) {
             var msg = 'Sorry, we couldn\'t a coach by that email.';
         }
@@ -33,3 +35,20 @@ exports.index = function(req, res) { 
     }
 }
 
+// exports.removeAthleteFromTeam = function(req, res) {
+//     var aid = req.query.aid;
+//     var tid = req.query.tid;
+//     console.log("Before Removing: " + teamathletes[teamathletes].length);
+
+//     models.TeamAthleteSchema
+//         .find({"_id": aid, "tid": tid})
+//         .remove()
+//         .exec(afterRemoving);
+
+//         function afterRemoving(err) {
+//             if(err) {console.log(err); res.send(500);};
+//             console.log("After Removing: " + teamathletes[teamathletes].length);
+
+//             res.redirect('/settings');
+//         }
+// }
