@@ -36,7 +36,6 @@ exports.findTeamsForCoach = function(email) {
 	for(element in teamcoaches['teamCoaches']) {
 		var teamCoachElement = teamcoaches['teamCoaches'][element];
 		if(teamCoachElement['cid'] == email) {
-			
 			teams.push(teamcoaches['teamCoaches'][element].tid);
 		}
 	}
