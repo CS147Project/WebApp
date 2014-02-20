@@ -1,5 +1,5 @@
 var data = require("../json/users.json");
-var teamCoachData = require("../json/teamCoaches.json");
+var teamCoachData = require("../json/teamcoaches.json");
 var teamData = require("../json/teams.json");
 var athletes = require("../json/athletes.json");
 

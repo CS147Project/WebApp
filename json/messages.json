@@ -3,14 +3,12 @@
 		{
             "mid": 1,
             "text": "Dude, what a workout!!",
-            
             "datetime": "01/01/2014",
             "fromid": "kj@f.com",
             "toid": "kj@f.com"
         }, {
             "mid": 2,
             "text": "Testing messages",
-            
             "datetime": "01/01/2014",
             "fromid": "jeremy@h.com",
             "toid": "kj@f.com"

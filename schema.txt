@@ -62,6 +62,7 @@ Messages Table
     'datetime': '01/01/2014 01:01:01 UTC',
     'fromid': 'test@test.com'
     'toid': 'foo@bar.com'
+    'isread': true
     },
 ]
 
@@ -72,6 +73,7 @@ Feedback Table
     'datetime': '01/01/2014 01:01:01 UTC',
     'fromid': 'test@test.com'
     'wid': 1
+    'isread': true
     },
 ]
 

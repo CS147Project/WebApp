@@ -1,10 +1,10 @@
 {
-	"athletes": [
+	"coaches": [
 		{
-            "aid": "rebecca@a.com"
+            "cid": "rebecca@a.com"
             }, {
 
-            "aid": "rando@sketch.com"
+            "cid": "rando@sketch.com"
            
     	}
 	]
