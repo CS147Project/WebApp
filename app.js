@@ -48,23 +48,8 @@ if ('development' == app.get('env')) {
 }
 
 // Add routes here
-// app.get('/', admin.login);
-app.get('/', function(req, res){
-  console.log("hey");
-  connection.query('SELECT * FROM users', function(err, rows){
-    console.log(err);
-    console.log(rows);
-    res.render('login', {users : rows});
-  });
-});
-app.get('/login', function(req, res){
-  console.log("hey");
-  connection.query('SELECT * FROM users', function(err, rows){
-    console.log(err);
-    console.log(rows);
-    res.render('login', {users : rows});
-  });
-});
+app.get('/', admin.login);
+app.get('/login', admin.login);
 app.get('/loginAttempt', admin.loginHandler);
 app.get('/signup', admin.signup);
 app.get('/addUser', admin.addUser);
