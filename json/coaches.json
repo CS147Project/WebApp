@@ -2,11 +2,15 @@
 	"coaches": [
 		{
             "cid": "rebecca@a.com"
-            }, {
-
-            "cid": "rando@sketch.com"
-           
-    	}
+        }, {
+            "cid": "coach@1.com" 
+        }, {
+            "cid": "coach@2.com" 
+        }, {
+            "cid": "coach@3.com" 
+        }, {
+            "cid": "coach@4.com" 
+        }
 	]
 
 }

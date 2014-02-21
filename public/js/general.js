@@ -1,5 +1,6 @@
 'use strict';
 var lastActive = null;
+var count = 1;
 
 // Call this function when the page loads (the "ready" event)
 $(document).ready(function() {
@@ -13,12 +14,26 @@ function initializePage() {
 	console.log("init");
 	lastActive = $(".navbar a .home-btn");
 	lastActive.addClass("active");
-	$("#genNav .navbar .btn").click(navigate);	
+	$("#genNav .navbar .btn").click(navigate);
+    $("#addExercise").click(addExercise);
 }
 
-function navigate(e){
+function navigate(e) {
 	lastActive.removeClass("active");
 	console.log(lastActive);
 	$("this").addClass("active");
 	lastActive = $("this");
+}
+
+function addExercise(e) {
+    e.preventDefault();
+
+    console.log("Registered Click");
+
+    var newExercise = "<div class='text-left'>"+count+".</div>";
+
+    $("#exercisesCreated").append(newExercise);
+
+
+    count++;
 }
