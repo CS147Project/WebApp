@@ -12,12 +12,10 @@ exports.index = function(req, res) { 
         return res.redirect('/');
     }
     var teams = messages.findTeamsForCoach(req.session.email);
-
     var teamRequests = [];
     for(team in teams) {
         teamRequests.push({"requests": teamsFns.getRequestsForTeam(teams[team])});
     } 
-    console.log("teamRequests", teamRequests);
     if(req.query.email !== undefined) {
         if(teams.length != 0 && req.query.msg !== undefined) {
             var msg = req.query.msg;

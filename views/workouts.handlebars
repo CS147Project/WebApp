@@ -1,21 +1,19 @@
-<a href="#">
-  <button type="button" class="btn btn-danger btn disabled">
-   Create Workout
-  </button>
+<a href="startWorkoutCreation">
+  <button type="button" class="btn btn-danger">Create Workout</button>
 </a>
 
-    <div class="panel panel-default">
-        <a href="startworkout"><div id="startWorkout" class="btn btn-success btn-block">
-          <span class="glyphicon glyphicon-play-circle glyphicons-lg"></span> Start Workout
-        </div></a>
-        <div class="panel-heading"> 
-          Personal Bests
-        </div>
-        <table class="table">
-            {{#each templateWorkouts}}
-              <tr class="btn"><a href="">
-                <td>{{title}}</td>
-              </a></tr>
-            {{/each}}
-        </table>
+<div class="panel panel-default">
+    <a href="startworkout"><div id="startWorkout" class="btn btn-success btn-block">
+      <span class="glyphicon glyphicon-play-circle glyphicons-lg"></span> Start Workout
+    </div></a>
+    <div class="panel-heading"> 
+      Personal Bests
     </div>
+    <table class="table">
+        {{#each templateWorkouts}}
+          <tr class="btn"><a href="">
+            <td>{{title}}</td>
+          </a></tr>
+        {{/each}}
+    </table>
+</div>
