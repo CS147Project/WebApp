@@ -15,6 +15,21 @@
       "title": "Monday Workout",
       "description": "Try harder!!"
     }
+    ,  {
+      "wid": 3,
+      "creatorid": "kj@f.com",
+      "created": "01/03/2014",
+      "title": "Tuesday Sprints",
+      "description": "Do it!!!"
+    },  {
+      "wid": 4,
+      "creatorid": "kj@f.com",
+      "created": "01/04/2014",
+      "title": "Wednesday Lifting",
+      "description": "Lift Them Weights!!"
+    }
+
+
 
     ]
   }

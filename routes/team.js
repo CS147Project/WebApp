@@ -29,13 +29,22 @@ return myAthletes;;
 
 }
 
+exports.getRequestsForTeam = function(team) {
+    var requests = [];
+    for(invite in invites['allInvites']) {
+        console.log("invite tid's", invites['allInvites'][invite].tid);
+        if(team == invites['allInvites'][invite].tid) {
+            requests.push(invites['allInvites'][invite]);
+        }
+    }
+    return requests;
+}
+
 exports.getRequestsForTeams = function(teams) {
     var requests = [];
-    //for(var team in teams) {
-        for(var i=0; i<teams.length; i++) {
-            console.log("team id: " + teams[i]);
+    for(team in teams) {
         for(invite in invites['allInvites']) {
-            if(teams[i] == invites['allInvites'][invite].tid) {
+            if(teams[team].tid == invites['allInvites'][invite].tid) {
                 requests.push(invites['allInvites'][invite]);
             }
         }

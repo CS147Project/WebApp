@@ -19,8 +19,9 @@
     {{/each}}
 {{/if}}
 
-{{#if requests}}
+{{#if teamRequests}}
     <h3>Respond to Requests</h3>
+
     {{#each requests}}
         <form class="form" role="form" method="post" action="/respondTeam">
             <input type="hidden" name="tid" value="{{tid}}">
@@ -28,6 +29,17 @@
             <input type="hidden" name="response" value="true">
             <button class="btn  btn-default" type="submit">Team: {{tid}}, Name:{{aid}}</button>
         </form>
+
+    {{#each teamRequests}}
+        <h4>Requests for Team ...</h4>
+        {{#each requests}}
+            <form class="form" role="form" method="post" action="/respondTeam">
+                <input type="hidden" name="tid" value="{{tid}}">
+                <input type="hidden" name="aid" value="{{aid}}">
+                Name:{{aid}}<button class="btn btn-lg btn-default" type="submit">Accept</button>
+            </form>
+        {{/each}}
+
     {{/each}}
 {{/if}}
 
