@@ -1,3 +1,4 @@
+<!doctype html>
 <form class="form" role="form" method="get" action="/settings">
     <h3 class="form-signin-heading">Find Your Team</h3>
     <p class="caption">Enter in your coach's email</p>
@@ -13,7 +14,7 @@
     {{#each teams}}
         <form class="form" role="form" method="post" action="/inviteTeam">
             <input type="hidden" name="tid" value="{{tid}}">
-            <button class="btn btn-lg btn-default" type="submit">{{name}}</button>
+            <button class="btn  btn-default" type="submit">{{name}}</button>
         </form>
     {{/each}}
 {{/if}}
@@ -25,7 +26,27 @@
             <input type="hidden" name="tid" value="{{tid}}">
             <input type="hidden" name="aid" value="{{aid}}">
             <input type="hidden" name="response" value="true">
-            <button class="btn btn-lg btn-default" type="submit">Team: {{tid}}, Name:{{aid}}</button>
+            <button class="btn  btn-default" type="submit">Team: {{tid}}, Name:{{aid}}</button>
         </form>
     {{/each}}
+{{/if}}
+
+{{#if teamathletes}}
+<h3>Remove a Player</h3>
+<form class="form" role="form" method="post" action="/respondTeam">
+   
+        <select name = "aid">
+            {{#each teamathletes}}
+            <option value = {{aid}}> {{aid}} ({{tid}}) </option>
+            <input type="hidden" name="tid" value="{{tid}}">
+             {{/each}}
+        </select>
+
+            <button class="btn  btn-default" type="submit">Remove Player</button>
+            
+                   
+      
+    a player!
+  
+      </form>
 {{/if}}

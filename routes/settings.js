@@ -16,7 +16,27 @@ exports.index = function(req, res) { 
     console.log("teams", teams);
     var requests = teamsFns.getRequestsForTeams(teams);
     console.log("requests", requests);
-    if(req.query.email !== undefined) {
+    // var teamathletes = [];
+    // for(var i = 0; i<teams.length; i++) {
+    //     var players = teamsFns.getPlayersByTeams(teams);
+
+    // }
+
+
+
+    var players = teamsFns.getPlayersByTeams(teams);
+    var teamathletes = [];
+    for(var i=0; i<players.size; i++) {
+        var player = {
+            "aid": player[i]
+        };
+        teamathletes.push(player);
+    }
+
+
+    console.log("playersL: " + players.length);
+
+    if(req.session.email !== undefined) {
         if(teams.length != 0 && req.query.msg !== undefined) {
             var msg = req.query.msg;
         } else if(teams.length == 0) {
@@ -25,7 +45,8 @@ exports.index = function(req, res) { 
         res.render('settings', {
             'teams': teams,
             'msg': msg,
-            'requests': requests
+            'requests': requests,
+            'teamathletes': teamathletes
         });
     } else {
         res.render('settings', {

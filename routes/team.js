@@ -16,7 +16,18 @@ exports.getAllRequests = function() {
     return requests;
 }
 
+exports.getPlayersByTeams = function(teams) {
+    var myAthletes=[];
+    for(var i=0; i<teams.length; i++) {
+        for(athlete in teamathletes["teamathletes"]) {
+            if(teamathletes["teamathletes"][athlete].tid==teams[i]) {
+                myAthletes.push(teamathletes["teamathletes"][athlete].aid);
+            }
+        }
+    }
+return myAthletes;;
 
+}
 
 exports.getRequestsForTeams = function(teams) {
     var requests = [];
