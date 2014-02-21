@@ -43,6 +43,18 @@ exports.findTeamsForCoach = function(email) {
 	return teams;
 }
 
+function findTeamsForCoach(email) {
+	var teams = [];
+	for(element in teamcoaches['teamCoaches']) {
+		var teamCoachElement = teamcoaches['teamCoaches'][element];
+		if(teamCoachElement['cid'] == email) {
+			teams.push(teamcoaches['teamCoaches'][element].tid);
+		}
+	}
+	console.log(teams);
+	return teams;
+}
+
 function getPlayersByTeams(teams) {
 	var players = [];
 	for(athlete in teamathletes["teamathletes"]) {
