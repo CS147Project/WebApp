@@ -27,28 +27,22 @@
         <div id="logo">
           <h1> TeamWorkout </h1>
         </div>
-        <div id="accountMenu">
-          <div class="dropdown">
-            <button class="btn dropdown-toggle sr-only" type="button" id="dropdownMenu1" data-toggle="dropdown">
-              Account
-              <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-              <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>
-              <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>
-              <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
-              <li role="presentation" class="divider"></li>
-              <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
-            </ul>
-          </div>
+        <div id="accountMenu" class="dropdown pull-right">
+          <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" type="button">Account <span class="caret"></span></button>
+          <ul class="dropdown-menu">
+              <li><a href="/logout">Logout</a></li>
+              <li><a href="#">Teams</a></li>
+              <li><a href="#">Account</a></li>
+              <li><a href="/settings">Settings</a></li>
+              <li><a href="#">Help</a></li>
+          </ul>
 
-
-          <a href="logout">
+         <!-- <a href="logout">
             <button type="button" class="btn btn-default btn">
               <span class="glyphicon glyphicon-off glyphicons-lg"></span> Logout
             </button>
           </a>
-          <a href="settings" id="settings_btn" class="btn btn-lg"> <span class="glyphicon glyphicon-cog glyphicons-lg"></span> Settings </a>
+          <a href="settings" id="settings_btn" class="btn btn-lg"> <span class="glyphicon glyphicon-cog glyphicons-lg"></span> Settings </a> -->
         </div>
       </div> <!-- END OF HEADER -->
       <!-- CONTENT -->

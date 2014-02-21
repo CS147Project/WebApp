@@ -41,16 +41,16 @@ html, body {
 
 #logo {
 	position: absolute;
-	top:5px;
-	left:20px;
-	height: 100%;
+	float: left;
+	top:-10px;
+	left:40px;
 }
 
 #accountMenu {
 	position: absolute;
+	float: right;
 	top: 5px;
-	right: 10px;
-	height:50%;
+	right: 40px;
 }
 
 .content {
@@ -60,7 +60,7 @@ html, body {
 	background: white;
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
-	height:90%;
+	min-height: 90%;
 }
 
 .display {
