@@ -8,7 +8,7 @@ function verifyAccount(users, req, res) {
     password = req.query.password;
     console.log(email, password);
     for (var user in users) {
-        if (users[user].password == password) {
+        if (users[user].password == password && users[user].email == email) {
             req.session.email = email;
             console.log(email+' is logged in! Yay!!!');
             res.redirect('home');

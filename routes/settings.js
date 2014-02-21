@@ -11,10 +11,12 @@ exports.index = function(req, res) { 
         console.log("Please login for this page");
         return res.redirect('/');
     }
+    console.log("email", email);
     var teams = messages.findTeamsForCoach(req.session.email);
-
+    console.log("the teams user has", teams);
     var teamRequests = [];
     for(team in teams) {
+        console.log("the requests for this team", teamsFns.getRequestsForTeam(teams[team]));
         teamRequests.push({"requests": teamsFns.getRequestsForTeam(teams[team])});
     } 
     console.log("teamRequests", teamRequests);
