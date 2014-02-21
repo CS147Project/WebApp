@@ -35,4 +35,3 @@ exports.index = function(req, res) { 
         }); // Put in all the invites a coach currently has in both situations.
     }
 }
-
