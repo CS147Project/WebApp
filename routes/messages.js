@@ -34,11 +34,8 @@ function getFullNameByEmail(email) {
 exports.findTeamsForCoach = function(email) {
 	var teams = [];
 	for(element in teamcoaches['teamCoaches']) {
-		console.log("checking coaches");
 		var teamCoachElement = teamcoaches['teamCoaches'][element];
-		console.log(teamCoachElement['cid'], email);
 		if(teamCoachElement['cid'] == email) {
-			console.log("this coach is on a team yay!");
 			teams.push(teamcoaches['teamCoaches'][element].tid);
 		}
 	}

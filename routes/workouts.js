@@ -79,7 +79,6 @@ exports.assignWorkout = function(req, res) {
 
 //expects exercises w/o a workout id.
 exports.create = function(req, res) { 
-	console.log("hey");
 	var d = new Date();
 	d = parseDate(d);
 
