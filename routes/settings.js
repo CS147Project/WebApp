@@ -11,11 +11,13 @@ exports.index = function(req, res) { 
         console.log("Please login for this page");
         return res.redirect('/');
     }
-    console.log("user's email", req.session.email);
     var teams = messages.findTeamsForCoach(req.session.email);
-    console.log("teams", teams);
-    var requests = teamsFns.getRequestsForTeams(teams);
-    console.log("requests", requests);
+
+    var teamRequests = [];
+    for(team in teams) {
+        teamRequests.push({"requests": teamsFns.getRequestsForTeam(teams[team])});
+    } 
+    console.log("teamRequests", teamRequests);
     if(req.query.email !== undefined) {
         if(teams.length != 0 && req.query.msg !== undefined) {
             var msg = req.query.msg;
@@ -25,11 +27,11 @@ exports.index = function(req, res) { 
         res.render('settings', {
             'teams': teams,
             'msg': msg,
-            'requests': requests
+            'teamRequests': teamRequests
         });
     } else {
         res.render('settings', {
-            'requests': requests
+            'teamRequests': teamRequests
         }); // Put in all the invites a coach currently has in both situations.
     }
 }

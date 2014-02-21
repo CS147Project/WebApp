@@ -5,11 +5,22 @@ var teamData = require("../json/teams.json");
 var athletes = require("../json/athletes.json");
 
 
+exports.getRequestsForTeam = function(team) {
+    var requests = [];
+    for(invite in invites['allInvites']) {
+        console.log("invite tid's", invites['allInvites'][invite].tid);
+        if(team == invites['allInvites'][invite].tid) {
+            requests.push(invites['allInvites'][invite]);
+        }
+    }
+    return requests;
+}
+
 exports.getRequestsForTeams = function(teams) {
     var requests = [];
-    for(team in teamData['teams']) {
+    for(team in teams) {
         for(invite in invites['allInvites']) {
-            if(teamData['teams'][team].tid == invites['allInvites'][invite].tid) {
+            if(teams[team].tid == invites['allInvites'][invite].tid) {
                 requests.push(invites['allInvites'][invite]);
             }
         }
