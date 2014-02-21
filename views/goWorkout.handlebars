@@ -1,47 +1,49 @@
-<a href="workout/pause">
+<!doctype html>
+
+<!-- <a href="workout/pause">
   <button type="button" class="btn btn-danger btn">
     <span class="glyphicon glyphicon-pause glyphicons-lg"></span> Pause
   </button>
-</a>
+</a> -->
 
 
-<form class="form-horizontal center" role="form" method="get" action="/goWorkout/save">
+<form class="form-horizontal center" role="form" method="get" action="/goWorkout/submit">
     
-    <h2>{{name}}</h2>
+    <h2>{{exercise.name}}</h2>
 
-    {{#if weight}}
+    {{#if exercise.weight}}
         <div class="form-group">
             <label for="inputWeight" class="col-sm-2 control-label">Weight:</label>
             <div class="col-sm-5">
-                <input type="weight" class="form-control" id="inputWeight" placeholder="{{weight}}">
+                <input type="weight" class="form-control" id="inputWeight" placeholder="{{exercise.weight}}">
             </div>
         </div>
     {{/if}}
-    {{#if set}}
+    {{#if exercise.set}}
         <div class="form-group">
             <label for="inputSet" class="col-sm-2 control-label">Set:</label>
             <div class="col-sm-5">
-                <input type="set" class="form-control" id="inputSet" placeholder="{{set}}">
+                <input type="set" class="form-control" id="inputSet" placeholder="{{exercise.set}}">
             </div>
         </div>
     {{/if}}
-    {{#if rep}}
+    {{#if exercise.rep}}
         <div class="form-group">
             <label for="inputReps" class="col-sm-2 control-label">Reps:</label>
             <div class="col-sm-5">
-                <input type="reps" class="form-control" id="inputReps" placeholder="{{rep}}">
+                <input type="reps" class="form-control" id="inputReps" placeholder="{{exercise.rep}}">
             </div>
         </div>
     {{/if}}
-    {{#if distance}}
+    {{#if exercise.distance}}
         <div class="form-group">
             <label for="inputDist" class="col-sm-2 control-label">Distance: </label>
             <div class="col-sm-5">
-                <input type="distance" class="form-control" id="inputDist" placeholder="{{distance}}">
+                <input type="distance" class="form-control" id="inputDist" placeholder="{{exercise.distance}}">
             </div>
         </div>
     {{/if}}
-    {{#if time}}
+    {{#if exercise.time}}
         <div class="form-group">
             <label for="inputTime" class="col-sm-2 control-label">Time: </label>
             <div class="col-sm-5">
@@ -50,18 +52,20 @@
         </div>
     {{/if}}
 
-    <button class="btn btn-lg btn-success" type="submit">Done</button>
+    <input id="navExercise" class="btn {{#if nav.prev}}disable{{/if}}" type="button" value="Prev"></input>
+    <input id="navExercise" class="btn {{#if nav.next}}disable{{/if}}" type="button" value="Next"></input>
 
 </form>
-<a href="/goWorkout/previous">
+<!-- <a href="/goWorkout/previous">
 <button id="previous" type="button" class="btn" >Previous</button>
 </a>
 <a href="/goWorkout/next">
 <button id="next" type="button" class="btn btn-primary">Next</button>
-</a>
+</a> -->
 
 <div class="exerciseScroll">
     
 </div>
 
-<script src="/js/goWorkout.js"></script> 
+<script type="text/javascript" src="/js/goWorkout.js"></script>
+

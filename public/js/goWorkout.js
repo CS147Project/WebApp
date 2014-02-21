@@ -9,5 +9,8 @@ $(document).ready(function() {
  * Function that is called when the document is ready.
  */
 function initializePage() {
-	console.log("initWorkout");
+	$('#navExercise').click(submitData);
+	console.log("linked!");
 }
+
+

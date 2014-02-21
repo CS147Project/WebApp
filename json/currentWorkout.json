@@ -1,0 +1,42 @@
+{
+	"exercises": [
+  {
+    "wid": 1,
+    "eid": 1,
+    "name": "Bench Press",
+    "weight": 20,
+    "set": null,
+    "rep": 3,
+    "distance": null,
+    "time": null
+    },  {
+      "wid": 1,
+      "eid": 2,
+      "name": "Mile Run",
+      "weight": null,
+      "set": null,
+      "rep": null,
+      "distance": 1,
+      "time": "timed"
+    },  {
+      "wid": 1,
+      "eid": 3,
+      "name": "Curl Ups",
+      "weight": null,
+      "set": null,
+      "rep": null,
+      "distance": 1,
+      "time": 0
+    },  {
+      "wid": 1,
+      "eid": 4,
+      "name": "Squats",
+      "weight": null,
+      "set": null,
+      "rep": null,
+      "distance": 1,
+      "time": 0
+    }
+
+    ]
+  }

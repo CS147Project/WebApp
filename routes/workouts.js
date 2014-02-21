@@ -10,6 +10,7 @@ function parseDate(d) {
 	var newDate = "" + (d.getMonth()+1) + "/" + d.getDate() + "/" + d.getFullYear() + "";
 	return newDate;
 }
+
 exports.analytics = function(req, res) { 
     if(req.session !== undefined && req.session.email !== undefined) {
     	var completedWorkouts = completedworkouts["completedWorkouts"];
@@ -157,7 +158,7 @@ exports.addCompletedWorkout = function(req, res) { 
 		console.log(completedworkouts["completedWorkouts"][w].aid + ": did workouts # " + completedworkouts["completedWorkouts"][w].wid);
 
 	 }
-	res.redirect('home');
+	res.send(200);
 }
 
 exports.view = function(req, res){
