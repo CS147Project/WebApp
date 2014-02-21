@@ -1,16 +1,21 @@
-<a href="workout/pause">
-  <button type="button" class="btn btn-danger btn">
-    <span class="glyphicon glyphicon-pause glyphicons-lg"></span> Pause
+<a href="#">
+  <button type="button" class="btn btn-danger btn disabled">
+   Create Workout
   </button>
 </a>
 
-<form class="form" role="form" method="get" action="/workoutnow">
-    <ul class="list-unstyled">
-        <li>Exercise 1</li>
-        <li>Exercise 2</li>
-        <li>Exercise 3</li>
-        <li>Exercise 4</li>
-        <li>Exercise 5</li>
-    </ul>
-    <button class="btn btn-lg btn-success" type="submit">Start Now</button>
-</form>
+    <div class="panel panel-default">
+        <a href="startworkout"><div id="startWorkout" class="btn btn-success btn-block">
+          <span class="glyphicon glyphicon-play-circle glyphicons-lg"></span> Start Workout
+        </div></a>
+        <div class="panel-heading"> 
+          Personal Bests
+        </div>
+        <table class="table">
+            {{#each templateWorkouts}}
+              <tr class="btn"><a href="">
+                <td>{{title}}</td>
+              </a></tr>
+            {{/each}}
+        </table>
+    </div>
