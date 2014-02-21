@@ -39,17 +39,18 @@ exports.goWorkout = function(req, res) {
 
 exports.submit = function(req, res){
 	var form_data = req.body;
-	console.log(form_data);
+		console.log(form_data);
 
-
-
-	res.redirect('goWorkout'+parseInt(req.session.curr));
+	workouts.addCompletedWorkout();
+	res.send();
 
 }
 
 exports.save = function(req, res){
 	var form_data = req.body;
-	workouts.addCompletedWorkout();
+	console.log(form_data);
+
+	res.redirect('goWorkout'+parseInt(req.session.curr));
 
 }
 

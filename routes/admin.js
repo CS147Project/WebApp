@@ -8,7 +8,7 @@ function verifyAccount(users, req, res) {
     password = req.query.password;
     console.log(email, password);
     for (var user in users) {
-        if (users[user].password == password) {
+        if (users[user].password == password && users[user].email == email) {
             req.session.email = email;
             console.log(email+' is logged in! Yay!!!');
             res.redirect('home');
@@ -74,7 +74,7 @@ exports.loginHandler = function(req, res) { 
     users = data['users'];
     if(!verifyAccount(users, req, res)) {
         res.render('login', {
-            "msg": "I am sorry, but we were not ablt to find your account. Please try again.",
+            "msg": "I am sorry, but we were not able to find your account. Please try again.",
             layout: false
         });
     }

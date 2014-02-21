@@ -80,38 +80,8 @@ exports.assignWorkout = function(req, res) {
 
 //expects exercises w/o a workout id.
 exports.create = function(req, res) { 
-
 	var d = new Date();
 	d = parseDate(d);
-
-	// var theseExercises= [
-	// {
-	// 	"wid": 1,
-	// 	"eid": 1,
-	// 	"name": "Bench Press2",
-	// 	"weight": -1,
-	// 	"set": -1,
-	// 	"rep": -1,
-	// 	"distance": -1,
-	// 	"time": -1
-
-
-	// },  {
-	// 	"wid": 1,
-	// 	"eid": 2,
-	// 	"name": "Mile Run2",
-	// 	"weight": -1,
-	// 	"set": -1,
-	// 	"rep": -1,
-	// 	"distance": -1,
-	// 	"time": 1
-	// }
-
-	// ];
-
-
-
-
 
 	var wid = workouts["templateWorkouts"].length + 1;
 	var theseExercises = req.query.exercises;
@@ -133,8 +103,7 @@ exports.create = function(req, res) { 
 	}
 
 	workouts["templateWorkouts"].push(workout);
-	console.log("num workouts: " + workouts["templateWorkouts"].length);
-
+	// console.log("num workouts: " + workouts["templateWorkouts"].length);
 	res.redirect('home');
 }
 

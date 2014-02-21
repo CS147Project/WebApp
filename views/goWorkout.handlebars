@@ -7,7 +7,7 @@
 </a> -->
 
 
-<form class="form-horizontal center" role="form" method="get" action="/goWorkout/submit">
+<form id="goExerciseForm" class="form-horizontal center" role="form" method="get" action="">
     
     <h2>{{exercise.name}}</h2>
 
@@ -15,7 +15,7 @@
         <div class="form-group">
             <label for="inputWeight" class="col-sm-2 control-label">Weight:</label>
             <div class="col-sm-5">
-                <input type="weight" class="form-control" id="inputWeight" placeholder="{{exercise.weight}}">
+                <input type="number" class="form-control" id="inputWeight" placeholder="{{exercise.weight}}" required>
             </div>
         </div>
     {{/if}}
@@ -23,7 +23,7 @@
         <div class="form-group">
             <label for="inputSet" class="col-sm-2 control-label">Set:</label>
             <div class="col-sm-5">
-                <input type="set" class="form-control" id="inputSet" placeholder="{{exercise.set}}">
+                <input type="number" class="form-control" id="inputSet" placeholder="{{exercise.set}}" required>
             </div>
         </div>
     {{/if}}
@@ -31,7 +31,7 @@
         <div class="form-group">
             <label for="inputReps" class="col-sm-2 control-label">Reps:</label>
             <div class="col-sm-5">
-                <input type="reps" class="form-control" id="inputReps" placeholder="{{exercise.rep}}">
+                <input type="number" class="form-control" id="inputReps" placeholder="{{exercise.rep}}" required>
             </div>
         </div>
     {{/if}}
@@ -39,7 +39,7 @@
         <div class="form-group">
             <label for="inputDist" class="col-sm-2 control-label">Distance: </label>
             <div class="col-sm-5">
-                <input type="distance" class="form-control" id="inputDist" placeholder="{{exercise.distance}}">
+                <input type="number" class="form-control" id="inputDist" placeholder="{{exercise.distance}}" required>
             </div>
         </div>
     {{/if}}
@@ -47,13 +47,13 @@
         <div class="form-group">
             <label for="inputTime" class="col-sm-2 control-label">Time: </label>
             <div class="col-sm-5">
-                <input type="number" class="form-control" id="inputTime" pattern="HH:mm:ss" placeholder="00:00:00">
+                <input type="number" class="form-control" id="inputTime" pattern="HH:mm:ss" placeholder="00:00:00" required>
             </div>
         </div>
     {{/if}}
 
-    <input id="navExercise" class="btn {{#if nav.prev}}disable{{/if}}" type="button" value="Prev"></input>
-    <input id="navExercise" class="btn {{#if nav.next}}disable{{/if}}" type="button" value="Next"></input>
+    <button class="navExercise btn {{#if nav.prev}}disable{{/if}}" type="button" value="Prev"></button>
+    <button class="navExercise btn {{#if nav.next}}disable{{/if}}" type="button" value="Next"></button>
 
 </form>
 <!-- <a href="/goWorkout/previous">
@@ -66,6 +66,3 @@
 <div class="exerciseScroll">
     
 </div>
-
-<script type="text/javascript" src="/js/goWorkout.js"></script>
-

@@ -34,7 +34,8 @@ exports.Invite = Mongoose.model('Invite', InviteSchema);
 
 var TeamSchema = new Mongoose.Schema({
   name: { type: String, required: true },
-  sport: { type: String required: true }
+  sport: { type: String, required: true },
+  created: { type : Date, default: Date.now }
 });
 
 exports.Team = Mongoose.model('Team', TeamSchema);
@@ -52,3 +53,25 @@ var TeamCoachSchema = new Mongoose.Schema({
 });
 
 exports.TeamCoach = Mongoose.model('TeamCoach', TeamCoachSchema);
+
+var ExerciseTemplateSchema = new Mongoose.Schema({
+    name: { type: String, required: true },
+    weight: Number,
+    set: Number,
+    rep: Number,
+    distance: String,
+    time: String
+});
+
+exports.ExerciseTemplate = Mongoose.model('ExerciseTemplate', ExerciseTemplateSchema);
+
+var WorkoutTemplateSchema = new Mongoose.Schema({
+  creatorid: { type: String, ref: 'User', required: true },
+  created: { type : Date, default: Date.now },
+  title: { type: String, required: true },
+  description: String,
+  exercises: [ExerciseTemplateSchema]
+});
+
+exports.WorkoutTemplate = Mongoose.model('WorkoutTemplate', WorkoutTemplateSchema);
+

@@ -9,8 +9,24 @@ $(document).ready(function() {
  * Function that is called when the document is ready.
  */
 function initializePage() {
-	$('#navExercise').click(submitData);
+	$('.navExercise').click(submitData);
 	console.log("linked!");
 }
 
+function submitData(e){
+	console.log("clicked");
+	var currData = {
+	    "weight": $('#goExerciseForm #inputWeight').val(),
+	    "set":  $('#goExerciseForm #inputSet').val(),
+	    "rep":  $('#goExerciseForm #inputReps').val(),
+	    "distance":  $('#goExerciseForm #inputDist').val(),
+	    "time":  $('#goExerciseForm #inputTime').val()
+    };
 
+    console.log("currData: " + currData);
+    $.post('/goWorkout/save', {
+    	'currData' : currData,
+    	'nav-clicked' : $('this').val()
+    });
+
+}
