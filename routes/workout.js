@@ -19,7 +19,7 @@ exports.goWorkout = function(req, res) {
 }
 
 exports.save = function(req, res){
-
+	
 }
 
 exports.next = function(req, res){

@@ -161,8 +161,5 @@ exports.addCompletedWorkout = function(req, res) { 
 }
 
 exports.view = function(req, res){
-	var aid = req.query.aid;
-	var userWorkouts = workouts["templateWorkouts"];
-	console.log(userWorkouts);
 	res.render('workouts', workouts);
 }
