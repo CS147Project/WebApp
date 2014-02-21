@@ -16,22 +16,6 @@ exports.getAllRequests = function() {
     return requests;
 }
 
-// <<<<<<< HEAD
-exports.getPlayersByTeams = function(teams) {
-    var myAthletes=[];
-    for(var i=0; i<teams.length; i++) {
-        for(athlete in teamathletes["teamathletes"]) {
-            if(teamathletes["teamathletes"][athlete].tid==teams[i]) {
-                myAthletes.push(teamathletes["teamathletes"][athlete].aid);
-            }
-        }
-    }
-return myAthletes;;
-
-}
-
-// =======
-// >>>>>>> 5d3c3c4ac22e17c59311f966dff359f2fbb5340b
 exports.getRequestsForTeam = function(team) {
     var requests = [];
     for(invite in invites['allInvites']) {
