@@ -20,13 +20,30 @@
     		"lastName": "Amato",
     		"nickname": "RA",
     		"password": "password"
-    	}, 
-    	{
-    		"email": "rando@sketch.com",
-    		"firstName": "Rando",
-    		"lastName": "Sketch",
-    		"nickname": "GradStudent",
-    		"password": "password"
-    	}
+    	}, {
+            "email": "coach@1.com",
+            "firstName": "coach",
+            "lastName": "1",
+            "nickname": "first coach",
+            "password": "password"
+        }, {
+            "email": "coach@2.com",
+            "firstName": "coach",
+            "lastName": "2",
+            "nickname": "second coach",
+            "password": "password"
+        }, {
+            "email": "coach@3.com",
+            "firstName": "coach",
+            "lastName": "3",
+            "nickname": "third coach",
+            "password": "password"
+        }, {
+            "email": "coach@4.com",
+            "firstName": "coach",
+            "lastName": "4",
+            "nickname": "fourth coach",
+            "password": "password"
+        }
 	]
 }

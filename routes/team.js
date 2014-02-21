@@ -5,6 +5,18 @@ var teamData = require("../json/teams.json");
 var athletes = require("../json/athletes.json");
 
 
+exports.getRequestsForTeams = function(teams) {
+    var requests = [];
+    for(team in teamData['teams']) {
+        for(invite in invites['allInvites']) {
+            if(teamData['teams'][team].tid == invites['allInvites'][invite].tid) {
+                requests.push(invites['allInvites'][invite]);
+            }
+        }
+    }
+    return requests;
+}
+
 function onRoster(tid, aid) {
     for (var athlete in teamathletes["teamathletes"]) {
         if (athlete.tid == tid && athlete.aid == aid) {
@@ -31,6 +43,30 @@ function isAthlete(email) {
         if(athletes['athletes'][athlete].aid == email) return true;
     }
     return false;
+}
+
+exports.createTeam = function(req, res) {
+    var tid = req.query.tid;
+//FILL THIS OUT
+
+
+
+}
+
+exports.getTeamsByUser =function(req, res) {
+    var user = req.session.email;
+    //TODO
+}
+
+exports.removeAthleteFromTeam = function(req, res) {
+    var aid = req.query.aid;
+    //TODO
+}
+
+exports.getPlayersCoaches = function(req, res) {
+    var aid = req.session.email;
+    //TODO
+    //return JSON object of all of the player's coaches (ID's)
 }
 
 exports.sendRequest = function(req, res) { 

@@ -1,11 +1,12 @@
-{ "teamCoaches": [ {
+{ "teamCoaches": [ 
+    {
         "tid": 1,
-        "cid": "coachy@mccoacherson.com"
+        "cid": "coach@1.com"
     }, {
-        "tid": 1,
-        "cid": "asst@coach.com"
+        "tid": 3,
+        "cid": "coach@2.com"
     }, {
         "tid": 2,
-        "cid": "asst@coach.com"
-    } ]
+        "cid": "coach@1.com"
+    }]
 }

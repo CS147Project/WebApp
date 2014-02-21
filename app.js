@@ -7,14 +7,15 @@ var express = require('express');
 var http = require('http');
 var path = require('path');
 var handlebars = require('express3-handlebars');
-var mysql = require('mysql');
-
+var mongoose = require('mongoose');
+/*
 //////// MYSQL CONFIG CODE
 var connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
   password : ''
 });
+*/
 
 
 /*
@@ -95,11 +96,20 @@ connection.query("CREATE TABLE IF NOT EXISTS teamcoaches (" +
 */
 
 var admin = require('./routes/admin');
+var settings = require('./routes/settings');
 var home = require('./routes/home');
 var team = require('./routes/team');
 var messages = require('./routes/messages');
 var workout = require('./routes/workout');
 var workouts = require('./routes/workouts');
+
+
+// Connect to the Mongo database, whether locally or on Heroku
+var local_database_name = 'appdb';
+var local_database_uri  = 'mongodb://localhost/' + local_database_name
+var database_uri = process.env.MONGOLAB_URI || local_database_uri
+mongoose.connect(database_uri);
+
 
 var app = express();
 
@@ -124,27 +134,12 @@ if ('development' == app.get('env')) {
 }
 
 // Add routes here
-// app.get('/', admin.login);
-app.get('/', function(req, res){
-  console.log("hey");
-  connection.query('SELECT * FROM users', function(err, rows){
-    console.log(err);
-    console.log(rows);
-    res.render('login', {users : rows});
-  });
-});
-app.get('/login', function(req, res){
-  console.log("hey");
-  connection.query('SELECT * FROM users', function(err, rows){
-    console.log(err);
-    console.log(rows);
-    res.render('login', {users : rows});
-  });
-});
+app.get('/', admin.login);
+app.get('/login', admin.login);
 app.get('/loginAttempt', admin.loginHandler);
 app.get('/signup', admin.signup);
 app.get('/addUser', admin.addUser);
-app.get('/settings', admin.settings);
+app.get('/settings', settings.index);
 app.get('/logout', admin.logout);
 app.get('/home', home.view);
 app.post('/inviteTeam', team.sendRequest);

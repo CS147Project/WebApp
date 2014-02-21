@@ -1,8 +1,7 @@
 <form class="form" role="form" method="get" action="/settings">
-    <h2 class="form-signin-heading">Enter Coach's Email</h2>
+    <h3 class="form-signin-heading">Find Your Team</h3>
+    <p class="caption">Enter in your coach's email</p>
     <input type="email" class="form-control" placeholder="Email address" name="email" required autofocus>
-
-    <!--     {{msg}} -->
     <button class="btn btn-lg btn-primary" type="submit">Find Team</button>
  </form>
 
@@ -10,7 +9,7 @@
     <h5>{{msg}}</h5>
 {{/if}}
 {{#if teams}}
-    <h2>Select a Team</h2>
+    <h3>Select a Team</h3>
     {{#each teams}}
         <form class="form" role="form" method="post" action="/inviteTeam">
             <input type="hidden" name="tid" value="{{tid}}">
@@ -19,12 +18,13 @@
     {{/each}}
 {{/if}}
 
-{{#if pending}}
-    {{#each pending}}
+{{#if requests}}
+    <h3>Respond to Requests</h3>
+    {{#each requests}}
         <form class="form" role="form" method="post" action="/respondTeam">
             <input type="hidden" name="tid" value="{{tid}}">
             <input type="hidden" name="aid" value="{{aid}}">
-            <button class="btn btn-lg btn-default" type="submit">{{aid}}</button>
+            <button class="btn btn-lg btn-default" type="submit">Team: {{tid}}, Name:{{aid}}</button>
         </form>
     {{/each}}
 {{/if}}
