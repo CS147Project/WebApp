@@ -101,22 +101,38 @@ exports.sendRequest = function(req, res) { 
     }
 }
 
+function removeRequest(aid, tid) {
+    for(invite in invites["allInvites"]) {
+        if(invites["allInvites"][invite].aid == aid && invites["allInvites"][invite].tid == tid) {
+            invites["allInvites"].splice(invite, 1);
+            return;
+        }
+    }
+    return;
+
+}
+
 exports.respondRequest = function(req, res) {
-	var invite = req.query.invite;
-	var response = req.query.response;
-	if(response==true) {
+	var form_data = req.body;
+    var response = form_data.response;
+    var aid = form_data.aid;
+    var tid = form_data.tid;
+
+	if(response=="true") {
 		var teamathlete = {
 			"tid": invite.tid,
             "aid": invite.aid
 		}
 		teamathletes["teamathletes"].push(teamathlete);
+        removeRequest(aid, tid);
+
 	}
 	//remove request from array 
-	var index = invites["allInvites"].indexof(invite);
-	if(index > -1) {
-		invites["allInvites"].splice(index, 1);
-	}
-	res.redirect('home');
+	// var index = invites["allInvites"].indexof(invite);
+	// if(index > -1) {
+	// 	invites["allInvites"].splice(index, 1);
+	// }
+	res.redirect('settings');
 }
 
 exports.viewAll = function(req, res) {
