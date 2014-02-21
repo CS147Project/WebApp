@@ -4,12 +4,27 @@ var invites = require("../json/invites.json");
 var teamData = require("../json/teams.json");
 var athletes = require("../json/athletes.json");
 
-
-exports.getRequestsForTeams = function(teams) {
-    var requests = [];
+exports.getAllRequests = function() {
+        var requests = [];
     for(team in teamData['teams']) {
         for(invite in invites['allInvites']) {
             if(teamData['teams'][team].tid == invites['allInvites'][invite].tid) {
+                requests.push(invites['allInvites'][invite]);
+            }
+        }
+    }
+    return requests;
+}
+
+
+
+exports.getRequestsForTeams = function(teams) {
+    var requests = [];
+    //for(var team in teams) {
+        for(var i=0; i<teams.length; i++) {
+            console.log("team id: " + teams[i]);
+        for(invite in invites['allInvites']) {
+            if(teams[i] == invites['allInvites'][invite].tid) {
                 requests.push(invites['allInvites'][invite]);
             }
         }
