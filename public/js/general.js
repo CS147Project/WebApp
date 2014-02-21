@@ -29,8 +29,8 @@ function addExercise(e) {
     e.preventDefault();
 
     console.log("Registered Click");
-
-    var newExercise = "<div class='text-left'>"+count+".</div>";
+    var form = "<div><input type='text' class='form-control' placeholder='Name' name='excersiseName"+count+"'></div>"
+    var newExercise = "<div class='text-left'>"+count+'.'+form+"</div>";
 
     $("#exercisesCreated").append(newExercise);
 
