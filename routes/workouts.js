@@ -96,15 +96,10 @@ exports.create = function(req, res) { 
 	console.log("all exercises: " + exercises["exercises"]);
 	console.log("num workouts: " + workouts["templateWorkouts"].length);
 
-	workout = {
-		"wid": wid,
-		"creatorid": req.session.email,
-		"created": d
-	}
-
 	workouts["templateWorkouts"].push(workout);
 	// console.log("num workouts: " + workouts["templateWorkouts"].length);
 	res.redirect('home');
+
 }
 
 exports.addCompletedWorkout = function(req, res) {  

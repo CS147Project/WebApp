@@ -2,7 +2,6 @@ var data = require("../json/users.json");
 var teamCoachData = require("../json/teamcoaches.json");
 var teamData = require("../json/teams.json");
 var athletes = require("../json/athletes.json");
-var workoutResults = require("../json/currentworkouts.json");
 
 function searchTeams(tid) {
     for(team in teamData['teams']) {
