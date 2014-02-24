@@ -102,7 +102,8 @@ function getCoachesByTeams(teams) {
 	return coaches;
 }
 
-exports.create = function(req, res) { 
+exports.create = function(req, res) {
+
 	var d = new Date();
 	d = parseDate(d);
 	console.log("from: "+ req.query.fromid + " to: " + req.query.toid + " text: " + req.query.text);
@@ -124,7 +125,7 @@ exports.create = function(req, res) { 
 	console.log("all messages: "+ messages["messages"]);
 	console.log("m leng: " + messages["messages"].length);
 
-	res.redirect('home');
+	res.redirect('messages');
 }
 
 exports.get = function(req, res) {
@@ -162,3 +163,5 @@ exports.get = function(req, res) {
 		'messages': userMessages, 'friends': friends
 	});
 }
+
+ 

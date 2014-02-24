@@ -1,0 +1,15 @@
+<!doctype html>
+
+{{#if players}}
+<h3>Remove a Player</h3>
+
+<form class="form" role="form" method="post" action="/removeAthlete">
+{{#each players}}
+    <option value = {{aid}}> {{name}}</option>
+
+    {{/each}}
+    <button class="btn btn-default" type="submit"> Remove</button>
+
+</form>
+
+{{/if}}

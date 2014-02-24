@@ -1,14 +1,12 @@
 <!doctype html>
 
-<h2> Messages </h2>
-<h4>
-	Create a New Message
-</h4>
-<div>
-	<form class="form-signin" role="form" method="get" action="/messages/create">
+<h4> Messages </h4>
+<p class="caption">Create a New Message: </p>
 
+	<form class="form-signin" role="form" method="get" action="/messages/create">
+To: 
 		<select name = "toid">
-			{{#if friends}}
+			{{#if friends}} 
 			{{#each friends}}
 			<option value = {{aid}}> {{name}}</option>
 			{{/each}}
@@ -24,9 +22,9 @@
 		<input type = "hidden" name = "fromid" value = {{toid}}>
 
 
-		<button class="btn btn-lg btn-primary btn-block" type="submit">Send</button>
+		<button class="btn  btn-primary btn-block" type="submit">Send</button>
 	</form>
-</div>
+
 {{#if messages}}
 <h4>
 	Previous Conversations
@@ -45,7 +43,7 @@
 		<input type = "hidden" name = "fromid" value = {{toid}}>
 
 
-		<button class="btn btn-lg btn-primary btn-block" type="submit">Reply</button>
+		<button class="btn  btn-primary btn-block" type="submit">Reply</button>
 	</form>
 </p>
 {{/each}}
@@ -54,5 +52,4 @@
 {{else}}
 No Messages!
 {{/if}}
-
 
