@@ -1,3 +1,4 @@
+
 var data = require("../json/users.json");
 var teamCoachData = require("../json/teamcoaches.json");
 var teamData = require("../json/teams.json");
@@ -6,7 +7,8 @@ var messages = require("./messages");
 var teamsFns = require("./team");
 
 
-exports.index = function(req, res) { 
+exports.index = function(req, res) {
+
     if(req.session == undefined || req.session.email == undefined) {
         console.log("Please login for this page");
         return res.redirect('/');
@@ -33,3 +35,5 @@ exports.index = function(req, res) { 
         }); // Put in all the invites a coach currently has in both situations.
     }
 }
+
+ 

@@ -1,33 +1,46 @@
+<!doctype html>
 <form class="form" role="form" method="get" action="/settings">
-    <h3 class="form-signin-heading">Find Your Team</h3>
-    <p class="caption">Enter in your coach's email</p>
+    <h4 class="form-signin-heading">Request to Join a Team</h4>
+    <p class="caption">Enter in your coach's email: </p>
     <input type="email" class="form-control" placeholder="Email address" name="email" required autofocus>
-    <button class="btn btn-lg btn-primary" type="submit">Find Team</button>
- </form>
+    <button class="btn btn-primary" type="submit">Send Request</button>
+</form>
 
 {{#if msg}}
-    <h5>{{msg}}</h5>
+<h5>{{msg}}</h5>
 {{/if}}
 {{#if teams}}
-    <h3>Select a Team</h3>
-    {{#each teams}}
-        <form class="form" role="form" method="post" action="/inviteTeam">
-            <input type="hidden" name="tid" value="{{tid}}">
-            <button class="btn btn-lg btn-default" type="submit">{{name}}</button>
-        </form>
-    {{/each}}
+<h3>Select a Team</h3>
+{{#each teams}}
+<form class="form" role="form" method="post" action="/inviteTeam">
+    <input type="hidden" name="tid" value="{{tid}}">
+    <button class="btn btn-default" type="submit">{{name}}</button>
+</form>
+{{/each}}
 {{/if}}
 
 {{#if teamRequests}}
-    <h3>Respond to Requests</h3>
-    {{#each teamRequests}}
-        <h4>Requests for Team ...</h4>
-        {{#each requests}}
-            <form class="form" role="form" method="post" action="/respondTeam">
-                <input type="hidden" name="tid" value="{{tid}}">
-                <input type="hidden" name="aid" value="{{aid}}">
-                Name:{{aid}}<button class="btn btn-lg btn-default" type="submit">Accept</button>
-            </form>
-        {{/each}}
+<h4>Respond to Requests</h4>
+<form class="form" role="form" method="post" action="/respondTeamAll">
+     <button class="btn btn-primary" type="submit">Accept All Requests</button>
+</form>
+{{#each teamRequests}}
+<p class="caption"> OR Select Players to Accept </p>
+<form class="form" role="form" method="post" action="/respondTeam">
+    {{#each requests}}
+
+    <input type = "checkbox" name="aid" value="{{aid}}"> 
+    <input type="hidden" name="tid" value="{{tid}}">
+
+    {{aid}} 
+<br>
     {{/each}}
+    <button class="btn btn-primary" type="submit">Accept</button>
+</form>
+{{/each}}
+
 {{/if}}
+
+<!-- <a href="team"> <h4> Edit Team </h4>
+</a> -->
+
