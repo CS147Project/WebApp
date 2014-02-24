@@ -29,8 +29,22 @@ function addExercise(e) {
     e.preventDefault();
 
     console.log("Registered Click");
-    var form = "<div><input type='text' class='form-control' placeholder='Name' name='excersiseName"+count+"'></div>"
-    var newExercise = "<div class='text-left'>"+count+'.'+form+"</div>";
+    var form = "<div>"+
+                    "<input type='text' class='form-control' placeholder='Name' name='excersiseName"+count+"'>"+
+                    "<input type='text' class='form-control' placeholder='Number of Sets' name='excersiseSets"+count+"'>"+
+                    "<input type='text' class='form-control' placeholder='Number of Reps' name='excersiseReps"+count+"'>"+
+                    "<input type='text' class='form-control' placeholder='Additional Notes' name='excersiseNotes"+count+"'>"+
+                    "<p class=\"text-center\">How do you want this to be recorded?</p>"+
+                    "<select id=\"excersiseRecordType"+count+"\">"+
+                      "<option value=\"weight\">Weight</option>"+
+                      "<option value=\"speed\">Speed</option>"+
+                      "<option value=\"distance\">Distance</option>"+
+                      "<option value=\"time\">Time</option>"+
+                      "<option value=\"none\">None of the above</option>"+
+                    "</select>"+
+                    "<hr>"+
+                "</div>"
+    var newExercise = "<div class='text-left'>Exercise "+count+':'+form+"</div>";
 
     $("#exercisesCreated").append(newExercise);
 
