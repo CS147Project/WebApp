@@ -60,6 +60,7 @@ var ExerciseTemplateSchema = new Mongoose.Schema({
     set: Number,
     rep: Number,
     distance: String,
+    speed: String,
     time: String
 });
 

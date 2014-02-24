@@ -1,12 +1,13 @@
 <h3>Create a Workout</h3>
 <form class="form" role="form" method="post" action="/createWorkout">
     <input type="text" class="form-control" placeholder="Title" name="title" required autofocus>
-    <input type="text" class="form-control" placeholder="To be completed by (mm/dd/yy)" name="dueDate">
+<!--     <input type="text" class="form-control" placeholder="To be completed by (mm/dd/yy)" name="dueDate"> -->
     <textarea cols="50" rows="3" name="description" placeholder="Description"></textarea>
     <br>
     <div id="exercisesCreated">
         <h4>Exercises</h4>
     </div>
+    <input type="hidden" id="numExercises" name="numExercises" value="0">
     <button class="btn btn-success" id="addExercise"><span class="glyphicon glyphicon-plus-sign glyphicons-lg pull-left"></span></button>
     <button class="btn btn-success" type="submit">Create!</button>
 </form>

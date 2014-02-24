@@ -68,6 +68,7 @@ app.get('/goWorkout/next', workout.next);
 app.get('/goWorkout/previous', workout.previous);
 app.get('/workouts', workouts.view);
 app.get('/startWorkoutCreation', workouts.start);
+app.post('/createWorkout', workouts.create);
 app.get('/workouts/getAll', workouts.getAll);
 app.get('/workouts/getExercises', workouts.getExercises); //returns [] of exercises for workout
 app.get('/workouts/getUserWorkouts', workouts.getUserWorkouts); //returns workouts assigned to a user
