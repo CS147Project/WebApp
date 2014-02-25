@@ -8,6 +8,7 @@ var http = require('http');
 var path = require('path');
 var handlebars = require('express3-handlebars');
 var mongoose = require('mongoose');
+mongoose.set('debug', true);
 
 // Routes
 var admin = require('./routes/admin');
