@@ -1,0 +1,68 @@
+<!doctype html>
+
+<!-- <a href="workout/pause">
+  <button type="button" class="btn btn-danger btn">
+    <span class="glyphicon glyphicon-pause glyphicons-lg"></span> Pause
+  </button>
+</a> -->
+<center><h2> Assign Workout </h2></center>
+
+<div id="assignWorkout" class="swiper-container">
+    <!-- SWIPER WRAPPER -->
+  <div class="swiper-wrapper">
+     
+      <div id="selectWorkout" class="swiper-slide">
+        <!-- Select a Workout -->
+        Select a Workout to Assign:
+        <table class="table table-stripped">
+            {{#unless workouts}}
+            <tr>
+                <td> No Workouts! </td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="/startWorkoutCreation">
+                        <button type="button" class="btn btn-danger">Create Workout</button>
+                    </a>
+                </td>
+            </tr>
+            {{/unless}}
+
+            {{#each workouts}}
+            <tr id="workout">
+              <td id="{{wid}}" type="button" class="btn"> {{title}} </td>
+            </tr>
+            {{/each}}
+        </table>
+      </div>
+
+      <div class="swiper-slide"> 
+        <!-- Select Players -->
+        Select Players to Assign Workout
+        <table class="table table-stripped">
+            {{#unless players}}
+            <tr>
+                <td> No Players! </td>
+            </tr>
+            <tr>
+                <td><a href="/messages">
+                    <button type="button" class="btn btn-danger">Check for Player Requests</button>
+                </a></td>
+            </tr>
+            {{/unless}}
+
+            {{#each players}}
+            <tr id="player">
+              <td id="{{aid}}" class="btn"> {{aid}} </td>
+            </tr>
+            {{/each}}
+        </table>
+
+        <a href="#">
+            <button type="button" id="assign" class="btn btn-success">Assign Workouts</button>
+        </a>
+
+      </div>     
+  </div>
+  <div class="pagination"></div>
+</div>

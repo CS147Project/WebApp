@@ -4,7 +4,7 @@ var exercises = require("../json/exercises.json");
 var workouts = require("../json/workouts.json");
 var assignedworkout = require("../json/assignedworkout.json");
 var completedworkouts = require("../json/completedworkouts.json")
-
+var team = require("../json/teamathletes.json");
 var models = require('../models');
 
 
@@ -137,6 +137,13 @@ exports.create = function(req, res) { 
         if(err) {console.log(err); res.send(500);}
         res.redirect('workouts');
     }
+}
+
+exports.assign = function(req, res){
+    res.render('assign', {
+        'workouts': workouts['templateWorkouts'],
+        'players': team['teamathletes']
+    });
 }
 
 exports.view = function(req, res){

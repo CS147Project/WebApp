@@ -8,16 +8,16 @@
 </form>
 
 {{#if msg}}
-<h5>{{msg}}</h5>
+    <h5>{{msg}}</h5>
 {{/if}}
 {{#if teams}}
-<h3>Select a Team</h3>
-{{#each teams}}
-<form class="form" role="form" method="post" action="/inviteTeam">
-    <input type="hidden" name="tid" value="{{tid}}">
-    <button class="btn btn-default" type="submit">{{name}}</button>
-</form>
-{{/each}}
+    <h3>Select a Team</h3>
+    {{#each teams}}
+        <form class="form" role="form" method="post" action="/inviteTeam">
+            <input type="hidden" name="tid" value="{{tid}}">
+            <button class="btn btn-default" type="submit">{{name}}</button>
+        </form>
+    {{/each}}
 {{/if}}
 
 {{#if teamRequests}}

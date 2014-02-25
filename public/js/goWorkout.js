@@ -32,12 +32,14 @@ function submitData(e){
 }
 
 $(function(){
-  var mySwiper = $('.swiper-container').swiper({
+  var mySwiper = $('#goWorkout.swiper-container').swiper({
     //Your options here:
     pagination: '.pagination',
     paginationClickable: true,
     mode:'horizontal',
     loop: true
-    //etc..
+    onSlideChangeStart: function(){
+        // save current workout data
+    }
   });
 })

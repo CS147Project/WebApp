@@ -1,0 +1,15 @@
+/* assignWorkout.css
+ * styling for the assignWorkout Page
+ */
+
+#assignWorkout #selectWorkout {
+
+}
+
+#assignWorkout.swiper-container table tr{
+	width:100%;
+}
+#assignWorkout.swiper-container table tr td.btn{
+	width:100%;
+	text-align: center;
+}
