@@ -5,6 +5,8 @@ var workouts = require("../json/workouts.json");
 var assignedworkout = require("../json/assignedworkout.json");
 var completedworkouts = require("../json/completedworkouts.json")
 
+var models = require('../models');
+
 
 function parseDate(d) {
 	var newDate = "" + (d.getMonth()+1) + "/" + d.getDate() + "/" + d.getFullYear() + "";
@@ -78,53 +80,101 @@ exports.assignWorkout = function(req, res) {
 
 }
 
-//expects exercises w/o a workout id.
-exports.create = function(req, res) { 
-	var d = new Date();
-	d = parseDate(d);
-
-	var wid = workouts["templateWorkouts"].length + 1;
-	var theseExercises = req.query.exercises;
-
-	//not sure about this loop.
-	for(exc in theseExercises) {
-		theseExercises[exc].wid=wid;
-		exercises["exercises"].push(theseExercises[exc]);
-	}
-
-	console.log("all exercises siae: " + exercises["exercises"].length);
-	console.log("all exercises: " + exercises["exercises"]);
-	console.log("num workouts: " + workouts["templateWorkouts"].length);
-
-	workouts["templateWorkouts"].push(workout);
-	// console.log("num workouts: " + workouts["templateWorkouts"].length);
-	res.redirect('home');
-
+exports.start = function(req, res) {
+    if(req.session == undefined || req.session.email == undefined) {
+        console.log("Please login for this page");
+        return res.redirect('/');
+    }
+    res.render('createWorkout');
 }
 
-exports.addCompletedWorkout = function(req, res) {  
-	var d = new Date();
-	d = parseDate(d);
+exports.create = function(req, res) { 
+    if(req.session == undefined || req.session.email == undefined) {
+        console.log("Please login for this page");
+        return res.redirect('/');
+    }
+    console.log("Body", req.body);
+    var form_data = req.body;
+    var numExercises = form_data.numExercises;
+    var exercises = [];
 
-	for(w in completedworkouts["completedWorkouts"]) {
-		console.log(completedworkouts["completedWorkouts"][w].aid + ": did workouts # " + completedworkouts["completedWorkouts"][w].wid);
+    for (var i = 0; i < numExercises; i++) {
+        var weight = 0;
+        var distance = 0;
+        var speed = 0;
+        var time = 0;
+        if(form_data["excersiseRecordType"+i] == "weight") {
+            weight = 1;
+        } else if(form_data["excersiseRecordType"+i] == "distance") {
+            distance = 1;
+        } else if(form_data["excersiseRecordType"+i] == "speed") {
+            speed = 1;
+        } else {
+            time = 1;
+        }
 
-	}
+        var newExercise = new models.WorkoutTemplate({
+            "name": form_data["excersiseName"+i],
+            "set": form_data["excersiseSets"+i],
+            "rep": form_data["excersiseReps"+i],
+            "weight": weight,
+            "distance": distance,
+            "speed": speed,
+            "time": time
+        });
+        exercises.push(newExercise);
+    }
+    var newWorkout = new models.WorkoutTemplate({
+        "creatorid": req.session.email,
+        "title": form_data.title,
+        "description": form_data.description,
+        "exercises": exercises
+    });
 
-	var completedW = {
-		"wid": req.query.wid,
-		"aid": req.session.email,
-		"datetime": d
-	};
-	completedworkouts["completedWorkouts"].push(completedW);
+    newWorkout.save(afterSaving);
 
-	for(w in completedworkouts["completedWorkouts"]) {
-		console.log(completedworkouts["completedWorkouts"][w].aid + ": did workouts # " + completedworkouts["completedWorkouts"][w].wid);
-
-	 }
-	res.send(200);
+    function afterSaving(err) {
+        if(err) {console.log(err); res.send(500);}
+        res.redirect('workouts');
+    }
 }
 
 exports.view = function(req, res){
-	res.render('workouts', workouts);
+    if(req.session == undefined || req.session.email == undefined) {
+        console.log("Please login for this page");
+        return res.redirect('/');
+    }
+    console.log(req.session.email);
+    var templateWorkouts = models.WorkoutTemplate.find().exec(afterQuery);
+	console.log(templateWorkouts);
+	function afterQuery(err, projects) {
+        if(err) console.log(err);
+        res.render('workouts', {
+            "templateWorkouts": templateWorkouts
+        });    
+    }
+}
+
+
+exports.addCompletedWorkout = function(req, res) {  
+    var d = new Date();
+    d = parseDate(d);
+
+    for(w in completedworkouts["completedWorkouts"]) {
+        console.log(completedworkouts["completedWorkouts"][w].aid + ": did workouts # " + completedworkouts["completedWorkouts"][w].wid);
+
+    }
+
+    var completedW = {
+        "wid": req.query.wid,
+        "aid": req.session.email,
+        "datetime": d
+    };
+    completedworkouts["completedWorkouts"].push(completedW);
+
+    for(w in completedworkouts["completedWorkouts"]) {
+        console.log(completedworkouts["completedWorkouts"][w].aid + ": did workouts # " + completedworkouts["completedWorkouts"][w].wid);
+
+     }
+    res.redirect('home');
 }

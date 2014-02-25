@@ -8,14 +8,19 @@
       <span class="glyphicon glyphicon-play-circle glyphicons-lg"></span> Start Workout
     </div></a>
     <div class="panel-heading"> 
-      Personal Bests
+      Recently Created Workouts
     </div>
-    <table class="table">
-        {{#each templateWorkouts}}
-          <tr class="btn" id="{{id}}"><a href="/startWorkout{{id}}">
-            <td>{{title}}</td>
-          </a></tr>
-        {{/each}}
-    </table>
+
+    {{#if templateWorkouts}}
+      <table class="table">
+          {{#each templateWorkouts}}
+            <tr class="btn" id="{{id}}"><a href="/startWorkout{{id}}">
+              <td>{{title}}</td>
+            </a></tr>
+          {{/each}}
+      </table>
+    {{else}}
+        <h4>No workouts created recently</h4>
+    {{/if}}
 </div>
 

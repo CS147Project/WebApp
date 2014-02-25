@@ -1,8 +1,14 @@
+
+
 var data = require("../json/users.json");
 var teamathletes = require("../json/teamathletes.json");
 var invites = require("../json/invites.json");
 var teamData = require("../json/teams.json");
 var athletes = require("../json/athletes.json");
+
+
+
+
 
 exports.getAllRequests = function() {
     var requests = [];
@@ -49,8 +55,8 @@ function onRoster(tid, aid) {
 }
 
 function parseDate(d) {
-	var newDate = "" + (d.getMonth()+1) + "/" + d.getDate() + "/" + d.getFullYear() + "";
-	return newDate;
+    var newDate = "" + (d.getMonth()+1) + "/" + d.getDate() + "/" + d.getFullYear() + "";
+    return newDate;
 }
 
 function getNameForTeamId(tid) {
@@ -91,19 +97,20 @@ exports.getPlayersCoaches = function(req, res) {
     //return JSON object of all of the player's coaches (ID's)
 }
 
-exports.sendRequest = function(req, res) { 
+exports.sendRequest = function(req, res) {
+
     if(req.session !== undefined && req.session.email !== undefined) {
         aid = req.session.email;        
     } else {
         res.redirect('login');
         return;
     }
-	var d = new Date();
-	d = parseDate(d);
+    var d = new Date();
+    d = parseDate(d);
     tid = req.body.tid;
-	if(!onRoster(tid, aid)) {
-		newInvite = {
-			"iid": 1,
+    if(!onRoster(tid, aid)) {
+        newInvite = {
+            "iid": 1,
             "aid": aid,
             "tid": tid,
             "datetime": d
@@ -135,26 +142,43 @@ function removeRequest(aid, tid) {
 }
 
 exports.respondRequest = function(req, res) {
-	var form_data = req.body;
+    var form_data = req.body;
     var response = form_data.response;
-    var aid = form_data.aid;
+    var aid = form_data.aid; //this is now an array
     var tid = form_data.tid;
 
-	if(response=="true") {
-		var teamathlete = {
-			"tid": invite.tid,
+//for(var i =0; i<aid.length; i++) {
+    if(response=="true") {
+        var teamathlete = {
+            "tid": invite.tid,
             "aid": invite.aid
-		}
-		teamathletes["teamathletes"].push(teamathlete);
+        }
+        teamathletes["teamathletes"].push(teamathlete);
         removeRequest(aid, tid);
 
-	}
-	//remove request from array 
-	// var index = invites["allInvites"].indexof(invite);
-	// if(index > -1) {
-	// 	invites["allInvites"].splice(index, 1);
-	// }
-	res.redirect('settings');
+    }
+//}
+    //remove request from array 
+    // var index = invites["allInvites"].indexof(invite);
+    // if(index > -1) {
+    //  invites["allInvites"].splice(index, 1);
+    // }
+    res.redirect('settings');
+}
+
+exports.respondRequestAll = function(req, res) {
+//TODO: add more here!
+res.redirect('settings');
+}
+
+exports.get = function(req, res) {
+//TODO: add more here!
+res.redirect('team');
+}
+
+exports.removeAthlete = function(req, res) {
+//TODO: add more here!
+res.redirect('team');
 }
 
 exports.viewAll = function(req, res) {
@@ -163,4 +187,5 @@ exports.viewAll = function(req, res) {
         'invites': invites
     });
 }
+
 

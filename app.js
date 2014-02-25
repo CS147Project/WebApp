@@ -8,6 +8,7 @@ var http = require('http');
 var path = require('path');
 var handlebars = require('express3-handlebars');
 var mongoose = require('mongoose');
+mongoose.set('debug', true);
 
 // Routes
 var admin = require('./routes/admin');
@@ -66,7 +67,8 @@ app.get('/goWorkout:id', workout.goWorkout);
 app.get('/goWorkout/submit', workout.submit);
 app.post('/goWorkout/save', workout.save);
 app.get('/workouts', workouts.view);
-app.get('/workouts/create', workouts.create);
+app.get('/startWorkoutCreation', workouts.start);
+app.post('/createWorkout', workouts.create);
 app.get('/workouts/getAll', workouts.getAll);
 app.get('/workouts/getExercises', workouts.getExercises); //returns [] of exercises for workout
 app.get('/workouts/getUserWorkouts', workouts.getUserWorkouts); //returns workouts assigned to a user
