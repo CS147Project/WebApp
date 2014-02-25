@@ -9,31 +9,36 @@ exports.start = function(req, res) { 
 }
 
 exports.goWorkout = function(req, res) {
-	var exID = parseInt(req.params.id);
-	var exercise = null;
-	var nav = {
-		'next': 'true',
-		'prev': 'true'
-	};
-	if(exercises["exercises"][exID] != null){
-		exercise = exercises["exercises"][exID];
-		console.log(exercise);
-	}else{
-		res.render('home');
-	}
 
-	req.session.curr = exID;
+	// var exID = parseInt(req.params.id);
+	// var exercise = null;
+	// var nav = {
+	// 	'next': 'true',
+	// 	'prev': 'true'
+	// };
+	// if(exercises["exercises"][exID] != null){
+	// 	exercise = exercises["exercises"][exID];
+	// 	console.log(exercise);
+	// }else{
+	// 	res.render('home');
+	// }
 
-	if(exercises["exercises"][exID+1] == null)
-		nav['next'] = null;
-	if(exercises["exercises"][exID-1] == null)
-		nav['prev'] = null;
+	// req.session.curr = exID;
 
-	console.log(nav);
+	// if(exercises["exercises"][exID+1] == null)
+	// 	nav['next'] = null;
+	// if(exercises["exercises"][exID-1] == null)
+	// 	nav['prev'] = null;
+
+	// console.log(nav);
+
+	// res.render('goWorkout', {
+	// 	'exercise': exercise,
+	// 	'nav': nav
+	// });
 
 	res.render('goWorkout', {
-		'exercise': exercise,
-		'nav': nav
+		'exercises': exercises['exercises']
 	});
 }
 

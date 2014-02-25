@@ -1,52 +1,56 @@
-<!-- HOME Display -->
+<!doctype html>
+
+<!-- PERSONAL DISPLAY -->
 
 <div id="personalBests" class="display">
-  <div class="panel panel-default">
-    
-    <div class="row">
-      <div class="col-xs-6 ">
-        <a href="startworkout"><div id="startWorkout" class="btn btn-success btn-block">
-          <span class="glyphicon glyphicon-play-circle glyphicons-lg"></span> Start Workout
-        </div></a>
+  <div class="row">
+  <div class="col-xs-4">
+    <a href="/startworkout" id="beginWorkoutBtn" class="btn">
+      <img src="img/goworkout-icon.png" alt="Start Workout">
+    </a>
+  </div>
+  <div class="col-xs-8">
+    <div class="panel panel-default">
+      <div class="panel-heading"> 
+        Completed Workouts
       </div>
-      <div class="col-xs-6"><a href="analytics"><div id="viewAnalytics" class="btn btn-default btn-block disable">
-           View Your Analytics
-      </div></a></div>
+     
+      <table class="table">
+        {{#unless completedWorkouts}}
+        <tr>
+          <td> No Current Tasks! </td>
+        </tr>
+        {{/unless}}
+        {{#each completedWorkouts}}
+        <tr class="btn">
+          <td id="date"> {{datetime}} </td>
+          <td id="title"> {{title}} </td>
+        </tr>
+        {{/each}}
+      </table>
     </div>
-    
-    
-
+  </div>
+</div>
+  <div class="panel panel-default">
     <div class="panel-heading"> 
-      Personal Bests
+      To-Do List
     </div>
-    {{msg}}
+   
     <table class="table">
-      <tr class="btn">
-        <td id="date"> {{date}} </td>
-        <td id="activity"> Mile Run </td>
-        <td id="result"> 5m 35s </td>
+      {{#unless currentTasks}}
+      <tr>
+        <td><center> No Current Tasks! </center></td>
       </tr>
+      {{/unless}}
+      {{#each currentTasks}}
       <tr class="btn">
-        <td id="date"> 01FEB14 </td>
-        <td id="activity"> Mile Run </td>
-        <td id="result"> 5m 35s </td>
+        <td id="date"> {{datetime}} </td>
+        <td id="title"> {{title}} </td>
       </tr>
-      <tr class="btn">
-        <td id="date"> 01FEB14 </td>
-        <td id="activity"> Mile Run </td>
-        <td id="result"> 5m 35s </td>
-      </tr>
-      <tr class="btn">
-        <td id="date"> 01FEB14 </td>
-        <td id="activity"> Mile Run </td>
-        <td id="result"> 5m 35s </td>
-      </tr>
-      <tr class="btn">
-        <td id="date"> 01FEB14 </td>
-        <td id="activity"> Mile Run </td>
-        <td id="result"> 5m 35s </td>
-      </tr>
+      {{/each}}
     </table>
   </div>
 </div> 
+<!-- END OF PERSONAL DISPLAY -->
+
 

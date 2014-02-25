@@ -13,6 +13,10 @@
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
+    <!-- Slider imports -->
+    <link rel="stylesheet" href="css/idangerous.swiper.css">
+    <script defer src="js/idangerous.swiper-2.1.min.js"></script>
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -24,11 +28,18 @@
     <div id="container" class="container">
       <!-- HEADER -->
       <div id="header" class="header">
+        <!-- LOGO -->
         <div id="logo">
           <h1> TeamWorkout </h1>
         </div>
+        <!-- ACCOUNTMENU -->
         <div id="accountMenu" class="dropdown pull-right">
-          <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" type="button">Account <span class="caret"></span></button>
+          
+          <button class="transparentBG btn dropdown-toggle" data-toggle="dropdown" type="button">
+            <img src="img/account_icon.png" alt="Account"> 
+            <span class="caret"></span>
+          </button>
+
           <ul class="dropdown-menu">
               <li><a href="/logout">Logout</a></li>
               <li class="disabled"><a href="#">Teams</a></li>
@@ -36,34 +47,30 @@
               <li><a href="/settings">Settings</a></li>
               <li class="disabled"><a href="#">Help</a></li>
           </ul>
-
-         <!-- <a href="logout">
-            <button type="button" class="btn btn-default btn">
-              <span class="glyphicon glyphicon-off glyphicons-lg"></span> Logout
-            </button>
-          </a>
-          <a href="settings" id="settings_btn" class="btn btn-lg"> <span class="glyphicon glyphicon-cog glyphicons-lg"></span> Settings </a> -->
-        </div>
+        </div> <!-- END OF ACCOUNTMENU -->
       </div> <!-- END OF HEADER -->
+
+
       <!-- CONTENT -->
       <div id="content" class="content clearfix" style="overflow: scroll;">
-
         {{{body}}}
       </div> <!-- END OF CONTENT -->
+
 
       <!-- FOOTER -->
       <div id="footer" class="footer navbar-fixed-bottom">
         <!-- GENERAL NAVIGATION -->
         <div id="genNav" >
           <ul class="navbar">
-            <li><a href="home" id="home-btn" class="btn"> <img src="img/home_icon.png" alt="Home"> Home </a></li>
-            <li><a href="messages" id="message-btn" class="btn btn-lg"> <img src="img/message_icon.png" alt="Messages"> Messages </a></li>
-            <li><a href="workouts" id="workout-btn" class="btn"> <img src="img/workout_icon.png" alt="Workouts"> Workouts </a></li>
-            <li><a href="analytics" id="analytics_btn" class="btn inactive"> <img src="img/analytics_icon.png" alt="Analytics"> Analytics </a></li>
+            <li><a href="home" id="home-btn" class="btn"> <img src="img/home_icon.png" alt="Home"> </a></li>
+            <li><a href="messages" id="message-btn" class="btn btn-lg"> <img src="img/message_icon.png" alt="Messages"> </a></li>
+            <li><a href="workouts" id="workout-btn" class="btn"> <img src="img/workout_icon.png" alt="Workouts"> </a></li>
+            <li><a href="analytics" id="analytics_btn" class="btn inactive"> <img src="img/analytics_icon.png" alt="Analytics"> </a></li>
           </ul>
         </div>
       </div> 
       <!-- END OF FOOTER -->
+
     </div>
 
     <script src="https://code.jquery.com/jquery.js"></script>

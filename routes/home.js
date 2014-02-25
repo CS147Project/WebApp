@@ -2,6 +2,7 @@ var data = require("../json/users.json");
 var teamCoachData = require("../json/teamcoaches.json");
 var teamData = require("../json/teams.json");
 var athletes = require("../json/athletes.json");
+var completedWorkouts = require("../json/completedWorkouts.json");
 
 function searchTeams(tid) {
     for(team in teamData['teams']) {
@@ -34,7 +35,8 @@ exports.view = function(req, res){
     if(req.session.email !== undefined) {
         res.render('home', {
             'athlete': isAthlete(req.session.email),
-            'teams': findTeamsForCoach(req.session.email)
+            'teams': findTeamsForCoach(req.session.email),
+            'completedWorkouts': completedWorkouts['completedWorkouts']
         });
     } else {
 	   res.redirect('login');

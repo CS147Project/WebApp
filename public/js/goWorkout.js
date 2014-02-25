@@ -30,3 +30,14 @@ function submitData(e){
     });
 
 }
+
+$(function(){
+  var mySwiper = $('.swiper-container').swiper({
+    //Your options here:
+    pagination: '.pagination',
+    paginationClickable: true,
+    mode:'horizontal',
+    loop: true
+    //etc..
+  });
+})
