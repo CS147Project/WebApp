@@ -2,15 +2,33 @@
 var Mongoose = require('mongoose');
 
 var UserSchema = new Mongoose.Schema({
-  _id: { type: String, required: true, unique: true },
-  firstName: { type: String, required: true },
-  lastName: { type: String, required: true },
-  nickname: String,
-  isAthlete: { type: Boolean, required: true},
-  isCoach: Boolean,
-  password: { type: String, required: true },
-  joined: { type : Date, default: Date.now }
+  "email": String,
+  "firstName": String,
+  "lastName": String,
+  "nickname": String,
+  "password": String
+
+  
+
+
 });
+
+
+
+
+// var UserSchema = new Mongoose.Schema({
+//  // _id: { type: String, required: true, unique: true },
+// //rebecca added:
+// email: { type: String, required: true },
+
+//   firstName: { type: String, required: true },
+//   lastName: { type: String, required: true },
+//   nickname: String,
+//   // isAthlete: { type: Boolean, required: true},
+//   // isCoach: Boolean,
+//   password: { type: String, required: true },
+//   //joined: { type : Date, default: Date.now }
+// });
 
 exports.User = Mongoose.model('User', UserSchema);
 
