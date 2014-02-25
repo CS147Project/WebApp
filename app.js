@@ -67,6 +67,7 @@ app.get('/goWorkout:id', workout.goWorkout);
 app.get('/goWorkout/submit', workout.submit);
 app.post('/goWorkout/save', workout.save);
 app.get('/workouts', workouts.view);
+app.get('/workouts/create', workouts.create);
 app.get('/startWorkoutCreation', workouts.start);
 app.post('/createWorkout', workouts.create);
 app.get('/workouts/getAll', workouts.getAll);

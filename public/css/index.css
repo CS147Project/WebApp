@@ -74,13 +74,13 @@ html, body {
 
 .content {
 	position: relative;
-	overflow-y: scroll;
+	overflow: scroll;
 	bottom, top:0px;
 	padding: 0px 0px 40px 0px;
 	background: white;
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
-	min-height: 90%;
+	height: 90%;
 }
 
 .display {
