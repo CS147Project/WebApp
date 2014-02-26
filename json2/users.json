@@ -1,0 +1,70 @@
+{
+	"users": [
+		{
+    		
+    		"firstName": "Krista",
+    		"lastName": "Fryauff",
+    		"nickname": "KJ",
+            "isAthlete": true,
+            "isCoach": true,
+    		"password": "password",
+            "joined": "January 5, 2014"
+    	}, 
+    	{
+    		
+    		"firstName": "Jeremy",
+    		"lastName": "Hines",
+    		"nickname": "JC",
+            "isAthlete": true,
+            "isCoach": false,
+            "password": "password",
+            "joined": "January 5, 2014"
+    		
+    	}, 
+    	{
+    		"firstName": "Rebecca",
+    		"lastName": "Amato",
+    		"nickname": "RA",
+    		"isAthlete": false,
+            "isCoach": true,
+            "password": "password",
+            "joined": "January 5, 2014"
+    	}, {
+           
+            "firstName": "coach",
+            "lastName": "1",
+            "nickname": "first coach",
+            "isAthlete": true,
+            "isCoach": true,
+            "password": "password",
+            "joined": "January 5, 2014"
+        }, {
+           
+            "firstName": "coach",
+            "lastName": "2",
+            "nickname": "second coach",
+            "isAthlete": false,
+            "isCoach": true,
+            "password": "password",
+            "joined": "January 5, 2014"
+        }, {
+           
+            "firstName": "coach",
+            "lastName": "3",
+            "nickname": "third coach",
+            "isAthlete": false,
+            "isCoach": true,
+            "password": "password",
+            "joined": "January 5, 2014"
+        }, {
+           
+            "firstName": "coach",
+            "lastName": "4",
+            "nickname": "fourth coach",
+            "isAthlete": false,
+            "isCoach": true,
+            "password": "password",
+            "joined": "January 5, 2014"
+        }
+	]
+}

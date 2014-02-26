@@ -1,0 +1,25 @@
+{
+	"teams": [
+		{
+      
+      "name": "Stanford Soccer",
+      "sport": "soccer",
+      "created": "January 5, 2014" 
+    }, {
+     
+      "name": "The Winners",
+      "sport": "soccer",
+      "created": "January 6, 2014"   
+    }, {
+      
+      "name": "The Losers",
+      "sport": "Foosball",
+      "created": "January 7, 2014"        
+    }, {
+      
+      "name": "Legion of BOOM",
+      "sport": "futbol",
+      "created": "January 8, 2014"        
+    }
+	]
+}
