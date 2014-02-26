@@ -13,6 +13,10 @@
  *
 */
 
+/* Last Edited: 25 FEB 2014;
+ * Edited By: kfryauff;
+*/
+
 /* ===============================================================
 Basic Swiper Styles 
 ================================================================*/
@@ -88,10 +92,13 @@ sizes, pagination, etc.
   text-align: center;
 
 }
+
 .swiper-slide {
   /* Specify Slides's Size: */
-
+  overflow: scroll;
+  width:100%;
 }
+
 .swiper-slide-active {
   /* Specific active slide styling: */
 
@@ -115,6 +122,11 @@ Pagination Styles
   cursor: pointer;
 
 }
+
+.swiper-pagination-switch .success {
+  background: #
+}
+
 .swiper-active-switch {
   /* Specific active button style: */ 
    background: #000;

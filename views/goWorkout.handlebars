@@ -9,6 +9,17 @@
 <div id="goWorkout" class="swiper-container">
     <!-- SWIPER WRAPPER -->
   <div class="swiper-wrapper">
+      <div class="swiper-slide">
+        <center><h3>Workout Summary</h3></center>
+        {{#each exercises}}
+            <p>{{name}}</p>
+        {{/each}}
+        <br />
+        <br />
+        <p>Swipe to the right to begin</p>
+
+      </div>
+
       {{#each exercises}}
       <!-- SLIDE -->
       <div class="swiper-slide"> 
@@ -66,3 +77,7 @@
   </div>
   <div class="pagination"></div>
 </div>
+
+<a href="#">
+    <button type="button" id="assign" class="btn btn-primary">Complete Workout</button>
+</a>

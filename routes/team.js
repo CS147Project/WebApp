@@ -8,7 +8,9 @@ var athletes = require("../json/athletes.json");
 
 
 
-
+exports.view = function(req, res) {
+    res.render('team');
+}
 
 exports.getAllRequests = function() {
     var requests = [];

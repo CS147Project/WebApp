@@ -1,3 +1,4 @@
+<!doctype html>
 
 <a href="/startWorkoutCreation">
   <button type="button" class="btn btn-default">Create Workout</button>
@@ -8,7 +9,7 @@
 </a>
 
 <div class="panel panel-default">
-    <a href="startworkout"><div id="startWorkout" class="btn btn-success btn-block">
+    <a href="goWorkout0"><div id="startWorkout" class="btn btn-success btn-block">
       <span class="glyphicon glyphicon-play-circle glyphicons-lg"></span> Start Workout
     </div></a>
     <div class="panel-heading"> 
@@ -18,7 +19,7 @@
     {{#if templateWorkouts}}
       <table class="table">
           {{#each templateWorkouts}}
-            <tr class="btn" id="{{id}}"><a href="/startWorkout{{id}}">
+            <tr class="btn" id="{{id}}"><a href="/goWorkout{{id}}">
               <td>{{title}}</td>
             </a></tr>
           {{/each}}

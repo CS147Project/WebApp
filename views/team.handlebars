@@ -1,15 +1,16 @@
 <!doctype html>
 
+<h2> Team Page </h2>
+
 {{#if players}}
-<h3>Remove a Player</h3>
+	<h3>Remove a Player</h3>
 
-<form class="form" role="form" method="post" action="/removeAthlete">
-{{#each players}}
-    <option value = {{aid}}> {{name}}</option>
+	<form class="form" role="form" method="post" action="/removeAthlete">
+		{{#each players}}
+	    	<option value = {{aid}}> {{name}}</option>
+	    {{/each}}
 
-    {{/each}}
-    <button class="btn btn-default" type="submit"> Remove</button>
+	    <button class="btn btn-default" type="submit"> Remove</button>
 
-</form>
-
+	</form>
 {{/if}}

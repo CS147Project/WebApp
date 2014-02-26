@@ -59,7 +59,8 @@ app.get('/settings', settings.index);
 app.get('/logout', admin.logout);
 app.get('/home', home.view);
 app.post('/inviteTeam', team.sendRequest);
-app.post('/respondTeam', team.respondRequest)
+app.post('/respondTeam', team.respondRequest);
+app.get('/teamPage', team.view);
 app.get('/messages', messages.get);
 app.get('/messages/create', messages.create);
 app.get('/startworkout', workout.start);
