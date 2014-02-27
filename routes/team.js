@@ -5,10 +5,23 @@ var teamathletes = require("../json/teamathletes.json");
 var invites = require("../json/invites.json");
 var teamData = require("../json/teams.json");
 var athletes = require("../json/athletes.json");
+//var models = require('../models');
 
 
 
 exports.view = function(req, res) {
+//testing code
+
+    // models.User
+    //     .find()    
+    //     .exec(renderProjects);
+
+    // function renderProjects(err, users) {
+    //     console.log(users);
+       
+    // }
+
+//end testing code
     res.render('team');
 }
 
