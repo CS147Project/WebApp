@@ -12,12 +12,12 @@ var athletes = require("../json/athletes.json");
 exports.view = function(req, res) {
 //testing code
 
-    // models.User
+    // models.Team
     //     .find()    
     //     .exec(renderProjects);
 
-    // function renderProjects(err, users) {
-    //     console.log(users);
+    // function renderProjects(err, result) {
+    //     console.log(result);
        
     // }
 
