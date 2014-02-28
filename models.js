@@ -74,9 +74,9 @@ exports.TeamCoach = Mongoose.model('TeamCoach', TeamCoachSchema);
 
 var ExerciseTemplateSchema = new Mongoose.Schema({
     name: { type: String, required: true },
-    weight: Number,
-    set: Number,
-    rep: Number,
+    // weight: Number,
+    // set: Number,
+    // rep: Number,
     distance: String,
     speed: String,
     time: String
