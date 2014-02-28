@@ -1,34 +1,20 @@
 
 var Mongoose = require('mongoose');
 
+
+
 var UserSchema = new Mongoose.Schema({
-  "email": String,
-  "firstName": String,
-  "lastName": String,
-  "nickname": String,
-  "password": String
+  //I think this is automatic. I don't think we need it here
+ // _id: { type: String, required: true, unique: true },
 
-  
-
-
+  firstName: { type: String, required: true },
+  lastName: { type: String, required: true },
+  nickname: String,
+  isAthlete: { type: Boolean, required: true},
+  isCoach: Boolean,
+  password: { type: String, required: true },
+  joined: { type : Date, default: Date.now }
 });
-
-
-
-
-// var UserSchema = new Mongoose.Schema({
-//  // _id: { type: String, required: true, unique: true },
-// //rebecca added:
-// email: { type: String, required: true },
-
-//   firstName: { type: String, required: true },
-//   lastName: { type: String, required: true },
-//   nickname: String,
-//   // isAthlete: { type: Boolean, required: true},
-//   // isCoach: Boolean,
-//   password: { type: String, required: true },
-//   //joined: { type : Date, default: Date.now }
-// });
 
 exports.User = Mongoose.model('User', UserSchema);
 
@@ -74,9 +60,9 @@ exports.TeamCoach = Mongoose.model('TeamCoach', TeamCoachSchema);
 
 var ExerciseTemplateSchema = new Mongoose.Schema({
     name: { type: String, required: true },
-    // weight: Number,
-    // set: Number,
-    // rep: Number,
+    weight: Number,
+    set: Number,
+    rep: Number,
     distance: String,
     speed: String,
     time: String
