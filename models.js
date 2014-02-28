@@ -48,7 +48,7 @@ var MessageSchema = new Mongoose.Schema({
   created: { type : Date, default: Date.now }
 });
 
-exports.Invite = Mongoose.model('Invite', InviteSchema);
+exports.Message = Mongoose.model('Message', MessageSchema);
 
 var TeamSchema = new Mongoose.Schema({
   name: { type: String, required: true },
