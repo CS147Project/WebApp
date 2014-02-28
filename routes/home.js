@@ -36,7 +36,7 @@ exports.view = function(req, res){
         res.render('home', {
             'athlete': isAthlete(req.session.email),
             'teams': findTeamsForCoach(req.session.email),
-            'completedWorkouts': completedWorkouts['completedWorkouts']
+            'userWorkouts': completedWorkouts['completedWorkouts']
         });
     } else {
 	   res.redirect('login');

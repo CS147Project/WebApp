@@ -10,21 +10,20 @@
     </a>
   </div>
   <div class="col-xs-8">
-    <div id="selectWorkout-home" class="panel panel-default">
+    <div id="selectWorkout" class="panel panel-default">
       <div class="panel-heading"> 
         Select a Workout
       </div>
       <div class="table-responsive">
         <table class="table">
-          {{#unless completedWorkouts}}
+          {{#unless userWorkouts}}
             <tr>
-              <td> No Current Tasks! </td>
+              <td> You don't have any Workouts yet. </td>
             </tr>
           {{/unless}}
-          {{#each completedWorkouts}}
-            <tr id="{{wid}}" class="" type="button">
-              <td id="date"> {{datetime}} </td>
-              <td id="title"> {{title}} </td>
+          {{#each userWorkouts}}
+            <tr id="workout">
+              <td id="{{wid}}" type="button" class="btn"> {{title}} </td>
             </tr>
           {{/each}}
         </table>
