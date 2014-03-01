@@ -19,9 +19,9 @@
     {{#if templateWorkouts}}
       <table class="table">
           {{#each templateWorkouts}}
-            <tr class="btn" id="{{id}}"><a href="/goWorkout{{id}}">
-              <td>{{title}}</td>
-            </a></tr>
+            <tr class="btn" id="{{id}}">
+              <td><a href="/goWorkout/{{id}}">{{title}}</a></td>
+            </tr>
           {{/each}}
       </table>
     {{else}}

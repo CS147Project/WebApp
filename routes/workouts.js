@@ -19,7 +19,7 @@ exports.analytics = function(req, res) { 
     	var myWorkouts = [];
     	for(cw in completedworkouts["completedWorkouts"]) {
     		if(completedworkouts["completedWorkouts"][cw].aid == req.session.email) {
-    			console.log("pushign workout");
+    			console.log("pushing workout");
     			myWorkouts.push(completedworkouts["completedWorkouts"][cw]);
     		}
     	}
@@ -152,10 +152,10 @@ exports.view = function(req, res){
         return res.redirect('/');
     }
     console.log(req.session.email);
-    var templateWorkouts = models.WorkoutTemplate.find().exec(afterQuery);
-	console.log(templateWorkouts);
-	function afterQuery(err, projects) {
+    models.WorkoutTemplate.find().exec(afterQuery);
+	function afterQuery(err, templateWorkouts) {
         if(err) console.log(err);
+        console.log(templateWorkouts);
         res.render('workouts', {
             "templateWorkouts": templateWorkouts
         });    
