@@ -13,7 +13,8 @@ var UserSchema = new Mongoose.Schema({
   isAthlete: { type: Boolean, required: true},
   isCoach: Boolean,
   password: { type: String, required: true },
-  joined: { type : Date, default: Date.now }
+  joined: { type : Date, default: Date.now },
+  email: {type: String, required: true}
 });
 
 exports.User = Mongoose.model('User', UserSchema);
