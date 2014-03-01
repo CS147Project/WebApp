@@ -140,6 +140,42 @@ exports.create = function(req, res) { 
 }
 
 exports.assign = function(req, res){
+    models.User.find({'_id': req.session.email}).exec(afterIsCoachQuery);
+    function afterIsCoachQuery(err, coach) {
+        if(coach.isCoach) {
+            console.log("Is a Coach.");
+        } else {
+            res.render('assign', {
+                'msg': 'You need to be a coach to assign workouts. Go to the team page to add a team.'
+            });
+            return;
+        }
+    }
+
+    models.WorkoutTemplate.find({ 'creatorid': req.session.email}).sort({'created': -1}).exec(afterWorkoutQuery);
+    function afterWorkoutQuery(err, templateWorkouts) {
+        if(err) console.log(err);
+        models.TeamCoach.find({'cid': req.session.email}).exec(afterTeamQuery);
+    
+        function afterTeamQuery(err, teamsForCoach) {
+            if(err) console.log(err);
+            var athletes = [];
+            for(team in teamsForCoach) {
+                models.TeamAthlete.find({'tid': teamsForCoach[team]['tid']}).exec(afterAthleteQuery);
+                function afterAthleteQuery(err, athletesForCoach) {
+                    if(err) console.log(err);
+                    athletes.push(athletesForCoach);
+                }
+            }
+            res.render('assign', {
+                'workouts': templateWorkouts,
+                'players': athletes
+            });
+        }
+    }
+
+
+
     res.render('assign', {
         'workouts': workouts['templateWorkouts'],
         'players': team['teamathletes']
@@ -151,11 +187,9 @@ exports.view = function(req, res){
         console.log("Please login for this page");
         return res.redirect('/');
     }
-    console.log(req.session.email);
     models.WorkoutTemplate.find({ 'creatorid': req.session.email}).sort({'created': -1}).exec(afterQuery);
 	function afterQuery(err, templateWorkouts) {
         if(err) console.log(err);
-        console.log(templateWorkouts);
         res.render('workouts', {
             "templateWorkouts": templateWorkouts
         });    
