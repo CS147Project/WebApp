@@ -1,6 +1,7 @@
 var data = require("../json/users.json");
 var teamCoachData = require("../json/teamcoaches.json");
 var teamData = require("../json/teams.json");
+var models = require('../models');
 
 // HELPER FUNCTIONS
 function verifyAccount(users, req, res) {
@@ -92,12 +93,39 @@ exports.addUser = function(req, res) { 
     if(uniqueAccount(data['users'], newUser) && noBlank(newUser, req)) {
         data['users'].push(newUser);
         req.session.email = req.query.email;
+      //  var isAthlete = req.query.isAthlete;
+        var isAthlete = true;
+
+
         console.log(req.session.email+' is logged in! Yay!!!');
-        res.redirect('home'); // Send new user to the homepage
+
+
+            //connecting to database.
+            console.log("old users: " + models.User.length);
+            var user = new models.User({
+               'email': req.query.email,
+               'firstName': req.query.firstName,
+               'lastName': req.query.lastName,
+               'nickname': req.query.nickname,
+               'password': req.query.password, 
+               'isAthlete': isAthlete,
+           })
+           user.save(afterSaving);
+           function afterSaving(err) {
+            if(err) { console.log(err); res.send(500);};
+               console.log("new users: " + models.User.length);
+            res.redirect('home');
+        }
+
+
+
+      //  res.redirect('home'); // Send new user to the homepage
     }
     res.render('signup', {
         'msg': 'There was a problem creating your account. Please try again.',
         layout: false
     });
+
+
  }
 
