@@ -152,7 +152,7 @@ exports.view = function(req, res){
         return res.redirect('/');
     }
     console.log(req.session.email);
-    models.WorkoutTemplate.find().exec(afterQuery);
+    models.WorkoutTemplate.find({ 'creatorid': req.session.email}).sort({'created': -1}).exec(afterQuery);
 	function afterQuery(err, templateWorkouts) {
         if(err) console.log(err);
         console.log(templateWorkouts);
