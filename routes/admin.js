@@ -101,7 +101,7 @@ exports.addUser = function(req, res) { 
 
 
             //connecting to database.
-            console.log("old users: " + models.User.size);
+            console.log("old users: " + models.User.length);
             var user = new models.User({
                'email': req.query.email,
                'firstName': req.query.firstName,
@@ -113,7 +113,7 @@ exports.addUser = function(req, res) { 
            user.save(afterSaving);
            function afterSaving(err) {
             if(err) { console.log(err); res.send(500);};
-               console.log("new users: " + models.User.size);
+               console.log("new users: " + models.User.length);
             res.redirect('home');
         }
 
