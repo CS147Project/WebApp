@@ -35,7 +35,7 @@ function isAthlete(email) {
 
 
 exports.view = function(req, res){
-    if(req.session.email !== undefined) {
+    //if(req.session.email !== undefined) {
         var templateWorkouts = models.WorkoutTemplate.find().exec(afterQuery);
         function afterQuery(err, projects) {
             if(err) console.log(err);
@@ -45,7 +45,19 @@ exports.view = function(req, res){
                 'userWorkouts': templateWorkouts
             });
         };
-    } else {
-	   res.redirect('login');
-    }
+    //} else {
+	//   res.redirect('login');
+    //}
+}
+
+exports.viewGrid = function(req, res){
+    var templateWorkouts = models.WorkoutTemplate.find().exec(afterQuery);
+        function afterQuery(err, projects) {
+            if(err) console.log(err);
+            res.render('home_grid', {
+                'athlete': isAthlete(req.session.email),
+                'teams': findTeamsForCoach(req.session.email),
+                'userWorkouts': templateWorkouts
+            });
+        };
 }

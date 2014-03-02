@@ -183,7 +183,9 @@ exports.assign = function(req, res){
 }
 
 exports.view = function(req, res){
-    if(req.session == undefined || req.session.email == undefined) {
+    console.log(req.session);
+    console.log(req.session.email);
+    if(req.session.account == undefined) {
         console.log("Please login for this page");
         return res.redirect('/');
     }

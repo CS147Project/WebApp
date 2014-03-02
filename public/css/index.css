@@ -155,6 +155,9 @@ html, body {
 #personalBests {
 	margin: 0px;
 }
+#selectW.swiper-container{
+	height:75%;
+}
 
 .footer {
 	position: static;

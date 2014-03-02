@@ -7,11 +7,12 @@ var models = require('../models');
 function verifyAccount(users, req, res) {
     email = req.query.email;
     password = req.query.password;
-    console.log(email, password);
+    console.log("verifying: " + email, password);
     for (var user in users) {
         if (users[user].password == password && users[user].email == email) {
             req.session.email = email;
-            console.log(email+' is logged in! Yay!!!');
+            console.log(req.session.email+' is logged in! Yay!!!');
+            console.log(req.session);
             res.redirect('home');
             return true;
         }
@@ -76,6 +77,8 @@ exports.loginHandler = function(req, res) { 
     function afterQuery(err, account) {
         if(err) {console.log(err); res.send(500);}
         if(account.length != 0) { // account does exist
+            req.session.account = account;
+            console.log(account.email);
             res.render('home');
         } else {
             res.render('login', {

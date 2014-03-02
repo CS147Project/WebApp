@@ -48,3 +48,20 @@ function addExercise(e) {
     $("#exercisesCreated").append(newExercise);
     count++;
 }
+
+
+
+// Home_Grid Swiper
+// SWIPER FUNCTIONALITY
+$(function(){
+  var mySwiper = $('#selectW.swiper-container').swiper({
+    //Your options here:
+    pagination: '.pagination',
+    paginationClickable: true,
+    mode:'horizontal',
+    slidesPerView: 2,
+    onSlideChangeStart: function(){
+        // save current workout data
+    }
+  });
+})
