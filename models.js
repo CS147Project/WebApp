@@ -1,27 +1,26 @@
-
 var Mongoose = require('mongoose');
-
+var Schema = Mongoose.Schema;
 
 
 var UserSchema = new Mongoose.Schema({
   //I think this is automatic. I don't think we need it here
- // _id: { type: String, required: true, unique: true },
-
+  // _id: { type: String, required: true, unique: true },
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
   nickname: String,
   isAthlete: { type: Boolean, required: true},
-  isCoach: Boolean,
+  isCoach: { type: Boolean, default: false },
   password: { type: String, required: true },
-  joined: { type : Date, default: Date.now }
+  joined: { type : Date, default: Date.now },
+  email: {type: String, required: true}
 });
 
 exports.User = Mongoose.model('User', UserSchema);
 
 var InviteSchema = new Mongoose.Schema({
-  aid: { type: String, ref: 'User' }, // We need to allow coaches to invite
-  cid: { type: String, ref: 'User' }, // other coaches to join their team.
-  tid: { type: Number, required: true },
+  aid: { type: Schema.ObjectId, ref: 'User' }, // We need to allow coaches to invite
+  cid: { type: Schema.ObjectId, ref: 'User' }, // other coaches to join their team.
+  tid: { type: Schema.ObjectId, required: true },
   created: { type : Date, default: Date.now }
 });
 
@@ -29,8 +28,8 @@ exports.Invite = Mongoose.model('Invite', InviteSchema);
 
 var MessageSchema = new Mongoose.Schema({
   text: { type: String, required: true },
-  fromid: { type: String, ref: 'User', required: true },
-  toid: { type: String, ref: 'User', required: true },
+  fromid: { type: Schema.ObjectId, ref: 'User', required: true },
+  toid: { type: Schema.ObjectId, ref: 'User', required: true },
   created: { type : Date, default: Date.now }
 });
 
@@ -45,15 +44,15 @@ var TeamSchema = new Mongoose.Schema({
 exports.Team = Mongoose.model('Team', TeamSchema);
 
 var TeamAthleteSchema = new Mongoose.Schema({
-  tid: { type: Number, ref: 'Team', required: true },
-  aid: { type: String, ref: 'User', required: true }
+  tid: { type: Schema.ObjectId, ref: 'Team', required: true },
+  aid: { type: Schema.ObjectId, ref: 'User', required: true }
 });
 
 exports.TeamAthlete = Mongoose.model('TeamAthlete', TeamAthleteSchema);
 
 var TeamCoachSchema = new Mongoose.Schema({
-  tid: { type: Number, ref: 'Team', required: true },
-  cid: { type: String, ref: 'User', required: true }
+  tid: { type: Schema.ObjectId, ref: 'Team', required: true },
+  cid: { type: Schema.ObjectId, ref: 'User', required: true }
 });
 
 exports.TeamCoach = Mongoose.model('TeamCoach', TeamCoachSchema);
@@ -71,10 +70,10 @@ var ExerciseTemplateSchema = new Mongoose.Schema({
 exports.ExerciseTemplate = Mongoose.model('ExerciseTemplate', ExerciseTemplateSchema);
 
 var WorkoutTemplateSchema = new Mongoose.Schema({
-  creatorid: { type: String, ref: 'User', required: true },
+  creatorid: { type: Schema.ObjectId, ref: 'User', required: true },
   created: { type : Date, default: Date.now },
   title: { type: String, required: true },
-  description: String,
+  description: { type: String, required: false},
   exercises: [ExerciseTemplateSchema]
 });
 

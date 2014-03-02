@@ -1,6 +1,7 @@
 var data = require("../json/users.json");
 var teamCoachData = require("../json/teamcoaches.json");
 var teamData = require("../json/teams.json");
+var models = require('../models');
 
 // HELPER FUNCTIONS
 function verifyAccount(users, req, res) {
@@ -71,33 +72,73 @@ exports.logout = function(req, res) { 
 
 exports.loginHandler = function(req, res) { 
     var crypto = require('crypto'); //used for hashing passwords
-    users = data['users'];
-    if(!verifyAccount(users, req, res)) {
-        res.render('login', {
-            "msg": "I am sorry, but we were not able to find your account. Please try again.",
-            layout: false
-        });
+    models.User.find({'email': req.query.email, 'password': req.query.password}).exec(afterQuery);
+    function afterQuery(err, account) {
+        if(err) {console.log(err); res.send(500);}
+        if(account.length != 0) { // account does exist
+            res.render('home');
+        } else {
+            res.render('login', {
+                "msg": "We were not able to find your account. Please try again.",
+                layout: false
+            });
+        }
+        // console.log(account[0]);
     }
  }
 
 exports.addUser = function(req, res) { 
+    console.log("Query", req.query);
     var crypto = require('crypto'); //used for hashing passwords
-    newUser = {
+    var athlete = false; 
+    var coach = false;
+    if(req.query.accountType == "athlete") {
+        athlete = true;
+    } else if(req.query.accountType == "coach") {
+        coach = true;
+    } else if(req.query.accountType == "both") {
+        athlete = true;
+        coach = true;
+    }
+
+    newUserData = {
         'email': req.query.email,
         'firstName': req.query.firstName,
         'lastName': req.query.lastName,
-        'nickname': req.query.nickname,
+        'isAthlete': athlete,
+        'isCoach': coach,
         'password': req.query.password, //crypto.createHash('md5').update(req.query.name).digest('hex')    
     }
-    if(uniqueAccount(data['users'], newUser) && noBlank(newUser, req)) {
-        data['users'].push(newUser);
-        req.session.email = req.query.email;
-        console.log(req.session.email+' is logged in! Yay!!!');
-        res.redirect('home'); // Send new user to the homepage
+    if(noBlank(newUserData, req)) {
+        models.User.find({'email': req.query.email}).exec(afterQuery);
+        function afterQuery(err, account) {
+            if(err) {console.log(err); res.send(500);}
+            console.log("account", account);
+
+            if(account.length != 0) { // account taken
+                console.log("Account found with same email.");
+                res.render('signup', {
+                    'msg': 'That email account is taken. Please choose another one.',
+                    layout: false
+                });
+                return;
+            } else { // create account
+                console.log("Let's set up an account.");
+                var newUser = new models.User(newUserData);
+                newUser.save(afterSaving);
+
+                function afterSaving(err) {
+                    if(err) {console.log(err); res.send(500);}
+                    req.session.email = newUserData['email'];
+                    res.redirect('home');
+                }
+            }
+        }
+    } else { // Left fields blank.
+       res.render('signup', {
+            'msg': 'Please fill in all the fields.',
+            layout: false
+        }); 
     }
-    res.render('signup', {
-        'msg': 'There was a problem creating your account. Please try again.',
-        layout: false
-    });
  }
 

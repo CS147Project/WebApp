@@ -13,5 +13,10 @@ https://github.com/felixge/node-mysql#error-handling
 http://dev.mysql.com/doc/refman/5.0/en/creating-database.html
 http://nodejsrocks.blogspot.com/2012/04/nodejs-expressjs-mysql.html
 
+
+Mongo Terminal Commands and query functions
+http://docs.mongodb.org/manual/reference/mongo-shell/
+http://docs.mongodb.org/manual/core/cursors/
+
 Handlebars templating
 http://stackoverflow.com/questions/18306382/handlebars-js-use-a-partial-like-it-was-a-normal-full-template
