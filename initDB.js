@@ -19,7 +19,39 @@
 var local_database_name = 'appdb';
 var local_database_uri  = 'mongodb://localhost/' + local_database_name
 var database_uri = process.env.MONGOLAB_URI || local_database_uri
-mongoose.connect(database_uri);
+mongoose.connect(database_uri); //, function() {mongoose.database_uri.db.dropDatabaes();
+mongoose.connection.collections['workouttemplates'].drop( function(err) {
+    console.log('collection dropped');
+});
+
+mongoose.connection.collections['users'].drop( function(err) {
+    console.log('collection dropped');
+});
+
+mongoose.connection.collections['invites'].drop( function(err) {
+    console.log('collection dropped');
+});
+
+mongoose.connection.collections['messages'].drop( function(err) {
+    console.log('collection dropped');
+});
+
+mongoose.connection.collections['teamathletes'].drop( function(err) {
+    console.log('collection dropped');
+});
+
+mongoose.connection.collections['teamcoaches'].drop( function(err) {
+    console.log('collection dropped');
+});
+
+mongoose.connection.collections['exercisetemplates'].drop( function(err) {
+    console.log('collection dropped');
+});
+
+mongoose.connection.collections['workouttemplates'].drop( function(err) {
+    console.log('collection dropped');
+    mongoose.connection.close();
+});
 
 
 // Do the initialization here
@@ -34,42 +66,24 @@ mongoose.connect(database_uri);
 // var exercises = require("./json2/exercises.json");
 // var exercises_json= exercises["exercises"];
 
-models.User
-.find()
-.remove();
+// models.drop();
 
-models.Invite
-.find()
-.remove();
+// models.Invite.drop();
 
-models.Message
-.find()
-.remove();
+// models.Message.drop();
 
-models.Team
-.find()
-.remove();
+// models.Team.drop();
 
-models.TeamAthlete
-.find()
-.remove();
+// models.TeamAthlete.drop();
 
-models.TeamCoach
-.find()
-.remove();
+// models.TeamCoach.drop();
 
-models.ExerciseTemplate
-.find()
-.remove();
+// models.ExerciseTemplate.drop();
 
-models.WorkoutTemplate
-.find()
-.remove()
-.exec(onceClearModels);
-
+// models.WorkoutTemplate.drop().exec(onceClearModels);
 
 function onceClearModels(err) {
-mongoose.connection.close();
+    mongoose.connection.close();
 }
 
 

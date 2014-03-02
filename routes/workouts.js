@@ -125,7 +125,7 @@ exports.create = function(req, res) { 
         exercises.push(newExercise);
     }
     var newWorkout = new models.WorkoutTemplate({
-        "creatorid": req.session.email,
+        "creatorid": req.session._id,
         "title": form_data.title,
         "description": form_data.description,
         "exercises": exercises
