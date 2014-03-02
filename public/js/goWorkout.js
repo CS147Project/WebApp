@@ -33,7 +33,6 @@ function submitData(e){
 }
 
 
-
 // SWIPER FUNCTIONALITY
 $(function(){
   var mySwiper = $('#goWorkout.swiper-container').swiper({

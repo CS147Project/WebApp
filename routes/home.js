@@ -3,6 +3,7 @@ var teamCoachData = require("../json/teamcoaches.json");
 var teamData = require("../json/teams.json");
 var athletes = require("../json/athletes.json");
 var completedWorkouts = require("../json/completedWorkouts.json");
+var models = require('../models');
 
 function searchTeams(tid) {
     for(team in teamData['teams']) {
@@ -31,14 +32,20 @@ function isAthlete(email) {
 }
 
 
+
+
 exports.view = function(req, res){
     if(req.session.email !== undefined) {
-        res.render('home', {
-            'athlete': isAthlete(req.session.email),
-            'teams': findTeamsForCoach(req.session.email),
-            'userWorkouts': completedWorkouts['completedWorkouts']
-        });
+        var templateWorkouts = models.WorkoutTemplate.find().exec(afterQuery);
+        function afterQuery(err, projects) {
+            if(err) console.log(err);
+            res.render('home', {
+                'athlete': isAthlete(req.session.email),
+                'teams': findTeamsForCoach(req.session.email),
+                'userWorkouts': templateWorkouts
+            });
+        };
     } else {
 	   res.redirect('login');
     }
-};
+}

@@ -1,6 +1,7 @@
 var exercises = require("../json/exercises.json");
 var workouts = require("./workouts.js");
 var currWorkout = require("../json/currentWorkout.json");
+var models = require('../models');
 
 exports.start = function(req, res) { 
 	currWorkout["exercises"] = exercises["exercises"];
@@ -9,34 +10,9 @@ exports.start = function(req, res) { 
 }
 
 exports.goWorkout = function(req, res) {
-
-	// var exID = parseInt(req.params.id);
-	// var exercise = null;
-	// var nav = {
-	// 	'next': 'true',
-	// 	'prev': 'true'
-	// };
-	// if(exercises["exercises"][exID] != null){
-	// 	exercise = exercises["exercises"][exID];
-	// 	console.log(exercise);
-	// }else{
-	// 	res.render('home');
-	// }
-
-	// req.session.curr = exID;
-
-	// if(exercises["exercises"][exID+1] == null)
-	// 	nav['next'] = null;
-	// if(exercises["exercises"][exID-1] == null)
-	// 	nav['prev'] = null;
-
-	// console.log(nav);
-
-	// res.render('goWorkout', {
-	// 	'exercise': exercise,
-	// 	'nav': nav
-	// });
-
+	var wid = req.params.id;
+	models.WorkoutTemplate.find({ "_id" : wid});
+	console.log("go workout");
 	res.render('goWorkout', {
 		'exercises': exercises['exercises']
 	});

@@ -183,5 +183,7 @@ exports.addCompletedWorkout = function(req, res) { 
         console.log(completedworkouts["completedWorkouts"][w].aid + ": did workouts # " + completedworkouts["completedWorkouts"][w].wid);
 
      }
-    res.redirect('home');
+    res.redirect('workouts', {
+        "msg" : "Workout Completed!"
+    });
 }
