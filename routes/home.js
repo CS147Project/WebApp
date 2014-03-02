@@ -2,7 +2,7 @@ var data = require("../json/users.json");
 var teamCoachData = require("../json/teamcoaches.json");
 var teamData = require("../json/teams.json");
 var athletes = require("../json/athletes.json");
-var completedWorkouts = require("../json/completedWorkouts.json");
+var completedWorkouts = require("../json/completedworkouts.json");
 var models = require('../models');
 
 function searchTeams(tid) {
