@@ -29,11 +29,9 @@
             {{/unless}}
 
             {{#each workouts}}
-              <tr id="workout">
-                <td id="{{_id}}"> 
-                  <a href="home">
-                    {{title}}
-                  </a>
+              <tr class="workout">
+                <td id="{{_id}}" type="button" class="btn"> 
+                  {{title}}
                 </td>
               </tr>
             {{/each}}

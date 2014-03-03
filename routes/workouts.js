@@ -142,9 +142,14 @@ exports.create = function(req, res) { 
 }
 
 exports.assign = function(req, res){
-    models.User.find({'_id': req.session.email}).exec(afterIsCoachQuery);
+    if(req.session == undefined || req.session.email == undefined) {
+        console.log("Please login for this page");
+        return res.redirect('/');
+    }
+    models.User.find({'_id': req.session._id}).exec(afterIsCoachQuery);
     function afterIsCoachQuery(err, coach) {
-        if(coach.isCoach) {
+        if(err) {console.log(err); res.send(500);}
+        if(coach[0].isCoach) {
             console.log("Is a Coach.");
         } else {
             res.render('assign', {
@@ -154,18 +159,18 @@ exports.assign = function(req, res){
         }
     }
 
-    models.WorkoutTemplate.find({ 'creatorid': req.session.email}).sort({'created': -1}).exec(afterWorkoutQuery);
+    models.WorkoutTemplate.find({ 'creatorid': req.session._id}).sort({'created': -1}).exec(afterWorkoutQuery);
     function afterWorkoutQuery(err, templateWorkouts) {
-        if(err) console.log(err);
-        models.TeamCoach.find({'cid': req.session.email}).exec(afterTeamQuery);
+        if(err) {console.log(err); return res.send(500);}
+        models.TeamCoach.find({'cid': req.session._id}).exec(afterTeamQuery);
     
         function afterTeamQuery(err, teamsForCoach) {
-            if(err) console.log(err);
+            if(err) {console.log(err); return res.send(500);}
             var athletes = [];
             for(team in teamsForCoach) {
                 models.TeamAthlete.find({'tid': teamsForCoach[team]['tid']}).exec(afterAthleteQuery);
                 function afterAthleteQuery(err, athletesForCoach) {
-                    if(err) console.log(err);
+                    if(err) {console.log(err); return res.send(500);}
                     athletes.push(athletesForCoach);
                 }
             }
@@ -173,15 +178,9 @@ exports.assign = function(req, res){
                 'workouts': templateWorkouts,
                 'players': athletes
             });
+            return;
         }
     }
-
-
-
-    res.render('assign', {
-        'workouts': workouts['templateWorkouts'],
-        'players': team['teamathletes']
-    });
 }
 
 exports.view = function(req, res){
