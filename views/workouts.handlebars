@@ -18,11 +18,11 @@
 
     {{#if userWorkouts}}
       <table class="table">
-          {{#each userWorkouts}}
-            <tr id="workout">
-              <td id="{{_id}}" type="button" class="btn"> {{title}} </td>
-            </tr>
-          {{/each}}
+        {{#each userWorkouts}}
+          <tr id="workout">
+            <td id="{{_id}}"><a href="/goWorkout{{_id}}">{{title}}</a></td>
+          </tr>
+        {{/each}}
       </table>
     {{else}}
         <h4>No workouts</h4>

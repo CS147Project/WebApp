@@ -16,22 +16,26 @@
         Select a Workout to Assign:
         <table class="table table-bordered">
             {{#unless workouts}}
-            <tr>
-                <td> No Workouts! </td>
-            </tr>
-            <tr>
-                <td>
-                    <a href="/startWorkoutCreation">
-                        <button type="button" class="btn btn-danger">Create Workout</button>
-                    </a>
-                </td>
-            </tr>
+              <tr>
+                  <td> No Workouts! </td>
+              </tr>
+              <tr>
+                  <td>
+                      <a href="/startWorkoutCreation">
+                          <button type="button" class="btn btn-danger">Create Workout</button>
+                      </a>
+                  </td>
+              </tr>
             {{/unless}}
 
             {{#each workouts}}
-            <tr id="workout">
-              <td id="{{wid}}" type="button" class="btn"> {{title}} </td>
-            </tr>
+              <tr id="workout">
+                <td id="{{_id}}"> 
+                  <a href="home">
+                    {{title}}
+                  </a>
+                </td>
+              </tr>
             {{/each}}
         </table>
       </div>
