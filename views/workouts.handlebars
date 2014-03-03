@@ -8,24 +8,24 @@
   <button type="button" class="btn btn-default">Assign Workout</button>
 </a>
 
-<div class="panel panel-default">
-    <a href="goWorkout0"><div id="startWorkout" class="btn btn-success btn-block">
+<div id="selectWorkout" class="panel panel-default">
+    <a href="goWorkout0"><div id="startWorkout" class="btn btn-primary btn-block btn-large">
       <span class="glyphicon glyphicon-play-circle glyphicons-lg"></span> Start Workout
     </div></a>
     <div class="panel-heading"> 
-      Recently Created Workouts
+      Your Workouts
     </div>
 
-    {{#if templateWorkouts}}
+    {{#if userWorkouts}}
       <table class="table">
-          {{#each templateWorkouts}}
-            <tr class="btn" id="{{id}}">
-              <td><a href="/goWorkout/{{id}}">{{title}}</a></td>
+          {{#each userWorkouts}}
+            <tr id="workout">
+              <td id="{{wid}}" type="button" class="btn"> {{title}} </td>
             </tr>
           {{/each}}
       </table>
     {{else}}
-        <h4>No workouts created recently</h4>
+        <h4>No workouts</h4>
     {{/if}}
 </div>
 

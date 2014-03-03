@@ -7,11 +7,12 @@ var models = require('../models');
 function verifyAccount(users, req, res) {
     email = req.query.email;
     password = req.query.password;
-    console.log(email, password);
+    console.log("verifying: " + email, password);
     for (var user in users) {
         if (users[user].password == password && users[user].email == email) {
             req.session.email = email;
-            console.log(email+' is logged in! Yay!!!');
+            console.log(req.session.email+' is logged in! Yay!!!');
+            console.log(req.session);
             res.redirect('home');
             return true;
         }

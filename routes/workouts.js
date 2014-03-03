@@ -185,7 +185,9 @@ exports.assign = function(req, res){
 }
 
 exports.view = function(req, res){
-    if(req.session == undefined || req.session.email == undefined) {
+    console.log(req.session);
+    console.log(req.session.email);
+    if(req.session.account == undefined) {
         console.log("Please login for this page");
         return res.redirect('/');
     }
@@ -193,7 +195,7 @@ exports.view = function(req, res){
 	function afterQuery(err, templateWorkouts) {
         if(err) console.log(err);
         res.render('workouts', {
-            "templateWorkouts": templateWorkouts
+            "userWorkouts": templateWorkouts
         });    
     }
 }
@@ -219,5 +221,7 @@ exports.addCompletedWorkout = function(req, res) { 
         console.log(completedworkouts["completedWorkouts"][w].aid + ": did workouts # " + completedworkouts["completedWorkouts"][w].wid);
 
      }
-    res.redirect('home');
+    res.redirect('workouts', {
+        "msg" : "Workout Completed!"
+    });
 }

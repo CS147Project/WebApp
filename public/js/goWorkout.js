@@ -13,6 +13,7 @@ function initializePage() {
 	console.log("linked!");
 }
 
+
 function submitData(e){
 	console.log("clicked");
 	var currData = {
@@ -32,7 +33,7 @@ function submitData(e){
 }
 
 
-
+// SWIPER FUNCTIONALITY
 $(function(){
   var mySwiper = $('#goWorkout.swiper-container').swiper({
     //Your options here:

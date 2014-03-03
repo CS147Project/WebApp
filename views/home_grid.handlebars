@@ -1,0 +1,58 @@
+<!doctype html>
+
+<!-- HOME DISPLAY -->
+
+<div id="selectW" class="swiper-container">
+    <!-- SWIPER WRAPPER -->
+  <div class="swiper-wrapper">
+      {{#each userWorkouts}}
+      <!-- SLIDE -->
+      <div class="swiper-slide"> 
+        <!-- FORM FOR SINGLE EXERCISE -->
+        <h3>Workout Title: {{title}}</h3>
+        <br />
+        <h4>Exercise Summary:</h4>
+          {{#each userWorkouts.exercises}}
+            <p>{{exercise}}</p>
+          {{/each}}
+        <div class="pull-right">
+          <a href="/goWorkout0" id="beginWorkoutBtn_grid" class="btn btn-primary">
+            <img src="img/goworkout-icon.png" alt="Start Workout" class="img-circle" height="50">
+          </a>
+        </div>
+      </div> 
+      <!-- END OF SLIDE -->
+      {{/each}}
+  </div>
+  <div class="pagination"></div>
+</div>
+
+
+
+
+
+
+
+
+<!-- TASK LIST -->
+  <div class="panel panel-default">
+    <div class="panel-heading"> 
+      To-Do List
+    </div>
+   
+    <table class="table">
+      {{#unless currentTasks}}
+      <tr>
+        <td><center> No Current Tasks! </center></td>
+      </tr>
+      {{/unless}}
+      {{#each currentTasks}}
+      <tr class="btn">
+        <td id="date"> {{datetime}} </td>
+        <td id="title"> {{title}} </td>
+      </tr>
+      {{/each}}
+    </table>
+  </div>
+<!-- END TASK LIST -->
+
