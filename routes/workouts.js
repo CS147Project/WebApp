@@ -187,11 +187,11 @@ exports.assign = function(req, res){
 exports.view = function(req, res){
     console.log(req.session);
     console.log(req.session.email);
-    if(req.session.account == undefined) {
+    if(req.session._id == undefined) {
         console.log("Please login for this page");
         return res.redirect('/');
     }
-    models.WorkoutTemplate.find({ 'creatorid': req.session._id}).sort({'created': -1}).exec(afterQuery);
+    models.WorkoutTemplate.find({'creatorid': req.session._id}).sort({'created': -1}).exec(afterQuery);
 	function afterQuery(err, templateWorkouts) {
         if(err) console.log(err);
         res.render('workouts', {

@@ -77,8 +77,8 @@ exports.loginHandler = function(req, res) { 
     function afterQuery(err, account) {
         if(err) {console.log(err); res.send(500);}
         if(account.length != 0) { // account does exist
-            req.session._id = account[0]._id;
             console.log("account", account[0]);
+            req.session._id = account[0]._id;
             req.session.email = account[0].email;
             res.redirect('home');
         } else {
