@@ -5,6 +5,7 @@ var teamathletes = require("../json/teamathletes.json");
 var teamcoaches = require("../json/teamcoaches.json");
 var users = require("../json/users.json");
 var coaches = require("../json/coaches.json");
+var models = require('../models');
 
 
 function isCoach(email) {
@@ -59,16 +60,16 @@ function getPlayersByTeams(teams) {
 	var players = [];
 	for(athlete in teamathletes["teamathletes"]) {
 		for(var i=0; i<teams.length; i++)
-		if(teamathletes["teamathletes"][athlete].tid== teams[i]) {
-			var onePlayer = {
+			if(teamathletes["teamathletes"][athlete].tid== teams[i]) {
+				var onePlayer = {
 					name: getFullNameByEmail(teamathletes["teamathletes"][athlete].aid),
 					uid: teamathletes["teamathletes"][athlete].aid
 				};
 				players.push(onePlayer);
-		} 
+			} 
+		}
+		return players;
 	}
-	return players;
-}
 
 //should delete later and access from team.js
 function getTeamsByUser(email) {
@@ -103,32 +104,49 @@ function getCoachesByTeams(teams) {
 }
 
 exports.create = function(req, res) {
+	var id = req.session._id;
 
 	var d = new Date();
 	d = parseDate(d);
 	console.log("from: "+ req.query.fromid + " to: " + req.query.toid + " text: " + req.query.text);
-	//HOW DO WE CALC IID?
-	var mid = messages["messages"].length + 1;
+	
+	// var mid = messages["messages"].length + 1;
 
-	newMessage = {
-		"mid": mid,
-		"text": req.query.text,
-		"datetime": d,
-		"fromid": req.session.email,
-		"toid": req.query.toid
+	// newMessage = {
+	// 	"mid": mid,
+	// 	"text": req.query.text,
+	// 	"datetime": d,
+	// 	"fromid": req.session.email,
+	// 	"toid": req.query.toid
+	// }
+
+	// console.log("m leng: " + messages["messages"].length);
+	// console.log("messages: " + messages["messages"]);
+
+	// messages["messages"].push(newMessage);
+	// console.log("all messages: "+ messages["messages"]);
+	// console.log("m leng: " + messages["messages"].length);
+
+	//connecting to db: 
+	var message = new models.Message( {
+//note: fromid and toid need to be )id, not e-mails!!!!
+	"text": req.query.text,
+	"fromid": req.query.fromid,
+	"toid": req.query.toid
+})
+	message.save(afterSaving);
+	function afterSaving(err) {
+		if(err) { console.log(err); res.send(500);};
+		res.redirect('messages');
 	}
 
-	console.log("m leng: " + messages["messages"].length);
-	console.log("messages: " + messages["messages"]);
-
-	messages["messages"].push(newMessage);
-	console.log("all messages: "+ messages["messages"]);
-	console.log("m leng: " + messages["messages"].length);
-
-	res.redirect('messages');
+	//res.redirect('messages');
 }
 
 exports.get = function(req, res) {
+	console.log("in messages!");
+	console.log("still in messages");
+	var id = req.session._id;
 	uid = req.session.email;
 	var userMessages = [];
 	for(message in messages["messages"]) {
@@ -149,19 +167,96 @@ exports.get = function(req, res) {
 		else {
 			console.log(" no teams!!!");
 		}
-		 friends = getCoachesByTeams(teams);
+		friends = getCoachesByTeams(teams);
 	}
 	else {
 		console.log("is coache!!!!");
 		teams = findTeamsForCoach(uid);
-		 friends = getPlayersByTeams(teams);
+		friends = getPlayersByTeams(teams);
 
 	}
 
+	//Using DB:
+	var allMessages = [];
+	models.Message
+	.find({"fromid": id})
+	.sort('date')
+	.exec(fromMessages);
 
-	res.render('messages', {
-		'messages': userMessages, 'friends': friends
-	});
+//from messages is null -> problems when want length.
+function fromMessages(err, fromMessages) {
+	for(var i=0; i<fromMessages.length; i++) {
+		allMessages.push(fromMessages[i]);
+	}
+
+ }
+
+ models.Message
+.find({"toid": id})
+.sort('date')
+.exec(toMessages);
+
+function toMessages(err, toMessages) {
+	for(var i=0; i<toMessages.length; i++) {
+		allMessages.push(toMessages[i]);
+	}
+
+}
+
+var allFriends = [];
+var allTeams = [];
+models.User.find().exec(foundAllUsers);
+function foundAllUsers(err, allUsers) {
+	console.log("found all users.");
+	console.log("all users: "+ allUsers.length);
+	for(var i=0; i<allUsers.length; i++) {
+		allFriends.push(allUsers[i]);
+	}
+}
+
+
+// models.User.find({"_id": id}).exec(haveUser);
+// function haveUser(err, thisUser) {
+// 	if(thisUser.isCoach) {
+// 		models.TeamCoach.find({"tid": id}).exec(teamCoachList);
+// 	}
+// 	if(thisUser.isAthlete) {
+// 		models.TeamAthlete.find({"aid": id}).exec(teamPlayerList);
+// 	}
+// }
+
+
+// function teamCoachList(err, teamsForCoach) {
+// 	for(team in teamsForCoach) {
+// 		models.TeamAthlete.find({'tid': teamsForCoach[team]['tid']}).exec(afterAthleteQuery);
+// 		function afterAthleteQuery(err, athletesForCoach) {
+// 			if(err) console.log(err);
+// 			allFriends.push(athletesForCoach);
+// 		}
+// 	}
+// }
+
+// function teamPlayerList(err, teamsForPlayer) {
+// 	for(team in teamsForPlayer) {
+// 		models.TeamCoach.find({"tid": teamsForPlayer[team]["tid"]}).exec(afterCoachQuery);
+
+// 		function afterCoachQuery(err, coachesForAthlete) {
+// 			if(err) console.log(err);
+// 			allFriends.push(coachesForAthlete);
+// 		}
+// 	}
+// }
+
+// with database
+console.log("all Friends num: "+ allFriends.length);
+console.log("all Messages for this user: " + allMessages.length);
+res.render('messages', {
+	'messages': allMessages, 'friends': allFriends, 'userId': id
+});
+
+	// res.render('messages', {
+	// 	'messages': userMessages, 'friends': friends
+	// });
 }
 
  
