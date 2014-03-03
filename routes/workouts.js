@@ -124,6 +124,8 @@ exports.create = function(req, res) { 
         });
         exercises.push(newExercise);
     }
+    console.log("session id", req.session._id);
+    console.log("session email", req.session.email);
     var newWorkout = new models.WorkoutTemplate({
         "creatorid": req.session._id,
         "title": form_data.title,
@@ -187,7 +189,7 @@ exports.view = function(req, res){
         console.log("Please login for this page");
         return res.redirect('/');
     }
-    models.WorkoutTemplate.find({ 'creatorid': req.session.email}).sort({'created': -1}).exec(afterQuery);
+    models.WorkoutTemplate.find({ 'creatorid': req.session._id}).sort({'created': -1}).exec(afterQuery);
 	function afterQuery(err, templateWorkouts) {
         if(err) console.log(err);
         res.render('workouts', {

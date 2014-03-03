@@ -76,14 +76,16 @@ exports.loginHandler = function(req, res) { 
     function afterQuery(err, account) {
         if(err) {console.log(err); res.send(500);}
         if(account.length != 0) { // account does exist
-            res.render('home');
+            req.session._id = account[0]._id;
+            console.log("account", account[0]);
+            req.session.email = account[0].email;
+            res.redirect('home');
         } else {
             res.render('login', {
                 "msg": "We were not able to find your account. Please try again.",
                 layout: false
             });
         }
-        // console.log(account[0]);
     }
  }
 
@@ -127,9 +129,10 @@ exports.addUser = function(req, res) { 
                 var newUser = new models.User(newUserData);
                 newUser.save(afterSaving);
 
-                function afterSaving(err) {
+                function afterSaving(err, newAccount) {
                     if(err) {console.log(err); res.send(500);}
-                    req.session.email = newUserData['email'];
+                    req.session._id = newAccount[0]._id;
+                    req.session.email = newAccount[0].email;
                     res.redirect('home');
                 }
             }
