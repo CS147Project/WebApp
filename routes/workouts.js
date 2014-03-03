@@ -148,7 +148,7 @@ exports.assign = function(req, res){
     }
     models.User.find({'_id': req.session._id}).exec(afterIsCoachQuery);
     function afterIsCoachQuery(err, coach) {
-        if(err) {console.log(err); res.send(500);}
+        if(err) {console.log(err); return res.send(500);}
         if(coach[0].isCoach) {
             console.log("Is a Coach.");
         } else {
