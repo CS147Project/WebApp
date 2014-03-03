@@ -8,6 +8,10 @@ var coaches = require("../json/coaches.json");
 var models = require('../models');
 
 
+function getFullNameById(id) {
+	
+}
+
 function isCoach(email) {
 	for(coach in coaches["coaches"]) {
 		if(coaches["coaches"][coach].cid == email) {
@@ -186,7 +190,15 @@ exports.get = function(req, res) {
 //from messages is null -> problems when want length.
 function fromMessages(err, fromMessages) {
 	for(var i=0; i<fromMessages.length; i++) {
-		allMessages.push(fromMessages[i]);
+
+		var messageToSend = {
+			"toid": fromMessages[i].toid,
+			"fromid": fromMessages[i].fromid,
+			"text": fromMessages[i].text,
+			"created": parseDate(fromMessages[i].created)
+		}
+		allMessages.push(messageToSend);
+		//allMessages.push(fromMessages[i]);
 	}
 
  }
