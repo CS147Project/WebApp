@@ -110,7 +110,7 @@ exports.addUser = function(req, res) { 
         'lastName': req.query.lastName,
         'isAthlete': athlete,
         'isCoach': coach,
-        'password': req.query.password, //crypto.createHash('md5').update(req.query.name).digest('hex')    
+        'password': req.query.password//, //crypto.createHash('md5').update(req.query.name).digest('hex')    
     }
     if(noBlank(newUserData, req)) {
         models.User.find({'email': req.query.email}).exec(afterQuery);
@@ -132,8 +132,9 @@ exports.addUser = function(req, res) { 
 
                 function afterSaving(err, newAccount) {
                     if(err) {console.log(err); res.send(500);}
-                    req.session._id = newAccount[0]._id;
-                    req.session.email = newAccount[0].email;
+                    req.session._id = newAccount._id;
+                    req.session.email = newAccount.email;
+               //     console.log("logged in _id: " + req.session.id + "email: " + req.session.email);
                     res.redirect('home');
                 }
             }
