@@ -9,7 +9,22 @@ var models = require('../models');
 
 
 function getFullNameById(id) {
+	var fullName="";
+	 models.User.find({"_id": id}).exec(haveUserNeedName);
+// console.log("fullName value: "+ fullName);
 	
+	function haveUserNeedName(err, user) {
+	//	console.log("FULL NAME: " + user[0].firstName + " " + user[0].lastName);
+	fullName= user[0].firstName + " " + user[0].lastName;
+	console.log("full name: "+ fullName);
+	//function returnFullName() {
+		
+	//}
+	//return fullName;
+	}
+	//console.log("FUll NAME: " +fullName);
+//	return fullName;
+	return fullName;
 }
 
 function isCoach(email) {
@@ -190,12 +205,18 @@ exports.get = function(req, res) {
 //from messages is null -> problems when want length.
 function fromMessages(err, fromMessages) {
 	for(var i=0; i<fromMessages.length; i++) {
+		
+	var fullName = getFullNameById(fromMessages[i].toid);
+console.log("full name to store: "+ fullName);
+
 
 		var messageToSend = {
 			"toid": fromMessages[i].toid,
 			"fromid": fromMessages[i].fromid,
 			"text": fromMessages[i].text,
-			"created": parseDate(fromMessages[i].created)
+			"created": parseDate(fromMessages[i].created),
+			// "toName": getFullNameById(fromMessages[i].toid),
+			// "fromName": getFullNameById(fromMessages[i].fromid)
 		}
 		allMessages.push(messageToSend);
 		//allMessages.push(fromMessages[i]);
@@ -210,7 +231,18 @@ function fromMessages(err, fromMessages) {
 
 function toMessages(err, toMessages) {
 	for(var i=0; i<toMessages.length; i++) {
-		allMessages.push(toMessages[i]);
+		// var fullName="";
+		// console.log("full name in calling fnct: "+ getFullNameById(fromMessages[i].toid));
+		var messageToSend = {
+			"toid": fromMessages[i].toid,
+			"fromid": fromMessages[i].fromid,
+			"text": fromMessages[i].text,
+			"created": parseDate(fromMessages[i].created),
+			// "toName": getFullNameById(fromMessages[i].toid, fullName),
+			// "fromName": getFullNameById(fromMessages[i].fromid, fullName)
+		}
+		allMessages.push(messageToSend);
+		//allMessages.push(toMessages[i]);
 	}
 
 }
@@ -270,5 +302,3 @@ res.render('messages', {
 	// 	'messages': userMessages, 'friends': friends
 	// });
 }
-
- 
