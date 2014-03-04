@@ -38,15 +38,3 @@ exports.save = function(req, res){
 	res.redirect('goWorkout'+parseInt(req.session.curr));
 
 }
-
-exports.next = function(req, res){
-	var nextIndex = parseInt(req.session.curr)+1;
-	var nextURL = 'goWorkout' + nextIndex;
-	res.redirect(nextURL);
-
-}
-exports.previous = function(req, res){
-	var prevIndex = parseInt(req.session.curr)-1;
-	var prevURL = 'goWorkout' + prevIndex;
-	res.redirect(prevURL);
-}

@@ -65,7 +65,6 @@ app.post('/respondTeam', team.respondRequest);
 app.get('/teamPage', team.view);
 app.get('/messages', messages.get);
 app.get('/messages/create', messages.create);
-app.get('/startworkout', workout.start);
 app.get('/goWorkout:id', workout.goWorkout);
 app.get('/goWorkout/submit', workout.submit);
 app.post('/goWorkout/save', workout.save);

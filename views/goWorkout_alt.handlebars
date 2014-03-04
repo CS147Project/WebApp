@@ -1,0 +1,83 @@
+<!doctype html>
+
+<!-- <a href="workout/pause">
+  <button type="button" class="btn btn-danger btn">
+    <span class="glyphicon glyphicon-pause glyphicons-lg"></span> Pause
+  </button>
+</a> -->
+
+<div id="goWorkout" class="swiper-container">
+    <!-- SWIPER WRAPPER -->
+  <div class="swiper-wrapper">
+      <div class="swiper-slide">
+        <center><h3>Workout Summary</h3></center>
+        {{#each exercises}}
+            <p>{{name}}</p>
+        {{/each}}
+        <br />
+        <br />
+        <p>Swipe to the right to begin</p>
+
+      </div>
+
+      {{#each exercises}}
+      <!-- SLIDE -->
+      <div class="swiper-slide"> 
+        <!-- FORM FOR SINGLE EXERCISE -->
+        <form id="goExerciseForm" class="form-horizontal center" role="form" method="get" action="">
+    
+            <h2>{{name}}</h2>
+
+            {{#if weight}}
+                <div class="form-group">
+                    <label for="inputWeight" class="col-sm-2 control-label">Weight:</label>
+                    <div class="col-sm-5">
+                        <input type="number" class="form-control" id="inputWeight" placeholder="{{exercise.weight}}" required>
+                    </div>
+                </div>
+            {{/if}}
+            {{#if sets}}
+                <div class="form-group">
+                    <label for="inputSet" class="col-sm-2 control-label">Set:</label>
+                    <div class="col-sm-5">
+                        <input type="number" class="form-control" id="inputSet" placeholder="{{exercise.sets}}" required>
+                    </div>
+                </div>
+            {{/if}}
+            {{#if reps}}
+                <div class="form-group">
+                    <label for="inputReps" class="col-sm-2 control-label">Reps:</label>
+                    <div class="col-sm-5">
+                        <input type="number" class="form-control" id="inputReps" placeholder="{{exercise.reps}}" required>
+                    </div>
+                </div>
+            {{/if}}
+            {{#if distance}}
+                <div class="form-group">
+                    <label for="inputDist" class="col-sm-2 control-label">Distance: </label>
+                    <div class="col-sm-5">
+                        <input type="number" class="form-control" id="inputDist" placeholder="{{exercise.distance}}" required>
+                    </div>
+                </div>
+            {{/if}}
+            {{#if time}}
+                <div class="form-group">
+                    <label for="inputTime" class="col-sm-2 control-label">Time: </label>
+                    <div class="col-sm-5">
+                        <input type="number" class="form-control" id="inputTime" pattern="HH:mm:ss" placeholder="00:00:00" required>
+                    </div>
+                </div>
+            {{/if}}
+
+        </form>
+
+      </div> 
+      <!-- END OF SLIDE -->
+      {{/each}}
+  </div>
+  <div class="pagination"></div>
+</div>
+
+<a href="">
+    <button type="button" id="completeWorkout" class="btn btn-primary">Complete Workout</button>
+</a>
