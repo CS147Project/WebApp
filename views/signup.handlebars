@@ -38,25 +38,25 @@
           <h2 class="form-signin-heading">Sign up</h2>
           <input type="text" class="form-control" placeholder="First Name" name="firstName" required>
           <input type="text" class="form-control" placeholder="Last Name" name="lastName" required>
-            <div class="control-group">
-              <label class="control-label">Select an Account Type</label>
-              <div class="controls">
-                <label class="radio">
-                  <input type="radio" name="accountType" value="athlete">
-                  Athlete Account
-                </label>
-                <label class="radio">
-                  <input type="radio" name="accountType" value="coach">
-                  Coach Account
-                </label>
-                <label class="radio">
-                  <input type="radio" name="accountType" value="both">
-                  Athlete & Coach Account
-                </label>
-              </div>
-            </div>
           <input type="email" class="form-control" placeholder="Email address" name="email" required autofocus>
           <input type="password" class="form-control" placeholder="Password" name="password" required>
+          <div class="control-group">
+            <label class="control-label">Select an Account Type</label>
+            <div class="controls">
+              <label class="radio">
+                <input type="radio" name="accountType" value="athlete">
+                Athlete Account
+              </label>
+              <label class="radio">
+                <input type="radio" name="accountType" value="coach">
+                Coach Account
+              </label>
+              <label class="radio">
+                <input type="radio" name="accountType" value="both">
+                Athlete & Coach Account
+              </label>
+            </div>
+          </div>
           {{msg}}
           <button class="btn btn-lg btn-success btn-block" type="submit">Create Account!</button>
         </form>

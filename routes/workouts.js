@@ -23,13 +23,10 @@ exports.analytics = function(req, res) { 
     			myWorkouts.push(completedworkouts["completedWorkouts"][cw]);
     		}
     	}
-
-
-        res.render('analytics', {'completedworkouts': myWorkouts});
+        res.render('analytics', {
+            'completedworkouts': myWorkouts
+        });
     }
-    // else {
-    // 	res.render('home', {layout: false});
-    // }
  }
 
 //returns a collection of exercises, given a workout id
@@ -96,42 +93,41 @@ exports.create = function(req, res) { 
     console.log("Body", req.body);
     var form_data = req.body;
     var numExercises = form_data.numExercises;
-    var exercises = [];
-
+    var newWorkout = new models.WorkoutTemplate({
+        "creatorid": req.session._id,
+        "title": form_data.title,
+        "description": form_data.description,
+        "exercises": []
+    });
     for (var i = 0; i < numExercises; i++) {
-        var weight = 0;
-        var distance = 0;
-        var speed = 0;
-        var time = 0;
+        var weight = false;
+        var distance = false;
+        var speed = false;
+        var time = false;
         if(form_data["excersiseRecordType"+i] == "weight") {
-            weight = 1;
+            weight = true;
         } else if(form_data["excersiseRecordType"+i] == "distance") {
-            distance = 1;
+            distance = true;
         } else if(form_data["excersiseRecordType"+i] == "speed") {
-            speed = 1;
+            speed = true;
         } else {
-            time = 1;
+            time = true;
         }
 
-        var newExercise = new models.WorkoutTemplate({
+        var newExercise = new models.ExerciseTemplate({
             "name": form_data["excersiseName"+i],
-            "set": form_data["excersiseSets"+i],
-            "rep": form_data["excersiseReps"+i],
+            "sets": parseInt(form_data["excersiseSets"+i]),
+            "reps": parseInt(form_data["excersiseReps"+i]),
             "weight": weight,
             "distance": distance,
             "speed": speed,
             "time": time
         });
-        exercises.push(newExercise);
+        newWorkout.exercises.push(newExercise);
     }
     console.log("session id", req.session._id);
     console.log("session email", req.session.email);
-    var newWorkout = new models.WorkoutTemplate({
-        "creatorid": req.session._id,
-        "title": form_data.title,
-        "description": form_data.description,
-        "exercises": exercises
-    });
+    console.log("exercises", newWorkout.exercises);
 
     newWorkout.save(afterSaving);
 
