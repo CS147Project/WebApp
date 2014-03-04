@@ -1,6 +1,7 @@
 <!doctype html>
 
-<form class="form" role="form" method="get" action="/settings">
+<!-- <form class="form" role="form" method="get" action="/settings"> -->
+   <form class="form" role="form" method="post" action="/inviteTeam"> 
     <h4 class="form-signin-heading">Request to Join a Team</h4>
     <p class="caption">Enter in your coach's email: </p>
     <input type="email" class="form-control" placeholder="Email address" name="email" required autofocus>
@@ -20,27 +21,7 @@
     {{/each}}
 {{/if}}
 
-{{#if teamRequests}}
-<h4>Respond to Requests</h4>
-<form class="form" role="form" method="post" action="/respondTeamAll">
-     <button class="btn btn-primary" type="submit">Accept All Requests</button>
-</form>
-{{#each teamRequests}}
-<p class="caption"> OR Select Players to Accept </p>
-<form class="form" role="form" method="post" action="/respondTeam">
-    {{#each requests}}
 
-    <input type = "checkbox" name="aid" value="{{aid}}"> 
-    <input type="hidden" name="tid" value="{{tid}}">
-
-    {{aid}} 
-<br>
-    {{/each}}
-    <button class="btn btn-primary" type="submit">Accept</button>
-</form>
-{{/each}}
-
-{{/if}}
 
 <!-- <a href="team"> <h4> Edit Team </h4>
 </a> -->

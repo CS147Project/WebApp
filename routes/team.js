@@ -5,11 +5,21 @@ var teamathletes = require("../json/teamathletes.json");
 var invites = require("../json/invites.json");
 var teamData = require("../json/teams.json");
 var athletes = require("../json/athletes.json");
+var models = require('../models');
+var messages = require("./messages");
 
 
 
 exports.view = function(req, res) {
-    res.render('team');
+var teams = messages.findTeamsForCoach(req.session.email);
+    var teamRequests = [];
+    for(team in teams) {
+        teamRequests.push({"requests": getRequestsForTeam(teams[team])});
+    }
+        res.render('team', {
+            'teamRequests': teamRequests
+         }); 
+  //  res.render('team');
 }
 
 exports.getAllRequests = function() {
@@ -47,6 +57,19 @@ exports.getRequestsForTeams = function(teams) {
     return requests;
 }
 
+//delete later (when move away from JSON and into database)
+
+function getRequestsForTeam (team) {
+    var requests = [];
+    for(invite in invites['allInvites']) {
+        console.log("invite tid's", invites['allInvites'][invite].tid);
+        if(team == invites['allInvites'][invite].tid) {
+            requests.push(invites['allInvites'][invite]);
+        }
+    }
+    return requests;
+}
+
 function onRoster(tid, aid) {
     for (var athlete in teamathletes["teamathletes"]) {
         if (athlete.tid == tid && athlete.aid == aid) {
@@ -76,10 +99,35 @@ function isAthlete(email) {
 }
 
 exports.createTeam = function(req, res) {
-    var tid = req.query.tid;
-//FILL THIS OUT
+    var cid = req.session.id;
+    var sport = req.body.sport;
+    var name = req.body.name;
+    var tid="";
 
 
+
+    var team = new models.Team({
+        "sport": sport,
+        "name": name
+    }) 
+    team.save(afterSaving);
+    function afterSaving(err, team) {
+        if(err) { console.log(err); res.send(500);};
+        tid= team._id;
+        console.log("tid: " + tid);
+        var teamCoach = new models.TeamCoach({
+        "cid": cid,
+        "tid": tid
+    }) 
+    teamCoach.save(afterSavingCoach);
+    function afterSavingCoach(err, coach) {
+        if(err) { console.log(err); res.send(500);};
+        
+        console.log("after saving coach");
+    }
+    }
+
+res.redirect('teamPage');
 
 }
 
@@ -99,26 +147,62 @@ exports.getPlayersCoaches = function(req, res) {
     //return JSON object of all of the player's coaches (ID's)
 }
 
+function getTeamByCoach(cid) {
+
+}
+
 exports.sendRequest = function(req, res) {
-
     if(req.session !== undefined && req.session.email !== undefined) {
-        aid = req.session.email;        
-    } else {
-        res.redirect('login');
-        return;
-    }
-    var d = new Date();
-    d = parseDate(d);
-    tid = req.body.tid;
-    if(!onRoster(tid, aid)) {
-        newInvite = {
-            "iid": 1,
-            "aid": aid,
-            "tid": tid,
-            "datetime": d
-        }
+    aid = req.session.email;        
+} else {
+    res.redirect('login');
+    return;
+}
 
-        invites['allInvites'].push(newInvite);
+    var coachEmail = req.body.email;
+    console.log("coach email: "+ coachEmail);
+    var cid = "";
+    var tid = "";
+    models.User
+    .find({"email": coachEmail})
+    .exec(afterQuery);
+
+//from messages is null -> problems when want length.
+function afterQuery(err, coach) {
+    cid = coach[0]._id;
+    console.log("cid: "+ cid);
+
+}
+console.log("cid outside: " + cid);
+models.TeamCoach
+    .find({"cid": cid})
+    .exec(afterTeamQuery);
+function afterTeamQuery(err, team) {
+    if(team!=null) {
+    tid = team[0].tid;
+    console.log("tid: "+ tid);
+}
+else {
+    console.log("this coach has no teams");
+}
+}
+
+
+
+   // tid = req.body.tid;
+   if(!onRoster(tid, aid)) {
+    var newInvite = {
+
+    }
+
+        // newInvite = {
+        //     "iid": 1,
+        //     "aid": aid,
+        //     "tid": tid,
+        //     "datetime": d
+        // }
+
+        // invites['allInvites'].push(newInvite);
         console.log(newInvite);
         res.render('home', {
             'msg': 'Your request to join '+getNameForTeamId(tid)+' has been sent!',
