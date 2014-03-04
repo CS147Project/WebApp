@@ -10,7 +10,9 @@
     <!-- SWIPER WRAPPER -->
   <div class="swiper-wrapper">
       <div class="swiper-slide">
-        <center><h3>Workout Summary</h3></center>
+        <center><h2>Workout Summary</h2></center>
+        <center><h3>{{workout.title}}</h3></center>        
+        <center><h4>{{workout.description}}</h4></center>        
         {{#each exercises}}
             <p>{{name}}</p>
         {{/each}}

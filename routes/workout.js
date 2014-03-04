@@ -3,7 +3,7 @@ var workouts = require("./workouts.js");
 var currWorkout = require("../json/currentWorkout.json");
 var models = require('../models');
 
-exports.start = function(req, res) {  // Doesn't seem to be used
+exports.start = function(req, res) {  // Doesn't seem to be used anywhere
 	currWorkout["exercises"] = exercises["exercises"];
 	req.session.wid = req.query.id;
     res.render('startWorkout', exercises);
@@ -16,6 +16,7 @@ exports.goWorkout = function(req, res) {
     function afterWorkoutQuery(err, templateWorkouts) {
         if(err) {console.log(err); return res.send(500);}
         res.render('goWorkout', {
+        	'workout': templateWorkouts[0],
 			'exercises': templateWorkouts[0].exercises
 		});
     }
