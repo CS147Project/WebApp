@@ -3,12 +3,6 @@ var workouts = require("./workouts.js");
 var currWorkout = require("../json/currentWorkout.json");
 var models = require('../models');
 
-exports.start = function(req, res) {  // Doesn't seem to be used
-	currWorkout["exercises"] = exercises["exercises"];
-	req.session.wid = req.query.id;
-    res.render('startWorkout', exercises);
-}
-
 exports.goWorkout = function(req, res) {
 	console.log("go workout");
 	console.log("id", req.params.id);
@@ -36,16 +30,4 @@ exports.save = function(req, res){
 
 	res.redirect('goWorkout'+parseInt(req.session.curr));
 
-}
-
-exports.next = function(req, res){
-	var nextIndex = parseInt(req.session.curr)+1;
-	var nextURL = 'goWorkout' + nextIndex;
-	res.redirect(nextURL);
-
-}
-exports.previous = function(req, res){
-	var prevIndex = parseInt(req.session.curr)-1;
-	var prevURL = 'goWorkout' + prevIndex;
-	res.redirect(prevURL);
 }

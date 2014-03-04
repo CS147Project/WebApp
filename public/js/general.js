@@ -5,6 +5,7 @@ var count = 1;
 // Call this function when the page loads (the "ready" event)
 $(document).ready(function() {
 	initializePage();
+  $('#selectWorkout tr#workout').first().addClass('success');
 })
 
 /*

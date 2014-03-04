@@ -2,9 +2,13 @@
 
 <h3>Create a Workout</h3>
 <form class="form" role="form" method="post" action="/createWorkout">
-    <input type="text" class="form-control" placeholder="Title of Exercise" name="title" required autofocus>
+    <!-- TITLE WORKOUT -->
+    <input type="text" class="form-control" placeholder="Workout Title" name="title" required autofocus>
 <!--     <input type="text" class="form-control" placeholder="To be completed by (mm/dd/yy)" name="dueDate"> -->
+    <!-- WORKOUT DESCRIPTION -->
     <textarea cols="50" rows="3" name="description" placeholder="Workout Description"></textarea>
+
+    <!-- EXERCISES -->
     <br>
     <div id="exercisesCreated">
         <h4>Exercises</h4>
@@ -15,5 +19,5 @@
 
     <br />
     <br />
-    <button class="btn btn-success" type="submit">Done!</button>
+    <button class="btn btn-success btn-lg" type="submit">Save Workout</button>
 </form>
