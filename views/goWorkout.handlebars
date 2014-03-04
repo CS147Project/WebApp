@@ -14,7 +14,7 @@
         <center><h3>{{workout.title}}</h3></center>        
         <center><h4>{{workout.description}}</h4></center>        
         {{#each exercises}}
-            <p>{{name}}</p>
+            <h5>{{name}}</h5>
         {{/each}}
         <br />
         <br />
@@ -26,7 +26,7 @@
       <!-- SLIDE -->
       <div class="swiper-slide"> 
         <!-- FORM FOR SINGLE EXERCISE -->
-        <form id="goExerciseForm" class="form-horizontal center" role="form" method="get" action="">
+        <form id="goExerciseForm" class="form-horizontal center" role="form" method="post" action="/workouts/addCompletedWorkout">
     
             <h2>{{name}}</h2>
             <h2>{{sets}} sets x {{reps}} reps</h2>
@@ -63,9 +63,7 @@
                     </div>
                 </div>
             {{/if}}
-
         </form>
-
       </div> 
       <!-- END OF SLIDE -->
       {{/each}}
