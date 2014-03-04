@@ -50,6 +50,14 @@ mongoose.connection.collections['exercisetemplates'].drop( function(err) {
 
 mongoose.connection.collections['workouttemplates'].drop( function(err) {
     console.log('collection dropped');
+});
+
+mongoose.connection.collections['completedexercise'].drop( function(err) {
+    console.log('collection dropped');
+});
+
+mongoose.connection.collections['completedworkout'].drop( function(err) {
+    console.log('collection dropped');
     mongoose.connection.close();
 });
 
