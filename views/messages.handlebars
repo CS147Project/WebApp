@@ -1,4 +1,13 @@
 <!doctype html>
+<!-- Handlebars.registerHelper('formatDate', function(datetime, format) {
+  if (moment) {
+    f = DateFormats[format];
+    return moment(datetime).format(f);
+  }
+  else {
+    return datetime;
+  }
+}); -->
 
 <h4> Messages </h4>
 <p class="caption">Create a New Message: </p>
@@ -8,7 +17,9 @@ To:
 		<select name = "toid">
 			{{#if friends}} 
 			{{#each friends}}
-			<option value = {{aid}}> {{name}}</option>
+			
+			<option value = {{_id}}> {{firstName}}</option>
+			<!-- <option value = {{aid}}> {{name}}</option> -->
 			{{/each}}
 			{{/if}}
 		</select>
@@ -19,7 +30,7 @@ To:
 
 		<input type="text" class="form-control" placeholder="Message..." name="text" required autofocus>
 
-		<input type = "hidden" name = "fromid" value = {{toid}}>
+		<input type = "hidden" name = "fromid" value = {{userId}}>
 
 
 		<button class="btn  btn-primary btn-block" type="submit">Send</button>
@@ -31,7 +42,13 @@ To:
 </h4>
 {{#each messages}}
 <p>
-	{{fromid}} to {{toid}} ({{datetime}}):<br>
+	{{fromid}} to {{toid}} ({{created}}):
+<!-- {{fromid/firstName}}
+	{{#with fromid}}
+	{{firstName}} {{lastName}}
+	{{/with}}
+ -->
+	<br>
 	{{text}}<br>
 
 
