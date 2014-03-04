@@ -33,9 +33,9 @@ exports.view = function(req, res) {
                     }
                 }
                 console.log("num requests: "+ teamRequests.length);
-        res.render('team', {
-            'teamRequests': teamRequests
-        }); 
+                res.render('team', {
+                    'teamRequests': teamRequests
+                }); 
             }
 
 
@@ -45,6 +45,7 @@ exports.view = function(req, res) {
         }
         else {
             console.log("this coach has no teams");
+            res.render('team');
         }
 
         // console.log("num requests: "+ teamRequests.length);
@@ -52,7 +53,7 @@ exports.view = function(req, res) {
         //     'teamRequests': teamRequests
         // }); 
 
-    }
+}
 //Get TEam Requests with Database
 
 
@@ -160,18 +161,7 @@ exports.createTeam = function(req, res) {
         if(err) { console.log(err); res.send(500);};
         tid= team._id;
         console.log("tid: " + tid);
-        var teamCoach = new models.TeamCoach({
-            "cid": cid,
-            "tid": tid
-        }) 
-        teamCoach.save(afterSavingCoach);
-        function afterSavingCoach(err, coach) {
-            if(err) { console.log(err); res.send(500);};
-
-            console.log("after saving coach at cid: "+ cid + " tid: "+ tid);
-            res.redirect('teamPage');
-
-        }
+        
     }
 
     
@@ -282,17 +272,33 @@ exports.respondRequest = function(req, res) {
     var aid = form_data.aid; //this is now an array
     var tid = form_data.tid;
 
-//for(var i =0; i<aid.length; i++) {
+for(var i =0; i<aid.length; i++) {
     if(response=="true") {
-        var teamathlete = {
-            "tid": invite.tid,
-            "aid": invite.aid
-        }
-        teamathletes["teamathletes"].push(teamathlete);
-        removeRequest(aid, tid);
+        // var teamathlete = {
+        //     "tid": invite.tid,
+        //     "aid": invite.aid
+        // }
+        // teamathletes["teamathletes"].push(teamathlete);
+        // removeRequest(aid, tid);
 
+//in DATABASE:
+models.Invite
+.find({"aid": aid[i]}, {"tid": tid[i]})
+.remove()
+.exec(afterRemoving);
+function afterRemoving(err) {
+    if(err) { console.log(err); res.send(500);};
+}
+ var newPlayer = new models.TeamAthlete({
+            "aid": aid[i],
+            "tid": tid[i]
+        }) 
+        newPlayer.save(afterSavingCoach);
+        function afterSavingCoach(err, coach) {
+            if(err) { console.log(err); res.send(500);};
+        }
     }
-//}
+}
     //remove request from array 
     // var index = invites["allInvites"].indexof(invite);
     // if(index > -1) {
@@ -302,6 +308,49 @@ exports.respondRequest = function(req, res) {
 }
 
 exports.respondRequestAll = function(req, res) {
+   var cid = req.session._id;
+    var teamRequests = [];
+
+
+    console.log("cid: "+ cid);
+    //get teamReq with database
+    models.TeamCoach
+    .find({"cid": cid})
+    .exec(afterTeamQuery);
+    function afterTeamQuery(err, team) {
+        models.Invite
+        .find({"tid": tid})
+        .exec(afterFoundAllInvites);
+
+function afterFoundAllInvites(err, invites) {
+    for(var i=0; i<invites.length; i++) {
+        var newPlayer = new models.TeamAthlete({
+            "aid": invites[i].aid,
+            "tid": invites[i].tid
+        }) 
+            newPlayer.save(afterSaving);
+    function afterSaving(err, player) {
+        if(err) { console.log(err); res.send(500);};
+        if(i+1==invites.length) {
+            models.Invite
+            .find({"tid": tid})
+            .remove()
+            .exec(removedInvites);
+            function removedInvites(err) {
+                res.redirect("team");
+            }
+        }
+        
+    }
+    }
+}
+
+
+    }
+
+
+
+
 //TODO: add more here!
 res.redirect('settings');
 }
