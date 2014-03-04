@@ -1,5 +1,3 @@
-
-
 var data = require("../json/users.json");
 var teamathletes = require("../json/teamathletes.json");
 var invites = require("../json/invites.json");
@@ -11,14 +9,61 @@ var messages = require("./messages");
 
 
 exports.view = function(req, res) {
-var teams = messages.findTeamsForCoach(req.session.email);
+    var cid = req.session._id;
     var teamRequests = [];
-    for(team in teams) {
-        teamRequests.push({"requests": getRequestsForTeam(teams[team])});
-    }
+
+
+    console.log("cid: "+ cid);
+    //get teamReq with database
+    models.TeamCoach
+    .find({"cid": cid})
+    .exec(afterTeamQuery);
+    function afterTeamQuery(err, team) {
+        if(team!=null && team.length>0) {
+            //IDK why TID is undefined in the following line!!!
+            var tid = team[0].tid;
+            console.log("tid: "+ tid);
+            models.Invite
+            .find({"tid": tid}).exec(afterInviteQuery);
+            function afterInviteQuery(err, invites) {
+                if(invites!=null) {
+                    for(var i=0; i<invites.length; i++) {
+                        console.log("pushing an invite");
+                        teamRequests.push(invites[i]);
+                    }
+                }
+                console.log("num requests: "+ teamRequests.length);
         res.render('team', {
             'teamRequests': teamRequests
-         }); 
+        }); 
+            }
+
+
+
+
+
+        }
+        else {
+            console.log("this coach has no teams");
+        }
+
+        // console.log("num requests: "+ teamRequests.length);
+        // res.render('team', {
+        //     'teamRequests': teamRequests
+        // }); 
+
+    }
+//Get TEam Requests with Database
+
+
+
+// var teams = messages.findTeamsForCoach(req.session.email);
+// for(team in teams) {
+//     teamRequests.push({"requests": getRequestsForTeam(teams[team])});
+// }
+// res.render('team', {
+//     'teamRequests': teamRequests
+// }); 
   //  res.render('team');
 }
 
@@ -99,7 +144,7 @@ function isAthlete(email) {
 }
 
 exports.createTeam = function(req, res) {
-    var cid = req.session.id;
+    var cid = req.session._id;
     var sport = req.body.sport;
     var name = req.body.name;
     var tid="";
@@ -116,19 +161,20 @@ exports.createTeam = function(req, res) {
         tid= team._id;
         console.log("tid: " + tid);
         var teamCoach = new models.TeamCoach({
-        "cid": cid,
-        "tid": tid
-    }) 
-    teamCoach.save(afterSavingCoach);
-    function afterSavingCoach(err, coach) {
-        if(err) { console.log(err); res.send(500);};
-        
-        console.log("after saving coach");
-    }
+            "cid": cid,
+            "tid": tid
+        }) 
+        teamCoach.save(afterSavingCoach);
+        function afterSavingCoach(err, coach) {
+            if(err) { console.log(err); res.send(500);};
+
+            console.log("after saving coach at cid: "+ cid + " tid: "+ tid);
+            res.redirect('teamPage');
+
+        }
     }
 
-res.redirect('teamPage');
-
+    
 }
 
 exports.getTeamsByUser =function(req, res) {
@@ -153,11 +199,11 @@ function getTeamByCoach(cid) {
 
 exports.sendRequest = function(req, res) {
     if(req.session !== undefined && req.session.email !== undefined) {
-    aid = req.session.email;        
-} else {
-    res.redirect('login');
-    return;
-}
+        aid = req.session.email;        
+    } else {
+        res.redirect('login');
+        return;
+    }
 
     var coachEmail = req.body.email;
     console.log("coach email: "+ coachEmail);
@@ -169,23 +215,24 @@ exports.sendRequest = function(req, res) {
 
 //from messages is null -> problems when want length.
 function afterQuery(err, coach) {
+    console.log("coach: " + coach);
     cid = coach[0]._id;
     console.log("cid: "+ cid);
 
-}
-console.log("cid outside: " + cid);
-models.TeamCoach
+    models.TeamCoach
     .find({"cid": cid})
     .exec(afterTeamQuery);
-function afterTeamQuery(err, team) {
-    if(team!=null) {
-    tid = team[0].tid;
-    console.log("tid: "+ tid);
-}
-else {
-    console.log("this coach has no teams");
-}
-}
+    function afterTeamQuery(err, team) {
+        if(team!=null) {
+
+            console.log("team: " + team);
+            tid = team.tid;
+            console.log("tid: "+ tid);
+        }
+        else {
+            console.log("this coach has no teams");
+        }
+    }
 
 
 
@@ -214,6 +261,8 @@ else {
             'msg': 'There was a problem sending your invite. Please try again.'
         });
     }
+}
+
 }
 
 function removeRequest(aid, tid) {
@@ -273,5 +322,3 @@ exports.viewAll = function(req, res) {
         'invites': invites
     });
 }
-
-
