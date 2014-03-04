@@ -9,22 +9,15 @@ var models = require('../models');
 
 
 function getFullNameById(id) {
-	var fullName;
-	console.log("fullName value: "+ fullName);
 	models.User.find({"_id": id}).exec(haveUserNeedName);
 	
 	function haveUserNeedName(err, user) {
+		console.log("user results", user);
 		if(err) {console.log(err); return "";}
-		//	console.log("FULL NAME: " + user[0].firstName + " " + user[0].lastName);
-		fullName = user[0].firstName + " " + user[0].lastName;
+		var fullName = user[0].firstName + " " + user[0].lastName;
 		console.log("full name: "+ fullName);
-		//function returnFullName() {
-			
-		//}
-		//return fullName;
+		return fullName;
 	}
-	console.log("full name: "+ fullName);
-	return fullName;
 }
 
 function isCoach(email) {
@@ -207,7 +200,7 @@ exports.get = function(req, res) {
 		console.log("fromMessages", fromMessages);
 		for(var i=0; i<fromMessages.length; i++) {
 			console.log(fromMessages[i].toid);
-			var fullName = getFullNameById("from message", fromMessages[i].toid);
+			var fullName = getFullNameById(fromMessages[i].toid);
 			console.log("full name to store: "+ fullName);
 
 			var messageToSend = {
