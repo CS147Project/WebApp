@@ -6,11 +6,20 @@ var invites = require("../json/invites.json");
 var teamData = require("../json/teams.json");
 var athletes = require("../json/athletes.json");
 var models = require('../models');
+var messages = require("./messages");
 
 
 
 exports.view = function(req, res) {
-    res.render('team');
+var teams = messages.findTeamsForCoach(req.session.email);
+    var teamRequests = [];
+    for(team in teams) {
+        teamRequests.push({"requests": getRequestsForTeam(teams[team])});
+    }
+        res.render('team', {
+            'teamRequests': teamRequests
+         }); 
+  //  res.render('team');
 }
 
 exports.getAllRequests = function() {
@@ -43,6 +52,19 @@ exports.getRequestsForTeams = function(teams) {
             if(teams[team].tid == invites['allInvites'][invite].tid) {
                 requests.push(invites['allInvites'][invite]);
             }
+        }
+    }
+    return requests;
+}
+
+//delete later (when move away from JSON and into database)
+
+function getRequestsForTeam (team) {
+    var requests = [];
+    for(invite in invites['allInvites']) {
+        console.log("invite tid's", invites['allInvites'][invite].tid);
+        if(team == invites['allInvites'][invite].tid) {
+            requests.push(invites['allInvites'][invite]);
         }
     }
     return requests;
@@ -93,21 +115,17 @@ exports.createTeam = function(req, res) {
         if(err) { console.log(err); res.send(500);};
         tid= team._id;
         console.log("tid: " + tid);
+        var teamCoach = new models.TeamCoach({
+        "cid": cid,
+        "tid": tid
+    }) 
+    teamCoach.save(afterSavingCoach);
+    function afterSavingCoach(err, coach) {
+        if(err) { console.log(err); res.send(500);};
+        
+        console.log("after saving coach");
     }
-
-//     var teamCoach = new models.teamCoach({
-//          "cid": cid,
-//          "tid": tid
-//     }) 
-//     teamCoach.save(afterSavingCoach);
-//      function afterSavingCoach(err, coach) {
-//  if(err) { console.log(err); res.send(500);};
-//         }
-
-// console.log("just assigned team id: " + tid);
-
-
-//FILL THIS OUT
+    }
 
 res.redirect('teamPage');
 

@@ -195,26 +195,31 @@ exports.get = function(req, res) {
 	.sort('date')
 	.exec(fromMessages);
 
-//from messages is null -> problems when want length.
+	//from messages is null -> problems when want length.
 	function fromMessages(err, fromMessages) {
 		console.log("fromMessages", fromMessages);
-		for(var i=0; i<fromMessages.length; i++) {
-			console.log(fromMessages[i].toid);
-			var fullName = getFullNameById(fromMessages[i].toid);
-			console.log("full name to store: "+ fullName);
-
-			var messageToSend = {
-				"toid": fromMessages[i].toid,
-				"fromid": fromMessages[i].fromid,
-				"text": fromMessages[i].text,
-				"created": parseDate(fromMessages[i].created),
-				// "toName": getFullNameById(fromMessages[i].toid),
-				// "fromName": getFullNameById(fromMessages[i].fromid)
+		for(var i = 0; i < fromMessages.length; i++) {
+			console.log("fromMessages", fromMessages[i].toid);
+			var fullName;
+			models.User.find({"_id": id}).exec(haveUserNeedName);
+			function haveUserNeedName(err, user) {
+				console.log("user results", user);
+				if(err) {console.log(err); return res.send(500);}
+				fullName = user[0].firstName + " " + user[0].lastName;
+				console.log("full name: "+ fullName);
+				console.log("fromMessages", fromMessages[i].toid);
+				var messageToSend = {
+					"toid": fromMessages[i]['toid'],
+					"fromid": fromMessages[i]['fromid'],
+					"text": fromMessages[i]['text'],
+					"created": parseDate(fromMessages[i]['created']),
+					// "toName": getFullNameById(fromMessages[i].toid),
+					// "fromName": getFullNameById(fromMessages[i].fromid)
+				}
+				allMessages.push(messageToSend);
+				//allMessages.push(fromMessages[i]);
 			}
-			allMessages.push(messageToSend);
-			//allMessages.push(fromMessages[i]);
 		}
-
 	 }
 
 	 models.Message.find({"toid": id}).sort('date').exec(toMessages);

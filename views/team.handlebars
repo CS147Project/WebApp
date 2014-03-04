@@ -28,3 +28,25 @@
 
 </form>
 {{/if}}
+
+{{#if teamRequests}}
+<h4>Respond to Requests</h4>
+<form class="form" role="form" method="post" action="/respondTeamAll">
+     <button class="btn btn-primary" type="submit">Accept All Requests</button>
+</form>
+{{#each teamRequests}}
+<p class="caption"> OR Select Players to Accept </p>
+<form class="form" role="form" method="post" action="/respondTeam">
+    {{#each requests}}
+
+    <input type = "checkbox" name="aid" value="{{aid}}"> 
+    <input type="hidden" name="tid" value="{{tid}}">
+
+    {{aid}} 
+<br>
+    {{/each}}
+    <button class="btn btn-primary" type="submit">Accept</button>
+</form>
+{{/each}}
+
+{{/if}}

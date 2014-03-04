@@ -99,7 +99,7 @@ exports.create = function(req, res) { 
         "description": form_data.description,
         "exercises": []
     });
-    for (var i = 0; i < numExercises; i++) {
+    for (var i = 1; i <= numExercises; i++) {
         var weight = false;
         var distance = false;
         var speed = false;
@@ -113,7 +113,7 @@ exports.create = function(req, res) { 
         } else {
             time = true;
         }
-
+        console.log("name", form_data["excersiseName"+i]);
         var newExercise = new models.ExerciseTemplate({
             "name": form_data["excersiseName"+i],
             "sets": parseInt(form_data["excersiseSets"+i]),
@@ -132,7 +132,7 @@ exports.create = function(req, res) { 
     newWorkout.save(afterSaving);
 
     function afterSaving(err) {
-        if(err) {console.log(err); res.send(500);}
+        if(err) {console.log(err); return res.send(500);}
         res.redirect('workouts');
     }
 }
