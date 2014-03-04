@@ -9,21 +9,21 @@ var models = require('../models');
 
 
 function getFullNameById(id) {
-	var fullName="";
-	 models.User.find({"_id": id}).exec(haveUserNeedName);
-// console.log("fullName value: "+ fullName);
+	var fullName;
+	console.log("fullName value: "+ fullName);
+	models.User.find({"_id": id}).exec(haveUserNeedName);
 	
 	function haveUserNeedName(err, user) {
-	//	console.log("FULL NAME: " + user[0].firstName + " " + user[0].lastName);
-	fullName= user[0].firstName + " " + user[0].lastName;
-	console.log("full name: "+ fullName);
-	//function returnFullName() {
-		
-	//}
-	//return fullName;
+		if(err) {console.log(err); return "";}
+		//	console.log("FULL NAME: " + user[0].firstName + " " + user[0].lastName);
+		fullName = user[0].firstName + " " + user[0].lastName;
+		console.log("full name: "+ fullName);
+		//function returnFullName() {
+			
+		//}
+		//return fullName;
 	}
-	//console.log("FUll NAME: " +fullName);
-//	return fullName;
+	console.log("full name: "+ fullName);
 	return fullName;
 }
 
@@ -149,10 +149,10 @@ exports.create = function(req, res) {
 	//connecting to db: 
 	var message = new models.Message( {
 //note: fromid and toid need to be )id, not e-mails!!!!
-	"text": req.query.text,
-	"fromid": req.query.fromid,
-	"toid": req.query.toid
-})
+		"text": req.query.text,
+		"fromid": req.query.fromid,
+		"toid": req.query.toid
+	})
 	message.save(afterSaving);
 	function afterSaving(err) {
 		if(err) { console.log(err); res.send(500);};
@@ -203,102 +203,101 @@ exports.get = function(req, res) {
 	.exec(fromMessages);
 
 //from messages is null -> problems when want length.
-function fromMessages(err, fromMessages) {
-	for(var i=0; i<fromMessages.length; i++) {
-		
-	var fullName = getFullNameById(fromMessages[i].toid);
-console.log("full name to store: "+ fullName);
+	function fromMessages(err, fromMessages) {
+		console.log("fromMessages", fromMessages);
+		for(var i=0; i<fromMessages.length; i++) {
+			console.log(fromMessages[i].toid);
+			var fullName = getFullNameById("from message", fromMessages[i].toid);
+			console.log("full name to store: "+ fullName);
 
-
-		var messageToSend = {
-			"toid": fromMessages[i].toid,
-			"fromid": fromMessages[i].fromid,
-			"text": fromMessages[i].text,
-			"created": parseDate(fromMessages[i].created),
-			// "toName": getFullNameById(fromMessages[i].toid),
-			// "fromName": getFullNameById(fromMessages[i].fromid)
+			var messageToSend = {
+				"toid": fromMessages[i].toid,
+				"fromid": fromMessages[i].fromid,
+				"text": fromMessages[i].text,
+				"created": parseDate(fromMessages[i].created),
+				// "toName": getFullNameById(fromMessages[i].toid),
+				// "fromName": getFullNameById(fromMessages[i].fromid)
+			}
+			allMessages.push(messageToSend);
+			//allMessages.push(fromMessages[i]);
 		}
-		allMessages.push(messageToSend);
-		//allMessages.push(fromMessages[i]);
-	}
 
- }
+	 }
 
- models.Message
-.find({"toid": id})
-.sort('date')
-.exec(toMessages);
+	 models.Message.find({"toid": id}).sort('date').exec(toMessages);
 
-function toMessages(err, toMessages) {
-	for(var i=0; i<toMessages.length; i++) {
-		// var fullName="";
-		// console.log("full name in calling fnct: "+ getFullNameById(fromMessages[i].toid));
-		var messageToSend = {
-			"toid": fromMessages[i].toid,
-			"fromid": fromMessages[i].fromid,
-			"text": fromMessages[i].text,
-			"created": parseDate(fromMessages[i].created),
-			// "toName": getFullNameById(fromMessages[i].toid, fullName),
-			// "fromName": getFullNameById(fromMessages[i].fromid, fullName)
+	function toMessages(err, toMessages) {
+		console.log("toMessages...", toMessages);
+		console.log("toMessages... length", toMessages.length);
+		for(var i = 0; i < toMessages.length; i++) {
+			// var fullName="";
+			// console.log("full name in calling fnct: "+ getFullNameById(toMessages[i].toid));
+			var messageToSend = {
+				"toid": toMessages[i]['toid'],
+				"fromid": toMessages[i]['fromid'],
+				"text": toMessages[i]['text'],
+				"created": parseDate(toMessages[i]['created'])
+				// "toName": getFullNameById(toMessages[i].toid, fullName),
+				// "fromName": getFullNameById(toMessages[i].fromid, fullName)
+			}
+			allMessages.push(messageToSend);
+			//allMessages.push(toMessages[i]);
 		}
-		allMessages.push(messageToSend);
-		//allMessages.push(toMessages[i]);
+
 	}
 
-}
-
-var allFriends = [];
-var allTeams = [];
-models.User.find().exec(foundAllUsers);
-function foundAllUsers(err, allUsers) {
-	console.log("found all users.");
-	console.log("all users: "+ allUsers.length);
-	for(var i=0; i<allUsers.length; i++) {
-		allFriends.push(allUsers[i]);
+	var allFriends = [];
+	var allTeams = [];
+	models.User.find().exec(foundAllUsers);
+	function foundAllUsers(err, allUsers) {
+		console.log("found all users.");
+		console.log("all users: "+ allUsers.length);
+		for(var i=0; i<allUsers.length; i++) {
+			allFriends.push(allUsers[i]);
+		}
 	}
-}
 
 
-// models.User.find({"_id": id}).exec(haveUser);
-// function haveUser(err, thisUser) {
-// 	if(thisUser.isCoach) {
-// 		models.TeamCoach.find({"tid": id}).exec(teamCoachList);
-// 	}
-// 	if(thisUser.isAthlete) {
-// 		models.TeamAthlete.find({"aid": id}).exec(teamPlayerList);
-// 	}
-// }
+	// models.User.find({"_id": id}).exec(haveUser);
+	// function haveUser(err, thisUser) {
+	// 	if(thisUser.isCoach) {
+	// 		models.TeamCoach.find({"tid": id}).exec(teamCoachList);
+	// 	}
+	// 	if(thisUser.isAthlete) {
+	// 		models.TeamAthlete.find({"aid": id}).exec(teamPlayerList);
+	// 	}
+	// }
 
 
-// function teamCoachList(err, teamsForCoach) {
-// 	for(team in teamsForCoach) {
-// 		models.TeamAthlete.find({'tid': teamsForCoach[team]['tid']}).exec(afterAthleteQuery);
-// 		function afterAthleteQuery(err, athletesForCoach) {
-// 			if(err) console.log(err);
-// 			allFriends.push(athletesForCoach);
-// 		}
-// 	}
-// }
+	// function teamCoachList(err, teamsForCoach) {
+	// 	for(team in teamsForCoach) {
+	// 		models.TeamAthlete.find({'tid': teamsForCoach[team]['tid']}).exec(afterAthleteQuery);
+	// 		function afterAthleteQuery(err, athletesForCoach) {
+	// 			if(err) console.log(err);
+	// 			allFriends.push(athletesForCoach);
+	// 		}
+	// 	}
+	// }
 
-// function teamPlayerList(err, teamsForPlayer) {
-// 	for(team in teamsForPlayer) {
-// 		models.TeamCoach.find({"tid": teamsForPlayer[team]["tid"]}).exec(afterCoachQuery);
+	// function teamPlayerList(err, teamsForPlayer) {
+	// 	for(team in teamsForPlayer) {
+	// 		models.TeamCoach.find({"tid": teamsForPlayer[team]["tid"]}).exec(afterCoachQuery);
 
-// 		function afterCoachQuery(err, coachesForAthlete) {
-// 			if(err) console.log(err);
-// 			allFriends.push(coachesForAthlete);
-// 		}
-// 	}
-// }
+	// 		function afterCoachQuery(err, coachesForAthlete) {
+	// 			if(err) console.log(err);
+	// 			allFriends.push(coachesForAthlete);
+	// 		}
+	// 	}
+	// }
 
-// with database
-console.log("all Friends num: "+ allFriends.length);
-console.log("all Messages for this user: " + allMessages.length);
-res.render('messages', {
-	'messages': allMessages, 'friends': allFriends, 'userId': id
-});
+	// with database
+	console.log("all Friends num: "+ allFriends.length);
+	console.log("all Messages for this user: " + allMessages.length);
+	res.render('messages', {
+		'messages': allMessages, 'friends': allFriends, 'userId': id
+	});
 
-	// res.render('messages', {
-	// 	'messages': userMessages, 'friends': friends
-	// });
+		// res.render('messages', {
+		// 	'messages': userMessages, 'friends': friends
+		// });
 }
