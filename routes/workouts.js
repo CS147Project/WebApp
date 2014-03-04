@@ -184,7 +184,6 @@ exports.assign = function(req, res){
 }
 
 exports.view = function(req, res){
-    console.log(req.session);
     console.log(req.session.email);
     if(req.session._id == undefined) {
         console.log("Please login for this page");

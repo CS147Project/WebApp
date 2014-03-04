@@ -12,10 +12,11 @@ $(document).ready(function() {
  */
 function initializePage() {
 	console.log("init");
+  $("#addExercise").click(addExercise);
 	lastActive = $(".navbar a .home-btn");
 	lastActive.addClass("active");
 	$("#genNav .navbar .btn").click(navigate);
-    $("#addExercise").click(addExercise);
+  $('.navExercise').click(submitData);
 }
 
 function navigate(e) {
@@ -49,8 +50,6 @@ function addExercise(e) {
     count++;
 }
 
-
-
 // Home_Grid Swiper
 // SWIPER FUNCTIONALITY
 $(function(){
@@ -65,3 +64,137 @@ $(function(){
     }
   });
 })
+
+function navigate(e){
+  console.log("/static/" + $(this).attr("value")+ ".html");
+  $("#content").load("/static/" + $(this).attr("value") + ".html");
+}
+
+
+//Select Workout
+///////////////////////////////////
+$("#selectWorkout tr#workout td.btn").click(function(){
+    event.preventDefault();
+
+    var elem = $(this).parent();
+
+    console.log("select - workout:" + $(this).id);
+
+    if ( elem.is( "tr" )) {
+        $('tr.success').removeClass('success');
+        elem.addClass('success');
+    }else{
+        consol.log("error: cannot find tr parent element: " + elem);
+    }
+});
+
+$("#beginWorkoutBtn").click(function(){
+    event.preventDefault();
+    console.log("begin workout btn pressed");
+  var selection = $(".success td");
+    if(!selection){
+
+    }
+  console.log(selection);
+    var url = '/goWorkout0';
+  console.log(url);
+  $.get(url, function() {
+            window.location.href = url; // reload the page
+        });
+});
+
+
+
+//Go Workout
+//////////////////////////////////////////
+/*
+ * Function that is called when the document is ready.
+ */
+
+function submitData(e){
+  console.log("clicked");
+  var currData = {
+      "weight": $('#goExerciseForm #inputWeight').val(),
+      "set":  $('#goExerciseForm #inputSet').val(),
+      "rep":  $('#goExerciseForm #inputReps').val(),
+      "distance":  $('#goExerciseForm #inputDist').val(),
+      "time":  $('#goExerciseForm #inputTime').val()
+    };
+
+    console.log("currData: " + currData);
+    $.post('/goWorkout/save', {
+      'currData' : currData,
+      'nav-clicked' : $('this').val()
+    });
+
+}
+
+// SWIPER FUNCTIONALITY
+$(function(){
+  var mySwiper = $('#goWorkout.swiper-container').swiper({
+    //Your options here:
+    pagination: '.pagination',
+    paginationClickable: true,
+    mode:'horizontal',
+    loop: true,
+    onSlideChangeStart: function(){
+        // save current workout data
+    }
+  });
+})
+
+
+
+//Assign Workout
+///////////////////////////////////////////////
+
+$(function(){
+  var mySwiper = $('#assignWorkout.swiper-container').swiper({
+    //Your options here:
+    pagination: '.pagination',
+    paginationClickable: true,
+    mode:'horizontal',
+    loop: false
+  });
+})
+
+$("#assignWorkout.swiper-container #workout .btn").click(function(){
+    event.preventDefault();
+    console.log("success - workout:");
+
+    var elem = $(this).parent();
+    if ( elem.is( "tr" ) ) {
+        elem.toggleClass("success");
+    }else{
+        consol.log("error: cannot find tr element parent: " + elem);
+    }
+});
+
+$("#assignWorkout.swiper-container #player .btn").click(function(){
+    event.preventDefault();
+    console.log("success - player:");
+
+    var elem = $(this).parent();
+    if ( elem.is( "tr" ) ) {
+        elem.toggleClass("success");
+    }else{
+        consol.log("error: cannot find tr element parent: " + elem);
+    }
+});
+
+$("#assignWorkout.swiper-container button#assign").click(function(){
+    event.preventDefault();
+    console.log("success - assign: ");
+
+    //var toAssign = document.getElementById("workout").getElementsByClassName("success");
+    $(".success").each(function(){
+        console.log("id: " + this.id);
+    });
+
+    // var players = document.getElementById('player').getElementsByClassName('success');
+    // console.log("players:" + players);
+
+});
+
+
+
