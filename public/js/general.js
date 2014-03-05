@@ -13,12 +13,11 @@ $(document).ready(function() {
  */
 function initializePage() {
 
-  ga("send", "event", "beginWorkoutBtn", "click");
-  ga("send", "event", "beginWorkoutBtn_grid", "click");
-   ga("send", "event", "workoutLinks", "click");
-   ga("send", "event", "home-btn", "click");
-    ga("send", "event", "message-btn", "click");
-     ga("send", "event", "workout-btn", "click");
+   $("#beginWorkoutBtn").click(sendBeginWorkout);  
+    $("#workoutLinks").click(sendWorkoutLinks);  
+     $("#home-btn").click(sendHome);  
+      $("#message-btn").click(sendMessage);  
+       $("#workout-btn").click(sendWorkout);  
    
   
 	console.log("init");
@@ -29,6 +28,26 @@ function initializePage() {
   $('.navExercise').click(submitData);
 }
 
+function sendBeginWorkout(e) {
+    ga("send", "event", "beginWorkoutBtn", "click");
+}
+
+function sendWorkoutLinks(e) {
+    ga("send", "event", "workoutLinks", "click");
+}
+
+function sendHome(e) {
+    ga("send", "event", "home-btn", "click");
+}
+
+function sendMessage(e) {
+    ga("send", "event", "message-btn", "click");
+}
+
+function sendWorkout(e) {
+    ga("send", "event", "workout-btn", "click");
+}
+
 function navigate(e) {
 	lastActive.removeClass("active");
 	console.log(lastActive);
@@ -37,6 +56,7 @@ function navigate(e) {
 }
 
 function addExercise(e) {
+    ga("send", "event", "addExercise", "click");
     e.preventDefault();
     console.log("Registered Click");
     var form = "<div>"+
