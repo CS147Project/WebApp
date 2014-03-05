@@ -57,6 +57,10 @@ res.send();
 
 }
 
+exports.done = function(req, res) {
+	res.render('workoutdone');
+}
+
 exports.save = function(req, res){
 	var form_data = req.body;
 	console.log(form_data);

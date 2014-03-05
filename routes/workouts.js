@@ -196,6 +196,7 @@ exports.view = function(req, res){
 
 
 exports.addCompletedWorkout = function(req, res) {  
+    console.log("adding completedWorkouts");
     if(req.session == undefined || req.session.email == undefined) {
         console.log("Please login for this page");
         return res.redirect('/');
