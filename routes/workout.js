@@ -1,3 +1,4 @@
+
 var exercises = require("../json/exercises.json");
 var workouts = require("./workouts.js");
 var currWorkout = require("../json/currentWorkout.json");
@@ -58,6 +59,7 @@ res.send();
 }
 
 exports.done = function(req, res) {
+	ga("send", "event", "doneWorkout", "click");
 	res.render('workoutdone');
 }
 

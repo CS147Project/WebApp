@@ -12,6 +12,15 @@ $(document).ready(function() {
  * Function that is called when the document is ready.
  */
 function initializePage() {
+
+  ga("send", "event", "beginWorkoutBtn", "click");
+  ga("send", "event", "beginWorkoutBtn_grid", "click");
+   ga("send", "event", "workoutLinks", "click");
+   ga("send", "event", "home-btn", "click");
+    ga("send", "event", "message-btn", "click");
+     ga("send", "event", "workout-btn", "click");
+   
+  
 	console.log("init");
   $("#addExercise").click(addExercise);
 	lastActive = $(".navbar a .home-btn");

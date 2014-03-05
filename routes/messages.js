@@ -195,6 +195,8 @@ exports.create = function(req, res) {
 }
 
 exports.get = function(req, res) {
+	
+
 	console.log("in messages!");
 	console.log("still in messages");
 	var id = req.session._id;
