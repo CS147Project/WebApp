@@ -17,7 +17,7 @@
             <p>{{exercise}}</p>
           {{/each}}
         <div class="pull-right">
-          <a href="/goWorkout0" id="beginWorkoutBtn_grid" class="btn btn-primary">
+          <a href="/goWorkout0" id="workoutLinks" class="btn btn-primary">
             <img src="img/goworkout-icon.png" alt="Start Workout" class="img-circle" height="50">
           </a>
         </div>
@@ -83,12 +83,12 @@
             </tr>
           {{/unless}}
           {{#each userWorkouts}}
-            <tr id="workout">
-        <a href="/goWorkout{{_id}}" id="{{_id}}" > 
+            <tr id="workoutLinks">
+              <a href="/goWorkout{{_id}}" id="{{_id}}" > 
 
-<p> {{title}}
+                <p> {{title}}
              <!--  <td id="{{title}}" type="button" class="btn"> {{title}} </td> --> </p>
-                            </a>
+              </a>
             </tr>
           {{/each}}
         </table>

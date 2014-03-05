@@ -59,7 +59,7 @@ exports.viewGrid = function(req, res){
     var templateWorkouts = models.WorkoutTemplate.find().exec(afterQuery);
         function afterQuery(err, projects) {
             if(err) console.log(err);
-            res.render('home_grid', {
+            res.render('home', {
                 'athlete': isAthlete(req.session.email),
                 'teams': findTeamsForCoach(req.session.email),
                 'userWorkouts': templateWorkouts,
