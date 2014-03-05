@@ -243,9 +243,11 @@ exports.addCompletedWorkout = function(req, res) { 
 
     function afterSaving(err) {
         if(err) {console.log(err); return res.send(500);}
-        res.render('workouts', {
-            "msg" : "Workout Completed!"
-        });
+        // res.render('workouts', {
+        //     "msg" : "Workout Completed!"
+        // });
+
+        res.redirect('workoutdone');
     }
 
 }

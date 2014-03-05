@@ -240,13 +240,6 @@ exports.get = function(req, res) {
 		for(var i = 0; i < fromMessages.length; i++) {
 			console.log("fromMessages", fromMessages[i].toid);
 			var fullName;
-			// models.User.find({"_id": id}).exec(haveUserNeedName);
-			// function haveUserNeedName(err, user) {
-			// 	console.log("user results", user);
-			// 	if(err) {console.log(err); return res.send(500);}
-			// 	fullName = user[0].firstName + " " + user[0].lastName;
-			// 	console.log("full name: "+ fullName);
-			// 	console.log("fromMessages", fromMessages[i].toid);
 			var messageToSend = {
 				"toid": fromMessages[i]['toid'],
 				"fromid": fromMessages[i]['fromid'],
@@ -254,36 +247,33 @@ exports.get = function(req, res) {
 				"created": parseDate(fromMessages[i]['created']),
 				"toName": fromMessages[i]['toName'],
 				"fromName": fromMessages[i]['fromName']
-					// "toName": getFullNameById(fromMessages[i].toid),
-					// "fromName": getFullNameById(fromMessages[i].fromid)
 				}
 				allMessages.push(messageToSend);
-				//allMessages.push(fromMessages[i]);
-		//	}
 	}
 }
 
-	//  models.Message.find({"toid": id}).sort('date').exec(toMessages);
 
-	// function toMessages(err, toMessages) {
-	// 	console.log("toMessages...", toMessages);
-	// 	console.log("toMessages... length", toMessages.length);
-	// 	for(var i = 0; i < toMessages.length; i++) {
-	// 		// var fullName="";
-	// 		// console.log("full name in calling fnct: "+ getFullNameById(toMessages[i].toid));
-	// 		var messageToSend = {
-	// 			"toid": toMessages[i]['toid'],
-	// 			"fromid": toMessages[i]['fromid'],
-	// 			"text": toMessages[i]['text'],
-	// 			"created": parseDate(toMessages[i]['created'])
-	// 			// "toName": getFullNameById(toMessages[i].toid, fullName),
-	// 			// "fromName": getFullNameById(toMessages[i].fromid, fullName)
-	// 		}
-	// 		allMessages.push(messageToSend);
-	// 		//allMessages.push(toMessages[i]);
-	// 	}
+	models.Message
+	.find({"toid": id})
+	.sort('date')
+	.exec(toMessages);
 
-	// }
+	//from messages is null -> problems when want length.
+	function toMessages(err, fromMessages) {
+		for(var i = 0; i < fromMessages.length; i++) {
+			console.log("to", fromMessages[i].toid);
+			var fullName;
+			var messageToSend = {
+				"toid": fromMessages[i]['toid'],
+				"fromid": fromMessages[i]['fromid'],
+				"text": fromMessages[i]['text'],
+				"created": parseDate(fromMessages[i]['created']),
+				"toName": fromMessages[i]['toName'],
+				"fromName": fromMessages[i]['fromName']
+				}
+				allMessages.push(messageToSend);
+	}
+}
 
 	var allFriends = [];
 	var allTeams = [];
