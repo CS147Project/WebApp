@@ -59,7 +59,6 @@ res.send();
 }
 
 exports.done = function(req, res) {
-	ga("send", "event", "doneWorkout", "click");
 	res.render('workoutdone');
 }
 
