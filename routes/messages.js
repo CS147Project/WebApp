@@ -120,8 +120,54 @@ exports.create = function(req, res) {
 
 	var d = new Date();
 	d = parseDate(d);
-	console.log("from: "+ req.query.fromid + " to: " + req.query.toid + " text: " + req.query.text);
+	console.log("from2: "+ req.query.fromid + " to: " + req.query.to + " text: " + req.query.text);
+
 	
+	try {
+		var json = req.query.to, 
+		obj = JSON.parse(json);
+		console.log("Parsed: obj " + obj.toName);
+
+	// var parsedData = JSON.parse(req.query.to);
+	// console.log("Parsed Data: " + parsedData);
+	// 	console.log("2: "+ parsedData);
+	// console.log("3: "+ parsedData["toName"]);
+	// console.log("4: " + parsedData.toName);
+
+	models.User
+	.find({"_id": id})
+	.exec(foundUser);
+
+	//from messages is null -> problems when want length.
+	function foundUser(err, user) {
+		var userName = user[0].firstName;
+		console.log("sender Name: "+ userName);
+
+
+		var message = new models.Message( {
+//note: fromid and toid need to be )id, not e-mails!!!!
+		"text": req.query.text,
+		"fromid": req.query.fromid,
+		"toid": obj.toid,
+		"toName": obj.toName,
+		"fromName": userName
+	})
+		message.save(afterSaving);
+		function afterSaving(err) {
+			if(err) { console.log(err); res.send(500);};
+			res.redirect('messages');
+		}
+
+	}
+
+
+} catch(e)  {
+	console.error("parsing error: ", e);
+	res.redirect('messages');
+}
+
+
+
 	// var mid = messages["messages"].length + 1;
 
 	// newMessage = {
@@ -140,17 +186,10 @@ exports.create = function(req, res) {
 	// console.log("m leng: " + messages["messages"].length);
 
 	//connecting to db: 
-	var message = new models.Message( {
-//note: fromid and toid need to be )id, not e-mails!!!!
-		"text": req.query.text,
-		"fromid": req.query.fromid,
-		"toid": req.query.toid
-	})
-	message.save(afterSaving);
-	function afterSaving(err) {
-		if(err) { console.log(err); res.send(500);};
-		res.redirect('messages');
-	}
+
+	
+
+
 
 	//res.redirect('messages');
 }
@@ -201,48 +240,50 @@ exports.get = function(req, res) {
 		for(var i = 0; i < fromMessages.length; i++) {
 			console.log("fromMessages", fromMessages[i].toid);
 			var fullName;
-			models.User.find({"_id": id}).exec(haveUserNeedName);
-			function haveUserNeedName(err, user) {
-				console.log("user results", user);
-				if(err) {console.log(err); return res.send(500);}
-				fullName = user[0].firstName + " " + user[0].lastName;
-				console.log("full name: "+ fullName);
-				console.log("fromMessages", fromMessages[i].toid);
-				var messageToSend = {
-					"toid": fromMessages[i]['toid'],
-					"fromid": fromMessages[i]['fromid'],
-					"text": fromMessages[i]['text'],
-					"created": parseDate(fromMessages[i]['created']),
+			// models.User.find({"_id": id}).exec(haveUserNeedName);
+			// function haveUserNeedName(err, user) {
+			// 	console.log("user results", user);
+			// 	if(err) {console.log(err); return res.send(500);}
+			// 	fullName = user[0].firstName + " " + user[0].lastName;
+			// 	console.log("full name: "+ fullName);
+			// 	console.log("fromMessages", fromMessages[i].toid);
+			var messageToSend = {
+				"toid": fromMessages[i]['toid'],
+				"fromid": fromMessages[i]['fromid'],
+				"text": fromMessages[i]['text'],
+				"created": parseDate(fromMessages[i]['created']),
+				"toName": fromMessages[i]['toName'],
+				"fromName": fromMessages[i]['fromName']
 					// "toName": getFullNameById(fromMessages[i].toid),
 					// "fromName": getFullNameById(fromMessages[i].fromid)
 				}
 				allMessages.push(messageToSend);
 				//allMessages.push(fromMessages[i]);
-			}
-		}
-	 }
-
-	 models.Message.find({"toid": id}).sort('date').exec(toMessages);
-
-	function toMessages(err, toMessages) {
-		console.log("toMessages...", toMessages);
-		console.log("toMessages... length", toMessages.length);
-		for(var i = 0; i < toMessages.length; i++) {
-			// var fullName="";
-			// console.log("full name in calling fnct: "+ getFullNameById(toMessages[i].toid));
-			var messageToSend = {
-				"toid": toMessages[i]['toid'],
-				"fromid": toMessages[i]['fromid'],
-				"text": toMessages[i]['text'],
-				"created": parseDate(toMessages[i]['created'])
-				// "toName": getFullNameById(toMessages[i].toid, fullName),
-				// "fromName": getFullNameById(toMessages[i].fromid, fullName)
-			}
-			allMessages.push(messageToSend);
-			//allMessages.push(toMessages[i]);
-		}
-
+		//	}
 	}
+}
+
+	//  models.Message.find({"toid": id}).sort('date').exec(toMessages);
+
+	// function toMessages(err, toMessages) {
+	// 	console.log("toMessages...", toMessages);
+	// 	console.log("toMessages... length", toMessages.length);
+	// 	for(var i = 0; i < toMessages.length; i++) {
+	// 		// var fullName="";
+	// 		// console.log("full name in calling fnct: "+ getFullNameById(toMessages[i].toid));
+	// 		var messageToSend = {
+	// 			"toid": toMessages[i]['toid'],
+	// 			"fromid": toMessages[i]['fromid'],
+	// 			"text": toMessages[i]['text'],
+	// 			"created": parseDate(toMessages[i]['created'])
+	// 			// "toName": getFullNameById(toMessages[i].toid, fullName),
+	// 			// "fromName": getFullNameById(toMessages[i].fromid, fullName)
+	// 		}
+	// 		allMessages.push(messageToSend);
+	// 		//allMessages.push(toMessages[i]);
+	// 	}
+
+	// }
 
 	var allFriends = [];
 	var allTeams = [];

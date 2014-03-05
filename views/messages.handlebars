@@ -14,11 +14,14 @@
 
 	<form class="form-signin" role="form" method="get" action="/messages/create">
 To: 
-		<select name = "toid">
+		<select name = "to">
 			{{#if friends}} 
 			{{#each friends}}
 			
-			<option value = {{_id}}> {{firstName}}</option>
+			<option value = '{"toid": "{{id}}", "toName": "{{firstName}}" }'> {{firstName}}</option>
+			<!-- <option value = "{'toid': '{{id}}', 'toName': '{{firstName}}' }"> {{firstName}}</option> -->
+			<!-- <input type = "hidden" name = "toName" value = {{firstName}}> -->
+
 			<!-- <option value = {{aid}}> {{name}}</option> -->
 			{{/each}}
 			{{/if}}
@@ -42,7 +45,7 @@ To:
 </h4>
 {{#each messages}}
 <p>
-	{{fromName}} to {{toName}} {{toName}} ({{created}}):
+	{{fromName}} to {{toName}} ({{created}}):
 <!-- {{fromid/firstName}}
 	{{#with fromid}}
 	{{firstName}} {{lastName}}
