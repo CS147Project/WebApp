@@ -56,6 +56,11 @@ exports.view = function(req, res){
 }
 
 exports.viewGrid = function(req, res){
+    if(req.session._id == undefined) {
+        console.log("Please login for this page");
+        return res.redirect('/');
+    }
+    
     var templateWorkouts = models.WorkoutTemplate.find().exec(afterQuery);
         function afterQuery(err, projects) {
             if(err) console.log(err);
