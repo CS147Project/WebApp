@@ -60,9 +60,9 @@ exports.viewGrid = function(req, res){
         console.log("Please login for this page");
         return res.redirect('/');
     }
+ models.WorkoutTemplate.find({'creatorid': req.session._id}).sort({'created': -1}).exec(afterQuery);
     
-    var templateWorkouts = models.WorkoutTemplate.find().exec(afterQuery);
-        function afterQuery(err, projects) {
+        function afterQuery(err, templateWorkouts) {
             if(err) console.log(err);
             res.render('home', {
                 'athlete': isAthlete(req.session.email),
