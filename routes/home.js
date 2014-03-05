@@ -38,7 +38,7 @@ function isAthlete(email) {
 
 exports.view = function(req, res){
 
-    if(req.session._id == undefined) {
+    if(req.session == undefined || req.session._id == undefined) {
         console.log("Please login for this page");
         return res.redirect('/');
     }
@@ -56,7 +56,7 @@ exports.view = function(req, res){
 }
 
 exports.viewGrid = function(req, res){
-    if(req.session._id == undefined) {
+    if(req.session == undefined || req.session._id == undefined) {
         console.log("Please login for this page");
         return res.redirect('/');
     }
