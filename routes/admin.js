@@ -66,7 +66,8 @@ exports.signup = function(req, res) { 
 
 exports.logout = function(req, res) { 
     if(req.session !== undefined && req.session.email !== undefined) {
-        req.session.email = undefined;
+     //   req.session.email = undefined;
+     req.session = undefined;
     }
     res.redirect('login');
 }
