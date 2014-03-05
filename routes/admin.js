@@ -65,12 +65,15 @@ exports.signup = function(req, res) { 
  }
 
 exports.logout = function(req, res) { 
+    console.log("session stuffs", req.session);
     if(req.session !== undefined && req.session.email !== undefined) {
-     //   req.session.email = undefined;
-     req.session._id=undefined;
-     req.session.email=undefined;
-     req.session = undefined;
+        console.log("let's delete stuff");
+        req.session._id = undefined;
+        req.session.email = undefined;
+    } else {
+        console.log("Or not...");
     }
+    console.log("session stuffs", req.session);
     res.redirect('login');
 }
 

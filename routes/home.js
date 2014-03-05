@@ -37,7 +37,6 @@ function isAthlete(email) {
 
 
 exports.view = function(req, res){
-
     if(req.session == undefined || req.session._id == undefined) {
         console.log("Please login for this page");
         return res.redirect('/');
@@ -60,15 +59,15 @@ exports.viewGrid = function(req, res){
         console.log("Please login for this page");
         return res.redirect('/');
     }
- models.WorkoutTemplate.find({'creatorid': req.session._id}).sort({'created': -1}).exec(afterQuery);
+    models.WorkoutTemplate.find({'creatorid': req.session._id}).sort({'created': -1}).exec(afterQuery);
     
-        function afterQuery(err, templateWorkouts) {
-            if(err) console.log(err);
-            res.render('home', {
-                'athlete': isAthlete(req.session.email),
-                'teams': findTeamsForCoach(req.session.email),
-                'userWorkouts': templateWorkouts,
-                'test': true
-            });
-        };
+    function afterQuery(err, templateWorkouts) {
+        if(err) console.log(err);
+        res.render('home', {
+            'athlete': isAthlete(req.session.email),
+            'teams': findTeamsForCoach(req.session.email),
+            'userWorkouts': templateWorkouts,
+            'test': true
+        });
+    };
 }
