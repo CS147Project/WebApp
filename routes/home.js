@@ -63,11 +63,26 @@ exports.viewGrid = function(req, res){
     
     function afterQuery(err, templateWorkouts) {
         if(err) console.log(err);
+        if(teamWorkouts.length>0) {
+
         res.render('home', {
             'athlete': isAthlete(req.session.email),
             'teams': findTeamsForCoach(req.session.email),
             'userWorkouts': templateWorkouts,
             'test': true
         });
+    } else {
+        models.WorkoutTemplate.find().sort({'created': -1}).exec(afterQueryGeneral);
+    
+    function afterQueryGeneral(err, templateWorkouts) {
+        if(err) console.log(err);
+        res.render('home', {
+            'athlete': isAthlete(req.session.email),
+            'teams': findTeamsForCoach(req.session.email),
+            'userWorkouts': templateWorkouts,
+            'test': false
+        });
+    };
+    }
     };
 }
