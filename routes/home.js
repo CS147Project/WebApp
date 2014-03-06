@@ -74,13 +74,13 @@ exports.viewGrid = function(req, res){
     } else {
         models.WorkoutTemplate.find().sort({'created': -1}).exec(afterQueryGeneral);
     
-    function afterQueryGeneral(err, templateWorkouts) {
+    function afterQueryGeneral(err, templateWorkouts2) {
         if(err) console.log(err);
         res.render('home', {
             'athlete': isAthlete(req.session.email),
             'teams': findTeamsForCoach(req.session.email),
-            'userWorkouts': templateWorkouts,
-            'test': false
+            'userWorkouts': templateWorkouts2,
+            'test': true
         });
     };
     }
