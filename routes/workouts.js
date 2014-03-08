@@ -129,9 +129,6 @@ exports.create = function(req, res) { 
             newWorkout.exercises.push(newExercise);
         }
     }
-    // console.log("session id", req.session._id);
-    // console.log("session email", req.session.email);
-    // console.log("exercises", newWorkout.exercises);
 
     newWorkout.save(afterSaving);
 

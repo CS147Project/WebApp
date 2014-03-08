@@ -56,13 +56,6 @@ function addExercise(e) {
     count++;
 }
 
-// function removeExercise(e) {
-//   console.log(e.toElement.parentElement);
-//   console.log(this.parent());
-//   this.parent().remove();
-//   console.log("remove that exercise bro!!!");
-// }
-
 // Home_Grid Swiper
 // SWIPER FUNCTIONALITY
 $(function(){
