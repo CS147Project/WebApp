@@ -12,13 +12,6 @@ $(document).ready(function() {
  * Function that is called when the document is ready.
  */
 function initializePage() {
-
-  $("#beginWorkoutBtn").click(sendBeginWorkout);  
-  $("#workoutLinks").click(sendWorkoutLinks);  
-  $("#home-btn").click(sendHome);  
-  $("#message-btn").click(sendMessage);  
-  $("#workout-btn").click(sendWorkout);   
-  
 	console.log("init");
   $("#addExercise").click(addExercise);
 	lastActive = $(".navbar a .home-btn");
@@ -37,7 +30,8 @@ function navigate(e) {
 function addExercise(e) {
     e.preventDefault();
     console.log("Registered Click");
-    var form = "<div>"+
+    var form =   "<div class='text-left' id='newExercise"+count+"'>Exercise "+count+": "+
+                    "<button class='btn btn-primary' id='removeExercise"+count+"' type='button'><span class='glyphicon glyphicon-trash glyphicons-lg pull-right'></span></button>"+
                     "<input type='text' class='form-control' placeholder='Name' name='excersiseName"+count+"'>"+
                     "<input type='text' class='form-control' placeholder='Number of Sets' name='excersiseSets"+count+"'>"+
                     "<input type='text' class='form-control' placeholder='Number of Reps' name='excersiseReps"+count+"'>"+
@@ -52,11 +46,22 @@ function addExercise(e) {
                     "</select>"+
                     "<hr>"+
                 "</div>"
-    var newExercise = "<div class='text-left'>Exercise "+count+':'+form+"</div>";
+    var newExercise = form;
     $("#numExercises")[0].value = count;
     $("#exercisesCreated").append(newExercise);
+    $("#removeExercise"+count).bind('click', { parentObj: "#newExercise"+count}, function(e) {
+      console.log(e.data.parentObj);
+      $(e.data.parentObj).remove();
+    });
     count++;
 }
+
+// function removeExercise(e) {
+//   console.log(e.toElement.parentElement);
+//   console.log(this.parent());
+//   this.parent().remove();
+//   console.log("remove that exercise bro!!!");
+// }
 
 // Home_Grid Swiper
 // SWIPER FUNCTIONALITY
@@ -144,7 +149,7 @@ $(function(){
     pagination: '.pagination',
     paginationClickable: true,
     mode:'horizontal',
-    loop: true,
+    loop: false,
     onSlideChangeStart: function(){
         // save current workout data
     }
@@ -203,6 +208,3 @@ $("#assignWorkout.swiper-container button#assign").click(function(){
     // console.log("players:" + players);
 
 });
-
-
-

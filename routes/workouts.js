@@ -100,11 +100,13 @@ exports.create = function(req, res) { 
         "exercises": []
     });
     for (var i = 1; i <= numExercises; i++) {
+        console.log("i", i);
         var weight = false;
         var distance = false;
         var speed = false;
         var time = false;
-        if(form_data["excersiseName"+i] !== '') {
+        if(form_data["excersiseName"+i] !== '' && form_data["excersiseName"+i] !== undefined) {
+            console.log("i", i);
             if(form_data["excersiseRecordType"+i] == "weight") {
                 weight = true;
             } else if(form_data["excersiseRecordType"+i] == "distance") {
