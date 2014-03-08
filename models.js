@@ -30,7 +30,10 @@ var MessageSchema = new Mongoose.Schema({
   text: { type: String, required: true },
   fromid: { type: Schema.ObjectId, ref: 'User', required: true },
   toid: { type: Schema.ObjectId, ref: 'User', required: true },
-  created: { type : Date, default: Date.now }
+  created: { type : Date, default: Date.now },
+  fromName: { type: String, required: true },
+  toName: { type: String, required: true }
+
 });
 
 exports.Message = Mongoose.model('Message', MessageSchema);
