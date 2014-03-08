@@ -104,26 +104,28 @@ exports.create = function(req, res) { 
         var distance = false;
         var speed = false;
         var time = false;
-        if(form_data["excersiseRecordType"+i] == "weight") {
-            weight = true;
-        } else if(form_data["excersiseRecordType"+i] == "distance") {
-            distance = true;
-        } else if(form_data["excersiseRecordType"+i] == "speed") {
-            speed = true;
-        } else {
-            time = true;
+        if(form_data["excersiseName"+i] !== '') {
+            if(form_data["excersiseRecordType"+i] == "weight") {
+                weight = true;
+            } else if(form_data["excersiseRecordType"+i] == "distance") {
+                distance = true;
+            } else if(form_data["excersiseRecordType"+i] == "speed") {
+                speed = true;
+            } else {
+                time = true;
+            }
+            console.log("name", form_data["excersiseName"+i]);
+            var newExercise = new models.ExerciseTemplate({
+                "name": form_data["excersiseName"+i],
+                "sets": parseInt(form_data["excersiseSets"+i]),
+                "reps": parseInt(form_data["excersiseReps"+i]),
+                "weight": weight,
+                "distance": distance,
+                "speed": speed,
+                "time": time
+            });
+            newWorkout.exercises.push(newExercise);
         }
-        console.log("name", form_data["excersiseName"+i]);
-        var newExercise = new models.ExerciseTemplate({
-            "name": form_data["excersiseName"+i],
-            "sets": parseInt(form_data["excersiseSets"+i]),
-            "reps": parseInt(form_data["excersiseReps"+i]),
-            "weight": weight,
-            "distance": distance,
-            "speed": speed,
-            "time": time
-        });
-        newWorkout.exercises.push(newExercise);
     }
     // console.log("session id", req.session._id);
     // console.log("session email", req.session.email);
