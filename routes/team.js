@@ -32,9 +32,23 @@ exports.view = function(req, res) {
                         teamRequests.push(invites[i]);
                     }
                 }
+                var players = [];
+                models.TeamAthlete
+                .find({"tid": tid}).exec(afterTeamAthleteQuery);
+                function afterTeamAthleteQuery(err, TeamAthletes) {
+                    console.log("num athletest on my team: "+ TeamAthletes.length);
+                    for(var i = 0; i<TeamAthletes.length; i++) {
+                    players.push(TeamAthletes[i]);
+                }
+                }
+
+
+
+
                 console.log("num requests: "+ teamRequests.length);
                 res.render('team', {
-                    'teamRequests': teamRequests
+                    'teamRequests': teamRequests,
+                    'players': players
                 }); 
             }
 
@@ -231,41 +245,57 @@ function afterQuery(err, coach) {
         if(team!=null) {
 
             console.log("team: " + team);
-            tid = team.tid;
-            console.log("tid: "+ tid);
+            tid = team[0].tid;
+            console.log("creating req with tid: "+ tid + "aid: " + req.session._id + "cid: " + cid);
+            var invite = new models.Invite({
+
+               "cid": cid,
+               "aid": req.session._id,
+               "tid": tid
+           }) 
+            invite.save(afterSaving);
+            function afterSaving(err, team) {
+                console.log("just saved an invite");
+                res.redirect("settings");
+            }
+
+
+
+
         }
         else {
             console.log("this coach has no teams");
+            res.redirect("settings");
         }
     }
 
 
 
    // tid = req.body.tid;
-   if(!onRoster(tid, aid)) {
-    var newInvite = {
+   // if(!onRoster(tid, aid)) {
+   //  var newInvite = {
 
-    }
+   //  }
 
-        // newInvite = {
-        //     "iid": 1,
-        //     "aid": aid,
-        //     "tid": tid,
-        //     "datetime": d
-        // }
+   //      // newInvite = {
+   //      //     "iid": 1,
+   //      //     "aid": aid,
+   //      //     "tid": tid,
+   //      //     "datetime": d
+   //      // }
 
-        // invites['allInvites'].push(newInvite);
-        console.log(newInvite);
-        res.render('home', {
-            'msg': 'Your request to join '+getNameForTeamId(tid)+' has been sent!',
-            'athlete': isAthlete(req.session.email)
-        }); // Can also redirect to 'settings'
+   //      // invites['allInvites'].push(newInvite);
+   //      console.log(newInvite);
+   //      res.render('home', {
+   //          'msg': 'Your request to join '+getNameForTeamId(tid)+' has been sent!',
+   //          'athlete': isAthlete(req.session.email)
+   //      }); // Can also redirect to 'settings'
 
-    } else {
-        res.render('settings', {
-            'msg': 'There was a problem sending your invite. Please try again.'
-        });
-    }
+   //  } else {
+   //      res.render('settings', {
+   //          'msg': 'There was a problem sending your invite. Please try again.'
+   //      });
+   //  }
 }
 
 }
@@ -283,51 +313,71 @@ function removeRequest(aid, tid) {
 
 exports.respondRequest = function(req, res) {
     var form_data = req.body;
-    var response = form_data.response;
-    var aid = form_data.aid; //this is now an array
-    var tid = form_data.tid;
-
-for(var i =0; i<aid.length; i++) {
-    if(response=="true") {
-        // var teamathlete = {
-        //     "tid": invite.tid,
-        //     "aid": invite.aid
-        // }
-        // teamathletes["teamathletes"].push(teamathlete);
-        // removeRequest(aid, tid);
-
+    var requestId = req.body.requestId;
+    var response = req.body.response;
+    console.log("requestID: "+ requestId + "response: " + response);
+//    var response = form_data.response;
+    // var requests = [];
+    // requests = form_data.requestId;
+    // console.log("requests: "+ requests);
+    // console.log("req. len: "+ requests.length);
+    // for(var i =0; i<requests.length; i++) {
 //in DATABASE:
-models.Invite
-.find({"aid": aid[i]}, {"tid": tid[i]})
-.remove()
-.exec(afterRemoving);
-function afterRemoving(err) {
-    if(err) { console.log(err); res.send(500);};
-}
- var newPlayer = new models.TeamAthlete({
-            "aid": aid[i],
-            "tid": tid[i]
+if(response == "accept") {
+    models.Invite
+    .find({"_id": requestId})
+    .exec(afterFindingInvite);
+    function afterFindingInvite(err, invite) {
+        if(err) { console.log(err); res.send(500);};
+// console.log("aid: " + invite.aid );
+// console.log("aid 0: " + invite[0].aid);
+
+        var newPlayer = new models.TeamAthlete({
+            "aid": invite[0].aid,
+            "tid": invite[0].tid
         }) 
-        newPlayer.save(afterSavingCoach);
-        function afterSavingCoach(err, coach) {
+        newPlayer.save(afterAddingPlayer);
+        function afterAddingPlayer(err, coach) { 
+           if(err) { console.log(err); res.send(500);};
+           console.log("just added playter");
+           models.Invite
+           .find({"_id": requestId})
+           .remove()
+           .exec(afterRemovingInvite);
+           function afterRemovingInvite(err) {
             if(err) { console.log(err); res.send(500);};
+            "just removed invite";
+
+            res.redirect('teamPage');
+
         }
+
+
     }
+
 }
-    //remove request from array 
-    // var index = invites["allInvites"].indexof(invite);
-    // if(index > -1) {
-    //  invites["allInvites"].splice(index, 1);
-    // }
-    res.redirect('settings');
+
 }
+else {
+    console.log("IN ELSE STATEMENT");
+    res.redirect('teamPage');
+}
+
+  //  res.redirect('teamPage');
+}
+
+
+
+
+
+
 
 exports.respondRequestAll = function(req, res) {
    var cid = req.session._id;
-    var teamRequests = [];
+   var teamRequests = [];
 
 
-    console.log("cid: "+ cid);
+   console.log("cid: "+ cid);
     //get teamReq with database
     models.TeamCoach
     .find({"cid": cid})
@@ -337,28 +387,28 @@ exports.respondRequestAll = function(req, res) {
         .find({"tid": tid})
         .exec(afterFoundAllInvites);
 
-function afterFoundAllInvites(err, invites) {
-    for(var i=0; i<invites.length; i++) {
-        var newPlayer = new models.TeamAthlete({
-            "aid": invites[i].aid,
-            "tid": invites[i].tid
-        }) 
-            newPlayer.save(afterSaving);
-    function afterSaving(err, player) {
-        if(err) { console.log(err); res.send(500);};
-        if(i+1==invites.length) {
-            models.Invite
-            .find({"tid": tid})
-            .remove()
-            .exec(removedInvites);
-            function removedInvites(err) {
-                res.redirect("team");
+        function afterFoundAllInvites(err, invites) {
+            for(var i=0; i<invites.length; i++) {
+                var newPlayer = new models.TeamAthlete({
+                    "aid": invites[i].aid,
+                    "tid": invites[i].tid
+                }) 
+                newPlayer.save(afterSaving);
+                function afterSaving(err, player) {
+                    if(err) { console.log(err); res.send(500);};
+                    if(i+1==invites.length) {
+                        models.Invite
+                        .find({"tid": tid})
+                        .remove()
+                        .exec(removedInvites);
+                        function removedInvites(err) {
+                            res.redirect("team");
+                        }
+                    }
+
+                }
             }
         }
-        
-    }
-    }
-}
 
 
     }
