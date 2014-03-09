@@ -100,13 +100,11 @@ exports.create = function(req, res) { 
         "exercises": []
     });
     for (var i = 1; i <= numExercises; i++) {
-        console.log("i", i);
         var weight = false;
         var distance = false;
         var speed = false;
         var time = false;
         if(form_data["excersiseName"+i] !== '' && form_data["excersiseName"+i] !== undefined) {
-            console.log("i", i);
             if(form_data["excersiseRecordType"+i] == "weight") {
                 weight = true;
             } else if(form_data["excersiseRecordType"+i] == "distance") {
@@ -116,7 +114,12 @@ exports.create = function(req, res) { 
             } else {
                 time = true;
             }
-            console.log("name", form_data["excersiseName"+i]);
+            if(form_data["excersiseSets"+i] == '') {
+                form_data["excersiseSets"+i] = 0;
+            }
+            if(form_data["excersiseReps"+i] == '') {
+                form_data["excersiseReps"+i] = 0;
+            }
             var newExercise = new models.ExerciseTemplate({
                 "name": form_data["excersiseName"+i],
                 "sets": parseInt(form_data["excersiseSets"+i]),
@@ -225,6 +228,12 @@ exports.addCompletedWorkout = function(req, res) { 
         } else {
             time = true;
         }
+        if(form_data["excersiseSets"+i] == '') {
+            form_data["excersiseSets"+i] = 0;
+        }
+        if(form_data["excersiseReps"+i] == '') {
+            form_data["excersiseReps"+i] = 0;
+        }
         console.log("name", form_data["excersiseName"+i]);
         var newExercise = new models.ExerciseTemplate({
             "name": form_data["excersiseName"+i],
@@ -237,18 +246,11 @@ exports.addCompletedWorkout = function(req, res) { 
         });
         newWorkout.exercises.push(newExercise);
     }
-    // console.log("session id", req.session._id);
-    // console.log("session email", req.session.email);
-    // console.log("exercises", newWorkout.exercises);
 
     newWorkout.save(afterSaving);
 
     function afterSaving(err) {
         if(err) {console.log(err); return res.send(500);}
-        // res.render('workouts', {
-        //     "msg" : "Workout Completed!"
-        // });
-
         res.redirect('workoutdone');
     }
 

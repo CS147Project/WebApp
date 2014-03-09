@@ -11,6 +11,10 @@ res.render('startWorkout', exercises);
 }
 
 exports.goWorkout = function(req, res) {
+    if(req.session == undefined || req.session.email == undefined) {
+        console.log("Please login for this page");
+        return res.redirect('/');
+    }
 	console.log("go workout");
 	console.log("id", req.params.id);
 	var wid= req.params.id;
@@ -26,17 +30,22 @@ exports.goWorkout = function(req, res) {
 		models.WorkoutTemplate.find({ '_id': wid}).exec(afterWorkoutQuery);
 		function afterWorkoutQuery(err, templateWorkouts) {
 			if(err) {console.log(err); return res.send(500);}
-			res.render('goWorkout', {
-				'workout': templateWorkouts[0],
-				'exercises': templateWorkouts[0].exercises
-			});
-}
+				for(exercise in templateWorkouts[0].exercises) {
+					if(templateWorkouts[0].exercises[exercise].sets == 0) {
+						templateWorkouts[0].exercises[exercise].sets = undefined;
+					}
+					if(templateWorkouts[0].exercises[exercise].reps == 0) {
+						templateWorkouts[0].exercises[exercise].reps = undefined;
+					}
+				}
 
+				res.render('goWorkout', {
+					'workout': templateWorkouts[0],
+					'exercises': templateWorkouts[0].exercises
+				});
+			}
 		}
-	}
-	else {
-
-
+	} else {
 		models.WorkoutTemplate.find({ '_id': req.params.id}).exec(afterWorkoutQuery);
 		function afterWorkoutQuery(err, templateWorkouts) {
 			if(err) {console.log(err); return res.send(500);}

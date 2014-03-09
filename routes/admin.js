@@ -105,9 +105,6 @@ exports.addUser = function(req, res) { 
         athlete = true;
     } else if(req.query.accountType == "coach") {
         coach = true;
-    } else if(req.query.accountType == "both") {
-        athlete = true;
-        coach = true;
     }
 
     newUserData = {
