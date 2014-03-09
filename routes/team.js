@@ -26,41 +26,69 @@ exports.view = function(req, res) {
             models.Invite
             .find({"tid": tid}).exec(afterInviteQuery);
             function afterInviteQuery(err, invites) {
-                if(invites!=null) {
+                if(invites!=null && invites.length>0) {
+                    var j =0;
                     for(var i=0; i<invites.length; i++) {
-                        console.log("pushing an invite");
-                        teamRequests.push(invites[i]);
-                    }
-                }
-                var players = [];
-                models.TeamAthlete
-                .find({"tid": tid}).exec(afterTeamAthleteQuery);
-                function afterTeamAthleteQuery(err, TeamAthletes) {
-                    console.log("num athletest on my team: "+ TeamAthletes.length);
-                    for(var i = 0; i<TeamAthletes.length; i++) {
-                        players.push(TeamAthletes[i]);
-                    }
-                }
+                        models.User.find({"_id": invites[i].aid}).exec(afterUserQuery);
+                        function afterUserQuery(err, user) {
+                            console.log("I: " + i);
+                             console.log("j: " + j);
+                            console.log("full name: "+ user[0].firstName + " " + user[0].lastName);
+                            console.log("invites: "+ invites);
+                            var request = {
+                                "name": user[0].firstName + " " + user[0].lastName,
+                                "requestId": invites[j]._id
+                            }
+                            teamRequests.push(request);
+                            if(j+1 == invites.length) {
+                                res.render('team', {
+                                    'teamRequests': teamRequests,
+                                    'players': players
+                                }); 
+                            }
+                            j++;
+                        }
+
+
+
+
+
+                      //  teamRequests.push(invites[i]);
+                  }
+
+
+              }
+
+              else {
+                console.log("this coach has no invites");
+                 res.render('team');
+}
+              var players = [];
+                // models.TeamAthlete
+                // .find({"tid": tid}).exec(afterTeamAthleteQuery);
+                // function afterTeamAthleteQuery(err, TeamAthletes) {
+                //     console.log("num athletest on my team: "+ TeamAthletes.length);
+                //     for(var i = 0; i<TeamAthletes.length; i++) {
+                //         players.push(TeamAthletes[i]);
+                //     }
+                // }
 
 
 
 
                 console.log("num requests: "+ teamRequests.length);
-                res.render('team', {
-                    'teamRequests': teamRequests,
-                    'players': players
-                }); 
-            }
+                // res.render('team', {
+                //     'teamRequests': teamRequests,
+                //     'players': players
+                // }); 
+}
 
 
 
 
 
-        }
-        else {
-            console.log("this coach has no teams");
-            res.render('team');
-        }
+}
+
 
         // console.log("num requests: "+ teamRequests.length);
         // res.render('team', {
@@ -368,7 +396,7 @@ else {
        console.log("IN REMOVE STATEMENT");
        res.redirect('teamPage');
    }
-   
+
 }
 
   //  res.redirect('teamPage');

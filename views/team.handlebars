@@ -44,7 +44,7 @@
      <button class="btn btn-primary" type="submit">Accept All Requests</button>
 </form> -->
 
-<p class="caption"> Select Players to Accept </p>
+<p class="caption"> Select Players to Accept/Deny </p>
 
 <form class="form" role="form" method="post" action="/respondTeam">
     <select name = "requestId"> {{_id}}
@@ -52,7 +52,10 @@
 
    
 			
-			<option value = "{{_id}}"> {{_id}}</option>
+			
+			<!-- <option value = "{{_id}}"> {{_id}}</option> -->
+			<option value = "{{requestId}}"> {{name}}</option>
+
 			{{/each}}
 			
 		
@@ -64,7 +67,7 @@
 		<option value = "deny"> Deny
 </select>
 
-    <button class="btn btn-primary" type="submit">Accept</button>
+    <button class="btn btn-primary" type="submit">Submit</button>
 </form>
 
 
