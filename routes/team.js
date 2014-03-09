@@ -38,8 +38,8 @@ exports.view = function(req, res) {
                 function afterTeamAthleteQuery(err, TeamAthletes) {
                     console.log("num athletest on my team: "+ TeamAthletes.length);
                     for(var i = 0; i<TeamAthletes.length; i++) {
-                    players.push(TeamAthletes[i]);
-                }
+                        players.push(TeamAthletes[i]);
+                    }
                 }
 
 
@@ -249,10 +249,10 @@ function afterQuery(err, coach) {
             console.log("creating req with tid: "+ tid + "aid: " + req.session._id + "cid: " + cid);
             var invite = new models.Invite({
 
-               "cid": cid,
-               "aid": req.session._id,
-               "tid": tid
-           }) 
+             "cid": cid,
+             "aid": req.session._id,
+             "tid": tid
+         }) 
             invite.save(afterSaving);
             function afterSaving(err, team) {
                 console.log("just saved an invite");
@@ -332,35 +332,43 @@ if(response == "accept") {
 // console.log("aid: " + invite.aid );
 // console.log("aid 0: " + invite[0].aid);
 
-        var newPlayer = new models.TeamAthlete({
-            "aid": invite[0].aid,
-            "tid": invite[0].tid
-        }) 
-        newPlayer.save(afterAddingPlayer);
-        function afterAddingPlayer(err, coach) { 
-           if(err) { console.log(err); res.send(500);};
-           console.log("just added playter");
-           models.Invite
-           .find({"_id": requestId})
-           .remove()
-           .exec(afterRemovingInvite);
-           function afterRemovingInvite(err) {
-            if(err) { console.log(err); res.send(500);};
-            "just removed invite";
+var newPlayer = new models.TeamAthlete({
+    "aid": invite[0].aid,
+    "tid": invite[0].tid
+}) 
+newPlayer.save(afterAddingPlayer);
+function afterAddingPlayer(err, coach) { 
+ if(err) { console.log(err); res.send(500);};
+ console.log("just added playter");
+ models.Invite
+ .find({"_id": requestId})
+ .remove()
+ .exec(afterRemovingInvite);
+ function afterRemovingInvite(err) {
+    if(err) { console.log(err); res.send(500);};
+    "just removed invite";
 
-            res.redirect('teamPage');
+    res.redirect('teamPage');
 
-        }
+}
 
 
-    }
+}
 
 }
 
 }
 else {
-    console.log("IN ELSE STATEMENT");
-    res.redirect('teamPage');
+    models.Invite
+    .find({"_id": requestId})
+    .remove()
+    .exec(afterRemovingInvite);
+    function afterRemovingInvite(err) {
+       if(err) { console.log(err); res.send(500);};
+       console.log("IN REMOVE STATEMENT");
+       res.redirect('teamPage');
+   }
+   
 }
 
   //  res.redirect('teamPage');
@@ -373,11 +381,11 @@ else {
 
 
 exports.respondRequestAll = function(req, res) {
-   var cid = req.session._id;
-   var teamRequests = [];
+ var cid = req.session._id;
+ var teamRequests = [];
 
 
-   console.log("cid: "+ cid);
+ console.log("cid: "+ cid);
     //get teamReq with database
     models.TeamCoach
     .find({"cid": cid})

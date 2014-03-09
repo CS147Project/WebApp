@@ -16,12 +16,12 @@
 
 
 
-<!-- {{#if players}}
+{{#if players}}
 <h3>Remove a Player</h3>
 
 <form class="form" role="form" method="post" action="/removeAthlete">
 
- <select name = "requestId"> {{_id}}
+ <select name = "teamAthleteId"> {{_id}}
     {{#each players}}
 
    
@@ -36,15 +36,15 @@
 	<button class="btn btn-default" type="submit"> Remove</button>
 
 </form>
-{{/if}} -->
+{{/if}}
 
 {{#if teamRequests}}
 <h4>Respond to Requests</h4>
-<form class="form" role="form" method="post" action="/respondTeamAll">
+<!-- <form class="form" role="form" method="post" action="/respondTeamAll">
      <button class="btn btn-primary" type="submit">Accept All Requests</button>
-</form>
+</form> -->
 
-<p class="caption"> OR Select Players to Accept </p>
+<p class="caption"> Select Players to Accept </p>
 
 <form class="form" role="form" method="post" action="/respondTeam">
     <select name = "requestId"> {{_id}}
