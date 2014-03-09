@@ -1,5 +1,3 @@
-
-
 var data = require("../json/users.json");
 var teamathletes = require("../json/teamathletes.json");
 var invites = require("../json/invites.json");

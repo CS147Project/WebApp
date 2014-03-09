@@ -1,31 +1,54 @@
 'use strict';
-var lastActive = null;
 var count = 1;
 
 // Call this function when the page loads (the "ready" event)
 $(document).ready(function() {
 	initializePage();
-  $('#selectWorkout tr#workout').first().addClass('success');
 })
 
 /*
  * Function that is called when the document is ready.
  */
 function initializePage() {
-	console.log("init");
+  $('#selectWorkout tr#workout').first().addClass('success');
+  $('#genNav .navbar .btn').first().addClass('active');
   $("#addExercise").click(addExercise);
-	lastActive = $(".navbar a .home-btn");
-	lastActive.addClass("active");
-	$("#genNav .navbar .btn").click(navigate);
+	//$('#genNav .navbar .btn').click(navigate);
   $('.navExercise').click(submitData);
+
 }
 
-function navigate(e) {
-	lastActive.removeClass("active");
-	console.log(lastActive);
-	$("this").addClass("active");
-	lastActive = $("this");
-}
+// function navigate(e) {
+//   console.log('clicked!');
+//   $('.btn.active').removeClass('active');
+//   $(this).addClass('active');
+// }
+
+//Create Workout
+/////////////////////
+$("#createWorkoutForm").validate({
+    rules: {
+        title: {
+            minlength: 2,
+            required: true
+        },
+        email: {
+            required: true,
+            email: true
+        },
+        message: {
+            minlength: 2,
+            required: true
+        }
+    },
+    highlight: function (element) {
+        $(element).closest('.control-group').removeClass('success').addClass('error');
+    },
+    success: function (element) {
+        element.text('OK!').addClass('valid')
+            .closest('.control-group').removeClass('error').addClass('success');
+    }
+});
 
 function addExercise(e) {
     e.preventDefault();
@@ -65,11 +88,6 @@ $(function(){
     }
   });
 })
-
-function navigate(e){
-  console.log("/static/" + $(this).attr("value")+ ".html");
-  $("#content").load("/static/" + $(this).attr("value") + ".html");
-}
 
 
 //Select Workout
@@ -130,7 +148,7 @@ function submitData(e){
 
 }
 
-// SWIPER FUNCTIONALITY
+// GOWORKOUT SWIPER FUNCTIONALITY
 $(function(){
   var mySwiper = $('#goWorkout.swiper-container').swiper({
     //Your options here:
@@ -145,10 +163,22 @@ $(function(){
 })
 
 
+  $('#goWorkout.arrow-left').on('click', function(e){
+    e.preventDefault()
+    mySwiper.swipePrev()
+  })
+  $('#goWorkout.arrow-right').on('click', function(e){
+    e.preventDefault()
+    mySwiper.swipeNext()
+  })
+
+
+
 
 //Assign Workout
 ///////////////////////////////////////////////
 
+//ASSIGNWORKOUT SWIPER FUNCTIONALITY
 $(function(){
   var mySwiper = $('#assignWorkout.swiper-container').swiper({
     //Your options here:

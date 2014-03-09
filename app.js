@@ -59,13 +59,17 @@ app.get('/settings', settings.index);
 app.get('/logout', admin.logout);
 app.get('/home', home.view);
 app.get('/home_grid', home.viewGrid);
+
 app.post('/createTeam', team.createTeam);
 app.post('/inviteTeam', team.sendRequest);
 app.post('/respondTeam', team.respondRequest);
 app.get('/teamPage', team.view);
+
 app.get('/messages', messages.get);
 app.get('/messages/create', messages.create);
+
 app.get('/goWorkout:id', workout.goWorkout);
+app.get('/goWorkout_alt:id', workout.goWorkout_alt);
 app.get('/goWorkout/submit', workout.submit);
 app.post('/goWorkout/save', workout.save);
 app.get('/workouts', workouts.view);

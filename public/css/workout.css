@@ -1,0 +1,43 @@
+/* GoWorkout
+ * styling for goWorkout Page
+*/
+.arrow-left {
+  background: url(img/arrows.png) no-repeat left top;
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  margin-top: -15px;
+  width: 17px;
+  height: 30px;
+}
+.arrow-right {
+  background: url(img/arrows.png) no-repeat left bottom;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  margin-top: -15px;
+  width: 17px;
+  height: 30px;
+}
+
+
+/* assignWorkout.css
+ * styling for the assignWorkout Page
+ */
+
+#assignWorkout #selectWorkout {
+
+}
+
+#assignWorkout.swiper-container table{
+	background-color: white;
+	background-color:  rgba(255,255,255,0.65);
+}
+
+#assignWorkout.swiper-container table tr{
+	width:100%;
+}
+#assignWorkout.swiper-container table tr td.btn{
+	width:100%;
+	text-align: center;
+}
