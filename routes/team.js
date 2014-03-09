@@ -22,7 +22,7 @@ exports.view = function(req, res) {
         if(team!=null && team.length>0) {
             //IDK why TID is undefined in the following line!!!
             var tid = team[0].tid;
-            console.log("tid: "+ tid);
+            console.log("found tid at 0 for this coach: "+ tid);
             models.Invite
             .find({"tid": tid}).exec(afterInviteQuery);
             function afterInviteQuery(err, invites) {
@@ -161,6 +161,21 @@ exports.createTeam = function(req, res) {
         if(err) { console.log(err); res.send(500);};
         tid= team._id;
         console.log("tid: " + tid);
+
+        var coach = new models.TeamCoach({
+            "cid": cid,
+            "tid": team._id
+        })
+        coach.save(afterSavingCoach);
+        function afterSavingCoach(err, coach) {
+            console.log("save coach: +" + coach.cid + coach.tid);
+            res.redirect("/teamPage");
+        }
+
+
+
+
+        
         
     }
 
