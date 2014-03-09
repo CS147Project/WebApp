@@ -5,94 +5,75 @@
     <span class="glyphicon glyphicon-pause glyphicons-lg"></span> Pause
   </button>
 </a> -->
+<form id="goExerciseForm" class="form-horizontal center" role="form" method="post" action="/addCompletedWorkout">
+    <div id="goWorkout" class="swiper-container">
+        <!-- SWIPER WRAPPER -->
+      <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <center><h3>Workout Summary</h3></center>
+                <center><h3>{{workout.title}}</h3></center>        
+                <center><h4>{{workout.description}}</h4></center>
+                <p class="caption">Exercises</p>
+                {{#each exercises}}
+                    <h5>{{name}}</h5>
+                {{/each}}
+                <br />
+                <br />
+                <p>Swipe to begin</p>
+            </div>
+            {{#each exercises}}
+                <!-- SLIDE -->
+                <div class="swiper-slide"> 
+                    <h2>{{name}}</h2>
+                    {{#if sets}}
+                        {{#if reps}}
+                            <h2>{{sets}} sets x {{reps}} reps</h2>
+                        {{else}}
+                            <h2>{{sets}} sets</h2>
+                        {{/if}}
+                    {{else}}
+                        {{#if reps}}
+                            <h2>{{reps}} reps</h2>
+                        {{/if}}
+                    {{/if}}
 
-<div id="goWorkout" class="swiper-container">
-    <!-- SWIPER WRAPPER -->
-  <div class="swiper-wrapper">
-      <div class="swiper-slide">
-        <center><h3>Workout Summary</h3></center>
-        <center><h3>{{workout.title}}</h3></center>        
-        <center><h4>{{workout.description}}</h4></center>
-        <p class="caption">Exercises</p>
-        {{#each exercises}}
-            <h5>{{name}}</h5>
-        {{/each}}
-        <br />
-        <br />
-        <p>Swipe to the right to begin</p>
-
-      </div>
-
-      {{#each exercises}}
-      <!-- SLIDE -->
-      <div class="swiper-slide"> 
-        <!-- FORM FOR SINGLE EXERCISE -->
-        <form id="goExerciseForm" class="form-horizontal center" role="form" method="post" action="/addCompletedWorkout">
-    
-            <h2>{{name}}</h2>
-            {{#if sets}}
-                {{#if reps}}
-                    <h2>{{sets}} sets x {{reps}} reps</h2>
-                {{else}}
-                    <h2>{{sets}} sets</h2>
-                {{/if}}
-            {{else}}
-                {{#if reps}}
-                    <h2>{{reps}} reps</h2>
-                {{/if}}
-            {{/if}}
-
-            {{#if weight}}
-                <div class="form-group">
-                    <label for="inputWeight" class="col-sm-2 control-label">Weight:</label>
-                    <div class="col-sm-5">
-                        <input type="number" class="form-control" id="inputWeight" placeholder="enter number" required>
-                    </div>
-                </div>
-            {{/if}}
-            {{#if speed}}
-                <div class="form-group">
-                    <label for="inputDist" class="col-sm-2 control-label">Speed: </label>
-                    <div class="col-sm-5">
-                        <input type="number" class="form-control" id="inputSpeed" placeholder="X.XX mph/kph" required>
-                    </div>
-                </div>
-            {{/if}}
-            {{#if distance}}
-                <div class="form-group">
-                    <label for="inputDist" class="col-sm-2 control-label">Distance: </label>
-                    <div class="col-sm-5">
-                        <input type="number" class="form-control" id="inputDist" placeholder="enter number" required>
-                    </div>
-                </div>
-            {{/if}}
-            {{#if time}}
-                <div class="form-group">
-                    <label for="inputTime" class="col-sm-2 control-label">Time: </label>
-                    <div class="col-sm-5">
-                        <input type="number" class="form-control" id="inputTime" pattern="HH:mm:ss" placeholder="00:00:00" required>
-                    </div>
-                </div>
-            {{/if}}
-<!--             <a href="">
-    <button type="button" id="completeWorkout" type="submit" class="btn btn-primary">Complete Workout</button>
-</a>
- -->
-
-        <a href="/workoutDone" > 
-
-<p> Complete Workout </p>
-                            </a>
-
-        </form>
-      </div> 
-      <!-- END OF SLIDE -->
-      {{/each}}
-  </div>
-  <div class="pagination"></div>
-</div>
-
-<!-- <a href="">
-    <button type="button" id="completeWorkout" class="btn btn-primary">Complete Workout</button>
-</a> -->
-
+                    {{#if weight}}
+                        <div class="form-group">
+                            <label for="inputWeight" class="col-sm-2 control-label">Weight:</label>
+                            <div class="col-sm-5">
+                                <input type="number" class="form-control" id="inputWeight" placeholder="enter number" required>
+                            </div>
+                        </div>
+                    {{/if}}
+                    {{#if speed}}
+                        <div class="form-group">
+                            <label for="inputDist" class="col-sm-2 control-label">Speed: </label>
+                            <div class="col-sm-5">
+                                <input type="number" class="form-control" id="inputSpeed" placeholder="X.XX mph/kph" required>
+                            </div>
+                        </div>
+                    {{/if}}
+                    {{#if distance}}
+                        <div class="form-group">
+                            <label for="inputDist" class="col-sm-2 control-label">Distance: </label>
+                            <div class="col-sm-5">
+                                <input type="number" class="form-control" id="inputDist" placeholder="enter number" required>
+                            </div>
+                        </div>
+                    {{/if}}
+                    {{#if time}}
+                        <div class="form-group">
+                            <label for="inputTime" class="col-sm-2 control-label">Time: </label>
+                            <div class="col-sm-5">
+                                <input type="number" class="form-control" id="inputTime" pattern="HH:mm:ss" placeholder="00:00:00" required>
+                            </div>
+                        </div>
+                    {{/if}}
+                </div> 
+                <!-- END OF SLIDE -->
+            {{/each}}
+        </div>
+        <div class="pagination"></div>
+        <button type="button" id="completeWorkout" type="submit" class="btn btn-primary">Complete Workout</button>
+    </div>
+</form>

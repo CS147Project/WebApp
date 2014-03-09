@@ -86,10 +86,10 @@ var CompletedExerciseSchema = new Mongoose.Schema({
     name: { type: String, required: true },
     sets: Number,
     reps: Number,
-    weight: Boolean,
-    distance: Boolean,
-    speed: Boolean,
-    time: Boolean
+    weight: String,
+    distance: String,
+    speed: String,
+    time: String
 });
 
 exports.CompletedExercise = Mongoose.model('CompletedExercise', CompletedExerciseSchema);

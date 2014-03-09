@@ -18,37 +18,22 @@ exports.goWorkout = function(req, res) {
 	console.log("go workout");
 	console.log("id", req.params.id);
 	var wid= req.params.id;
-	if(req.params.id==0) {
-		models.WorkoutTemplate
-		.find()
-		.exec(afterQuery);
-		function afterQuery(err, templates) {
-			if(templates!=null && templates.length>0) {
-				wid= templates[0]._id;
-			}
-
-		models.WorkoutTemplate.find({ '_id': wid}).exec(afterWorkoutQuery);
-		function afterWorkoutQuery(err, templateWorkouts) {
-			if(err) {console.log(err); return res.send(500);}
-				for(exercise in templateWorkouts[0].exercises) {
-					if(templateWorkouts[0].exercises[exercise].sets == 0) {
-						templateWorkouts[0].exercises[exercise].sets = undefined;
-					}
-					if(templateWorkouts[0].exercises[exercise].reps == 0) {
-						templateWorkouts[0].exercises[exercise].reps = undefined;
-					}
-				}
-
-				res.render('goWorkout', {
-					'workout': templateWorkouts[0],
-					'exercises': templateWorkouts[0].exercises
-				});
-			}
-		}
+	if(req.params.id == 0) { // No workout designated
+		res.redirect('workouts');
 	} else {
 		models.WorkoutTemplate.find({ '_id': req.params.id}).exec(afterWorkoutQuery);
 		function afterWorkoutQuery(err, templateWorkouts) {
 			if(err) {console.log(err); return res.send(500);}
+			for(exercise in templateWorkouts[0].exercises) {
+				if(templateWorkouts[0].exercises[exercise].sets == 0) {
+					templateWorkouts[0].exercises[exercise].sets = undefined;
+				}
+				if(templateWorkouts[0].exercises[exercise].reps == 0) {
+					templateWorkouts[0].exercises[exercise].reps = undefined;
+				}
+			}
+			console.log("workout", templateWorkouts[0]);
+			console.log("exercises", templateWorkouts[0].exercises);
 			res.render('goWorkout', {
 				'workout': templateWorkouts[0],
 				'exercises': templateWorkouts[0].exercises
