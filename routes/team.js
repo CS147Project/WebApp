@@ -26,27 +26,69 @@ exports.view = function(req, res) {
             models.Invite
             .find({"tid": tid}).exec(afterInviteQuery);
             function afterInviteQuery(err, invites) {
-                if(invites!=null) {
+                if(invites!=null && invites.length>0) {
+                    var j =0;
                     for(var i=0; i<invites.length; i++) {
-                        console.log("pushing an invite");
-                        teamRequests.push(invites[i]);
-                    }
-                }
+                        models.User.find({"_id": invites[i].aid}).exec(afterUserQuery);
+                        function afterUserQuery(err, user) {
+                            console.log("I: " + i);
+                             console.log("j: " + j);
+                            console.log("full name: "+ user[0].firstName + " " + user[0].lastName);
+                            console.log("invites: "+ invites);
+                            var request = {
+                                "name": user[0].firstName + " " + user[0].lastName,
+                                "requestId": invites[j]._id
+                            }
+                            teamRequests.push(request);
+                            if(j+1 == invites.length) {
+                                res.render('team', {
+                                    'teamRequests': teamRequests,
+                                    'players': players
+                                }); 
+                            }
+                            j++;
+                        }
+
+
+
+
+
+                      //  teamRequests.push(invites[i]);
+                  }
+
+
+              }
+
+              else {
+                console.log("this coach has no invites");
+                 res.render('team');
+}
+              var players = [];
+                // models.TeamAthlete
+                // .find({"tid": tid}).exec(afterTeamAthleteQuery);
+                // function afterTeamAthleteQuery(err, TeamAthletes) {
+                //     console.log("num athletest on my team: "+ TeamAthletes.length);
+                //     for(var i = 0; i<TeamAthletes.length; i++) {
+                //         players.push(TeamAthletes[i]);
+                //     }
+                // }
+
+
+
+
                 console.log("num requests: "+ teamRequests.length);
-                res.render('team', {
-                    'teamRequests': teamRequests
-                }); 
-            }
+                // res.render('team', {
+                //     'teamRequests': teamRequests,
+                //     'players': players
+                // }); 
+}
 
 
 
 
 
-        }
-        else {
-            console.log("this coach has no teams");
-            res.render('team');
-        }
+}
+
 
         // console.log("num requests: "+ teamRequests.length);
         // res.render('team', {
@@ -231,41 +273,57 @@ function afterQuery(err, coach) {
         if(team!=null) {
 
             console.log("team: " + team);
-            tid = team.tid;
-            console.log("tid: "+ tid);
+            tid = team[0].tid;
+            console.log("creating req with tid: "+ tid + "aid: " + req.session._id + "cid: " + cid);
+            var invite = new models.Invite({
+
+             "cid": cid,
+             "aid": req.session._id,
+             "tid": tid
+         }) 
+            invite.save(afterSaving);
+            function afterSaving(err, team) {
+                console.log("just saved an invite");
+                res.redirect("settings");
+            }
+
+
+
+
         }
         else {
             console.log("this coach has no teams");
+            res.redirect("settings");
         }
     }
 
 
 
    // tid = req.body.tid;
-   if(!onRoster(tid, aid)) {
-    var newInvite = {
+   // if(!onRoster(tid, aid)) {
+   //  var newInvite = {
 
-    }
+   //  }
 
-        // newInvite = {
-        //     "iid": 1,
-        //     "aid": aid,
-        //     "tid": tid,
-        //     "datetime": d
-        // }
+   //      // newInvite = {
+   //      //     "iid": 1,
+   //      //     "aid": aid,
+   //      //     "tid": tid,
+   //      //     "datetime": d
+   //      // }
 
-        // invites['allInvites'].push(newInvite);
-        console.log(newInvite);
-        res.render('home', {
-            'msg': 'Your request to join '+getNameForTeamId(tid)+' has been sent!',
-            'athlete': isAthlete(req.session.email)
-        }); // Can also redirect to 'settings'
+   //      // invites['allInvites'].push(newInvite);
+   //      console.log(newInvite);
+   //      res.render('home', {
+   //          'msg': 'Your request to join '+getNameForTeamId(tid)+' has been sent!',
+   //          'athlete': isAthlete(req.session.email)
+   //      }); // Can also redirect to 'settings'
 
-    } else {
-        res.render('settings', {
-            'msg': 'There was a problem sending your invite. Please try again.'
-        });
-    }
+   //  } else {
+   //      res.render('settings', {
+   //          'msg': 'There was a problem sending your invite. Please try again.'
+   //      });
+   //  }
 }
 
 }
@@ -283,51 +341,79 @@ function removeRequest(aid, tid) {
 
 exports.respondRequest = function(req, res) {
     var form_data = req.body;
-    var response = form_data.response;
-    var aid = form_data.aid; //this is now an array
-    var tid = form_data.tid;
-
-for(var i =0; i<aid.length; i++) {
-    if(response=="true") {
-        // var teamathlete = {
-        //     "tid": invite.tid,
-        //     "aid": invite.aid
-        // }
-        // teamathletes["teamathletes"].push(teamathlete);
-        // removeRequest(aid, tid);
-
+    var requestId = req.body.requestId;
+    var response = req.body.response;
+    console.log("requestID: "+ requestId + "response: " + response);
+//    var response = form_data.response;
+    // var requests = [];
+    // requests = form_data.requestId;
+    // console.log("requests: "+ requests);
+    // console.log("req. len: "+ requests.length);
+    // for(var i =0; i<requests.length; i++) {
 //in DATABASE:
-models.Invite
-.find({"aid": aid[i]}, {"tid": tid[i]})
-.remove()
-.exec(afterRemoving);
-function afterRemoving(err) {
+if(response == "accept") {
+    models.Invite
+    .find({"_id": requestId})
+    .exec(afterFindingInvite);
+    function afterFindingInvite(err, invite) {
+        if(err) { console.log(err); res.send(500);};
+// console.log("aid: " + invite.aid );
+// console.log("aid 0: " + invite[0].aid);
+
+var newPlayer = new models.TeamAthlete({
+    "aid": invite[0].aid,
+    "tid": invite[0].tid
+}) 
+newPlayer.save(afterAddingPlayer);
+function afterAddingPlayer(err, coach) { 
+ if(err) { console.log(err); res.send(500);};
+ console.log("just added playter");
+ models.Invite
+ .find({"_id": requestId})
+ .remove()
+ .exec(afterRemovingInvite);
+ function afterRemovingInvite(err) {
     if(err) { console.log(err); res.send(500);};
+    "just removed invite";
+
+    res.redirect('teamPage');
+
 }
- var newPlayer = new models.TeamAthlete({
-            "aid": aid[i],
-            "tid": tid[i]
-        }) 
-        newPlayer.save(afterSavingCoach);
-        function afterSavingCoach(err, coach) {
-            if(err) { console.log(err); res.send(500);};
-        }
-    }
+
+
 }
-    //remove request from array 
-    // var index = invites["allInvites"].indexof(invite);
-    // if(index > -1) {
-    //  invites["allInvites"].splice(index, 1);
-    // }
-    res.redirect('settings');
+
 }
+
+}
+else {
+    models.Invite
+    .find({"_id": requestId})
+    .remove()
+    .exec(afterRemovingInvite);
+    function afterRemovingInvite(err) {
+       if(err) { console.log(err); res.send(500);};
+       console.log("IN REMOVE STATEMENT");
+       res.redirect('teamPage');
+   }
+
+}
+
+  //  res.redirect('teamPage');
+}
+
+
+
+
+
+
 
 exports.respondRequestAll = function(req, res) {
-   var cid = req.session._id;
-    var teamRequests = [];
+ var cid = req.session._id;
+ var teamRequests = [];
 
 
-    console.log("cid: "+ cid);
+ console.log("cid: "+ cid);
     //get teamReq with database
     models.TeamCoach
     .find({"cid": cid})
@@ -337,28 +423,28 @@ exports.respondRequestAll = function(req, res) {
         .find({"tid": tid})
         .exec(afterFoundAllInvites);
 
-function afterFoundAllInvites(err, invites) {
-    for(var i=0; i<invites.length; i++) {
-        var newPlayer = new models.TeamAthlete({
-            "aid": invites[i].aid,
-            "tid": invites[i].tid
-        }) 
-            newPlayer.save(afterSaving);
-    function afterSaving(err, player) {
-        if(err) { console.log(err); res.send(500);};
-        if(i+1==invites.length) {
-            models.Invite
-            .find({"tid": tid})
-            .remove()
-            .exec(removedInvites);
-            function removedInvites(err) {
-                res.redirect("team");
+        function afterFoundAllInvites(err, invites) {
+            for(var i=0; i<invites.length; i++) {
+                var newPlayer = new models.TeamAthlete({
+                    "aid": invites[i].aid,
+                    "tid": invites[i].tid
+                }) 
+                newPlayer.save(afterSaving);
+                function afterSaving(err, player) {
+                    if(err) { console.log(err); res.send(500);};
+                    if(i+1==invites.length) {
+                        models.Invite
+                        .find({"tid": tid})
+                        .remove()
+                        .exec(removedInvites);
+                        function removedInvites(err) {
+                            res.redirect("team");
+                        }
+                    }
+
+                }
             }
         }
-        
-    }
-    }
-}
 
 
     }

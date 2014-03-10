@@ -9,9 +9,19 @@
 </a>
 
 <div id="selectWorkout" class="panel panel-default">
-    <a href="goWorkout0"><div id="startWorkout" class="btn btn-primary btn-block btn-large">
-      <span class="glyphicon glyphicon-play-circle glyphicons-lg"></span> Start Workout
-    </div></a>
+    {{#if userWorkouts}}
+      <a href="/goWorkout{{userWorkouts.0._id}}">
+        <div id="startWorkout" class="btn btn-primary btn-block btn-large">
+          <span class="glyphicon glyphicon-play-circle glyphicons-lg"></span> Start Workout
+        </div>
+      </a>
+    {{else}}
+      <a href="#">
+        <div id="startWorkout" class="btn btn-primary btn-block btn-large disabled">
+          <span class="glyphicon glyphicon-play-circle glyphicons-lg"></span> Start Workout
+        </div>
+      </a>
+    {{/if}}
     <div class="panel-heading"> 
       Your Workouts
     </div>
