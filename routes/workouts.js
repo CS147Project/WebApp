@@ -104,30 +104,34 @@ exports.create = function(req, res) { 
         var distance = false;
         var speed = false;
         var time = false;
-        if(form_data["excersiseRecordType"+i] == "weight") {
-            weight = true;
-        } else if(form_data["excersiseRecordType"+i] == "distance") {
-            distance = true;
-        } else if(form_data["excersiseRecordType"+i] == "speed") {
-            speed = true;
-        } else {
-            time = true;
+        if(form_data["excersiseName"+i] !== '' && form_data["excersiseName"+i] !== undefined) {
+            if(form_data["excersiseRecordType"+i] == "weight") {
+                weight = true;
+            } else if(form_data["excersiseRecordType"+i] == "distance") {
+                distance = true;
+            } else if(form_data["excersiseRecordType"+i] == "speed") {
+                speed = true;
+            } else {
+                time = true;
+            }
+            if(form_data["excersiseSets"+i] == '') {
+                form_data["excersiseSets"+i] = 0;
+            }
+            if(form_data["excersiseReps"+i] == '') {
+                form_data["excersiseReps"+i] = 0;
+            }
+            var newExercise = new models.ExerciseTemplate({
+                "name": form_data["excersiseName"+i],
+                "sets": parseInt(form_data["excersiseSets"+i]),
+                "reps": parseInt(form_data["excersiseReps"+i]),
+                "weight": weight,
+                "distance": distance,
+                "speed": speed,
+                "time": time
+            });
+            newWorkout.exercises.push(newExercise);
         }
-        console.log("name", form_data["excersiseName"+i]);
-        var newExercise = new models.ExerciseTemplate({
-            "name": form_data["excersiseName"+i],
-            "sets": parseInt(form_data["excersiseSets"+i]),
-            "reps": parseInt(form_data["excersiseReps"+i]),
-            "weight": weight,
-            "distance": distance,
-            "speed": speed,
-            "time": time
-        });
-        newWorkout.exercises.push(newExercise);
     }
-    console.log("session id", req.session._id);
-    console.log("session email", req.session.email);
-    console.log("exercises", newWorkout.exercises);
 
     newWorkout.save(afterSaving);
 
@@ -196,26 +200,58 @@ exports.view = function(req, res){
 
 
 exports.addCompletedWorkout = function(req, res) {  
-    var d = new Date();
-    d = parseDate(d);
-
-    for(w in completedworkouts["completedWorkouts"]) {
-        console.log(completedworkouts["completedWorkouts"][w].aid + ": did workouts # " + completedworkouts["completedWorkouts"][w].wid);
-
+    console.log("adding completedWorkouts");
+    if(req.session == undefined || req.session.email == undefined) {
+        console.log("Please login for this page");
+        return res.redirect('/');
+    }
+    console.log("Body", req.body);
+    var form_data = req.body;
+    var numExercises = form_data.numExercises;
+    var newWorkout = new models.WorkoutTemplate({
+        "finisherid": req.session._id,
+        "title": form_data.title,
+        "description": form_data.description,
+        "exercises": []
+    });
+    for (var i = 1; i <= numExercises; i++) {
+        var weight = false;
+        var distance = false;
+        var speed = false;
+        var time = false;
+        if(form_data["excersiseRecordType"+i] == "weight") {
+            weight = true;
+        } else if(form_data["excersiseRecordType"+i] == "distance") {
+            distance = true;
+        } else if(form_data["excersiseRecordType"+i] == "speed") {
+            speed = true;
+        } else {
+            time = true;
+        }
+        if(form_data["excersiseSets"+i] == '') {
+            form_data["excersiseSets"+i] = 0;
+        }
+        if(form_data["excersiseReps"+i] == '') {
+            form_data["excersiseReps"+i] = 0;
+        }
+        console.log("name", form_data["excersiseName"+i]);
+        var newExercise = new models.ExerciseTemplate({
+            "name": form_data["excersiseName"+i],
+            "sets": parseInt(form_data["excersiseSets"+i]),
+            "reps": parseInt(form_data["excersiseReps"+i]),
+            "weight": weight,
+            "distance": distance,
+            "speed": speed,
+            "time": time
+        });
+        newWorkout.exercises.push(newExercise);
     }
 
-    var completedW = {
-        "wid": req.query.wid,
-        "aid": req.session.email,
-        "datetime": d
-    };
-    completedworkouts["completedWorkouts"].push(completedW);
+    newWorkout.save(afterSaving);
 
-    for(w in completedworkouts["completedWorkouts"]) {
-        console.log(completedworkouts["completedWorkouts"][w].aid + ": did workouts # " + completedworkouts["completedWorkouts"][w].wid);
+    function afterSaving(err) {
+        if(err) {console.log(err); return res.send(500);}
+        res.redirect('workoutdone');
+    }
 
-     }
-    res.redirect('workouts', {
-        "msg" : "Workout Completed!"
-    });
 }

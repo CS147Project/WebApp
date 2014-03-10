@@ -1,3 +1,5 @@
+
+
 var data = require("../json/users.json");
 var teamCoachData = require("../json/teamcoaches.json");
 var teamData = require("../json/teams.json");
@@ -35,7 +37,7 @@ function isAthlete(email) {
 
 
 exports.view = function(req, res){
-    if(req.session._id == undefined) {
+    if(req.session == undefined || req.session._id == undefined) {
         console.log("Please login for this page");
         return res.redirect('/');
     }
@@ -46,19 +48,28 @@ exports.view = function(req, res){
         res.render('home', {
             'athlete': isAthlete(req.session.email),
             'teams': findTeamsForCoach(req.session.email),
-            'userWorkouts': templateWorkouts
+            'userWorkouts': templateWorkouts,
+            'test': false
         });
     };
 }
 
 exports.viewGrid = function(req, res){
-    var templateWorkouts = models.WorkoutTemplate.find().exec(afterQuery);
-        function afterQuery(err, projects) {
-            if(err) console.log(err);
-            res.render('home_grid', {
-                'athlete': isAthlete(req.session.email),
-                'teams': findTeamsForCoach(req.session.email),
-                'userWorkouts': templateWorkouts
-            });
-        };
+    if(req.session == undefined || req.session._id == undefined) {
+        console.log("Please login for this page");
+        return res.redirect('/');
+    }
+    models.WorkoutTemplate.find({'creatorid': req.session._id}).sort({'created': -1}).exec(afterQuery);
+    
+    function afterQuery(err, templateWorkouts) {
+        if(err) console.log(err);
+
+        
+        res.render('home', {
+            'athlete': isAthlete(req.session.email),
+            'teams': findTeamsForCoach(req.session.email),
+            'userWorkouts': templateWorkouts,
+            'test': true
+        });
+    };
 }

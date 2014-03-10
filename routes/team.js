@@ -9,14 +9,62 @@ var messages = require("./messages");
 
 
 exports.view = function(req, res) {
-var teams = messages.findTeamsForCoach(req.session.email);
+    var cid = req.session._id;
     var teamRequests = [];
-    for(team in teams) {
-        teamRequests.push({"requests": getRequestsForTeam(teams[team])});
-    }
-        res.render('team', {
-            'teamRequests': teamRequests
-         }); 
+
+
+    console.log("cid: "+ cid);
+    //get teamReq with database
+    models.TeamCoach
+    .find({"cid": cid})
+    .exec(afterTeamQuery);
+    function afterTeamQuery(err, team) {
+        if(team!=null && team.length>0) {
+            //IDK why TID is undefined in the following line!!!
+            var tid = team[0].tid;
+            console.log("found tid at 0 for this coach: "+ tid);
+            models.Invite
+            .find({"tid": tid}).exec(afterInviteQuery);
+            function afterInviteQuery(err, invites) {
+                if(invites!=null) {
+                    for(var i=0; i<invites.length; i++) {
+                        console.log("pushing an invite");
+                        teamRequests.push(invites[i]);
+                    }
+                }
+                console.log("num requests: "+ teamRequests.length);
+                res.render('team', {
+                    'teamRequests': teamRequests
+                }); 
+            }
+
+
+
+
+
+        }
+        else {
+            console.log("this coach has no teams");
+            res.render('team');
+        }
+
+        // console.log("num requests: "+ teamRequests.length);
+        // res.render('team', {
+        //     'teamRequests': teamRequests
+        // }); 
+
+}
+//Get TEam Requests with Database
+
+
+
+// var teams = messages.findTeamsForCoach(req.session.email);
+// for(team in teams) {
+//     teamRequests.push({"requests": getRequestsForTeam(teams[team])});
+// }
+// res.render('team', {
+//     'teamRequests': teamRequests
+// }); 
   //  res.render('team');
 }
 
@@ -97,7 +145,7 @@ function isAthlete(email) {
 }
 
 exports.createTeam = function(req, res) {
-    var cid = req.session.id;
+    var cid = req.session._id;
     var sport = req.body.sport;
     var name = req.body.name;
     var tid="";
@@ -113,20 +161,25 @@ exports.createTeam = function(req, res) {
         if(err) { console.log(err); res.send(500);};
         tid= team._id;
         console.log("tid: " + tid);
-        var teamCoach = new models.TeamCoach({
-        "cid": cid,
-        "tid": tid
-    }) 
-    teamCoach.save(afterSavingCoach);
-    function afterSavingCoach(err, coach) {
-        if(err) { console.log(err); res.send(500);};
+
+        var coach = new models.TeamCoach({
+            "cid": cid,
+            "tid": team._id
+        })
+        coach.save(afterSavingCoach);
+        function afterSavingCoach(err, coach) {
+            console.log("save coach: +" + coach.cid + coach.tid);
+            res.redirect("/teamPage");
+        }
+
+
+
+
         
-        console.log("after saving coach");
-    }
+        
     }
 
-res.redirect('teamPage');
-
+    
 }
 
 exports.getTeamsByUser =function(req, res) {
@@ -151,11 +204,11 @@ function getTeamByCoach(cid) {
 
 exports.sendRequest = function(req, res) {
     if(req.session !== undefined && req.session.email !== undefined) {
-    aid = req.session.email;        
-} else {
-    res.redirect('login');
-    return;
-}
+        aid = req.session.email;        
+    } else {
+        res.redirect('login');
+        return;
+    }
 
     var coachEmail = req.body.email;
     console.log("coach email: "+ coachEmail);
@@ -167,23 +220,24 @@ exports.sendRequest = function(req, res) {
 
 //from messages is null -> problems when want length.
 function afterQuery(err, coach) {
+    console.log("coach: " + coach);
     cid = coach[0]._id;
     console.log("cid: "+ cid);
 
-}
-console.log("cid outside: " + cid);
-models.TeamCoach
+    models.TeamCoach
     .find({"cid": cid})
     .exec(afterTeamQuery);
-function afterTeamQuery(err, team) {
-    if(team!=null) {
-    tid = team[0].tid;
-    console.log("tid: "+ tid);
-}
-else {
-    console.log("this coach has no teams");
-}
-}
+    function afterTeamQuery(err, team) {
+        if(team!=null) {
+
+            console.log("team: " + team);
+            tid = team.tid;
+            console.log("tid: "+ tid);
+        }
+        else {
+            console.log("this coach has no teams");
+        }
+    }
 
 
 
@@ -214,6 +268,8 @@ else {
     }
 }
 
+}
+
 function removeRequest(aid, tid) {
     for(invite in invites["allInvites"]) {
         if(invites["allInvites"][invite].aid == aid && invites["allInvites"][invite].tid == tid) {
@@ -231,17 +287,33 @@ exports.respondRequest = function(req, res) {
     var aid = form_data.aid; //this is now an array
     var tid = form_data.tid;
 
-//for(var i =0; i<aid.length; i++) {
+for(var i =0; i<aid.length; i++) {
     if(response=="true") {
-        var teamathlete = {
-            "tid": invite.tid,
-            "aid": invite.aid
-        }
-        teamathletes["teamathletes"].push(teamathlete);
-        removeRequest(aid, tid);
+        // var teamathlete = {
+        //     "tid": invite.tid,
+        //     "aid": invite.aid
+        // }
+        // teamathletes["teamathletes"].push(teamathlete);
+        // removeRequest(aid, tid);
 
+//in DATABASE:
+models.Invite
+.find({"aid": aid[i]}, {"tid": tid[i]})
+.remove()
+.exec(afterRemoving);
+function afterRemoving(err) {
+    if(err) { console.log(err); res.send(500);};
+}
+ var newPlayer = new models.TeamAthlete({
+            "aid": aid[i],
+            "tid": tid[i]
+        }) 
+        newPlayer.save(afterSavingCoach);
+        function afterSavingCoach(err, coach) {
+            if(err) { console.log(err); res.send(500);};
+        }
     }
-//}
+}
     //remove request from array 
     // var index = invites["allInvites"].indexof(invite);
     // if(index > -1) {
@@ -251,6 +323,49 @@ exports.respondRequest = function(req, res) {
 }
 
 exports.respondRequestAll = function(req, res) {
+   var cid = req.session._id;
+    var teamRequests = [];
+
+
+    console.log("cid: "+ cid);
+    //get teamReq with database
+    models.TeamCoach
+    .find({"cid": cid})
+    .exec(afterTeamQuery);
+    function afterTeamQuery(err, team) {
+        models.Invite
+        .find({"tid": tid})
+        .exec(afterFoundAllInvites);
+
+function afterFoundAllInvites(err, invites) {
+    for(var i=0; i<invites.length; i++) {
+        var newPlayer = new models.TeamAthlete({
+            "aid": invites[i].aid,
+            "tid": invites[i].tid
+        }) 
+            newPlayer.save(afterSaving);
+    function afterSaving(err, player) {
+        if(err) { console.log(err); res.send(500);};
+        if(i+1==invites.length) {
+            models.Invite
+            .find({"tid": tid})
+            .remove()
+            .exec(removedInvites);
+            function removedInvites(err) {
+                res.redirect("team");
+            }
+        }
+        
+    }
+    }
+}
+
+
+    }
+
+
+
+
 //TODO: add more here!
 res.redirect('settings');
 }
@@ -271,5 +386,3 @@ exports.viewAll = function(req, res) {
         'invites': invites
     });
 }
-
-

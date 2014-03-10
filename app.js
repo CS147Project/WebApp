@@ -72,6 +72,7 @@ app.get('/goWorkout:id', workout.goWorkout);
 app.get('/goWorkout_alt:id', workout.goWorkout_alt);
 app.get('/goWorkout/submit', workout.submit);
 app.post('/goWorkout/save', workout.save);
+app.get('/workoutDone', workout.done);
 app.get('/workouts', workouts.view);
 app.get('/startWorkoutCreation', workouts.start);
 app.post('/createWorkout', workouts.create);
@@ -80,8 +81,9 @@ app.get('/workouts/getExercises', workouts.getExercises); //returns [] of exerci
 app.get('/workouts/getUserWorkouts', workouts.getUserWorkouts); //returns workouts assigned to a user
 app.get('/assign', workouts.assign);
 app.post('/workouts/assignWorkout', workouts.assignWorkout);
-app.post('/workouts/addCompletedWorkout', workouts.addCompletedWorkout);
+app.post('/addCompletedWorkout', workouts.addCompletedWorkout);
 app.get('/analytics', workouts.analytics);
+
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

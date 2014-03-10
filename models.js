@@ -30,7 +30,10 @@ var MessageSchema = new Mongoose.Schema({
   text: { type: String, required: true },
   fromid: { type: Schema.ObjectId, ref: 'User', required: true },
   toid: { type: Schema.ObjectId, ref: 'User', required: true },
-  created: { type : Date, default: Date.now }
+  created: { type : Date, default: Date.now },
+  fromName: { type: String, required: true },
+  toName: { type: String, required: true }
+
 });
 
 exports.Message = Mongoose.model('Message', MessageSchema);
@@ -78,4 +81,26 @@ var WorkoutTemplateSchema = new Mongoose.Schema({
 });
 
 exports.WorkoutTemplate = Mongoose.model('WorkoutTemplate', WorkoutTemplateSchema);
+
+var CompletedExerciseSchema = new Mongoose.Schema({
+    name: { type: String, required: true },
+    sets: Number,
+    reps: Number,
+    weight: Boolean,
+    distance: Boolean,
+    speed: Boolean,
+    time: Boolean
+});
+
+exports.CompletedExercise = Mongoose.model('CompletedExercise', CompletedExerciseSchema);
+
+var CompletedWorkoutSchema = new Mongoose.Schema({
+  finisherid: { type: Schema.ObjectId, ref: 'User', required: true },
+  finished: { type : Date, default: Date.now },
+  title: { type: String, required: true },
+  description: { type: String, required: false},
+  exercises: [CompletedExerciseSchema]
+});
+
+exports.CompletedWorkout = Mongoose.model('CompletedWorkout', CompletedWorkoutSchema);
 

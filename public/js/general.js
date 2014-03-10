@@ -16,6 +16,31 @@ function initializePage() {
 	//$('#genNav .navbar .btn').click(navigate);
   $('.navExercise').click(submitData);
 
+  $(".form").validate({
+        rules: {
+            name:{
+                minlength: 3,
+                maxlength: 20,
+                required: true
+            },
+            email:{
+                minlength: 3,
+                maxlength: 20,
+                required: true
+            },
+            title:{
+                minlength: 2,
+                required: true
+            }
+        },
+        highlight: function (element) {
+            $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+        },
+        unhighlight: function (element) {
+            $(element).closest('.form-group').removeClass('has-error').addClass('has-success');
+        }
+    });
+
 }
 
 // function navigate(e) {
@@ -26,34 +51,39 @@ function initializePage() {
 
 //Create Workout
 /////////////////////
-$("#createWorkoutForm").validate({
-    rules: {
-        title: {
-            minlength: 2,
-            required: true
-        },
-        email: {
-            required: true,
-            email: true
-        },
-        message: {
-            minlength: 2,
-            required: true
-        }
-    },
-    highlight: function (element) {
-        $(element).closest('.control-group').removeClass('success').addClass('error');
-    },
-    success: function (element) {
-        element.text('OK!').addClass('valid')
-            .closest('.control-group').removeClass('error').addClass('success');
-    }
-});
+// $("#createWorkoutForm").validate({
+//     rules: {
+//         title: {
+//             minlength: 2,
+//             required: true
+//         },
+//         email: {
+//             required: true,
+//             email: true
+//         },
+//         message: {
+//             minlength: 2,
+//             required: true
+//         },
+//         numExercises: {
+//             minlength: 2,
+//             required:true
+//         }
+//     },
+//     highlight: function (element) {
+//         $(element).closest('.control-group').removeClass('success').addClass('error');
+//     },
+//     success: function (element) {
+//         element.text('OK!').addClass('valid')
+//             .closest('.control-group').removeClass('error').addClass('success');
+//     }
+// });
 
 function addExercise(e) {
     e.preventDefault();
     console.log("Registered Click");
-    var form = "<div>"+
+    var form =   "<div class='text-left' id='newExercise"+count+"'>Exercise "+count+": "+
+                    "<button class='btn btn-primary' id='removeExercise"+count+"' type='button'><span class='glyphicon glyphicon-trash glyphicons-lg pull-right'></span></button>"+
                     "<input type='text' class='form-control' placeholder='Name' name='excersiseName"+count+"'>"+
                     "<input type='text' class='form-control' placeholder='Number of Sets' name='excersiseSets"+count+"'>"+
                     "<input type='text' class='form-control' placeholder='Number of Reps' name='excersiseReps"+count+"'>"+
@@ -68,9 +98,13 @@ function addExercise(e) {
                     "</select>"+
                     "<hr>"+
                 "</div>"
-    var newExercise = "<div class='text-left'>Exercise "+count+':'+form+"</div>";
+    var newExercise = form;
     $("#numExercises")[0].value = count;
     $("#exercisesCreated").append(newExercise);
+    $("#removeExercise"+count).bind('click', { parentObj: "#newExercise"+count}, function(e) {
+      console.log(e.data.parentObj);
+      $(e.data.parentObj).remove();
+    });
     count++;
 }
 
@@ -155,7 +189,7 @@ $(function(){
     pagination: '.pagination',
     paginationClickable: true,
     mode:'horizontal',
-    loop: true,
+    loop: false,
     onSlideChangeStart: function(){
         // save current workout data
     }
@@ -196,7 +230,7 @@ $("#assignWorkout.swiper-container #workout .btn").click(function(){
     var elem = $(this).parent();
     if ( elem.is( "tr" ) ) {
         elem.toggleClass("success");
-    }else{
+    } else {
         consol.log("error: cannot find tr element parent: " + elem);
     }
 });
@@ -208,7 +242,7 @@ $("#assignWorkout.swiper-container #player .btn").click(function(){
     var elem = $(this).parent();
     if ( elem.is( "tr" ) ) {
         elem.toggleClass("success");
-    }else{
+    } else {
         consol.log("error: cannot find tr element parent: " + elem);
     }
 });
@@ -226,6 +260,3 @@ $("#assignWorkout.swiper-container button#assign").click(function(){
     // console.log("players:" + players);
 
 });
-
-
-
