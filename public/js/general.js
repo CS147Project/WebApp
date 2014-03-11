@@ -16,30 +16,30 @@ function initializePage() {
 	//$('#genNav .navbar .btn').click(navigate);
   $('.navExercise').click(submitData);
 
-  $(".form").validate({
-        rules: {
-            name:{
-                minlength: 3,
-                maxlength: 20,
-                required: true
-            },
-            email:{
-                minlength: 3,
-                maxlength: 20,
-                required: true
-            },
-            title:{
-                minlength: 2,
-                required: true
-            }
-        },
-        highlight: function (element) {
-            $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
-        },
-        unhighlight: function (element) {
-            $(element).closest('.form-group').removeClass('has-error').addClass('has-success');
-        }
-    });
+  // $(".form").validate({
+  //       rules: {
+  //           name:{
+  //               minlength: 3,
+  //               maxlength: 20,
+  //               required: true
+  //           },
+  //           email:{
+  //               minlength: 3,
+  //               maxlength: 20,
+  //               required: true
+  //           },
+  //           title:{
+  //               minlength: 2,
+  //               required: true
+  //           }
+  //       },
+  //       highlight: function (element) {
+  //           $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+  //       },
+  //       unhighlight: function (element) {
+  //           $(element).closest('.form-group').removeClass('has-error').addClass('has-success');
+  //       }
+  //   });
 
 }
 
@@ -184,7 +184,7 @@ function submitData(e){
 
 // GOWORKOUT SWIPER FUNCTIONALITY
 $(function(){
-  var mySwiper = $('#goWorkout.swiper-container').swiper({
+  var workoutSwiper = $('#goWorkout.swiper-container').swiper({
     //Your options here:
     pagination: '.pagination',
     paginationClickable: true,
@@ -197,14 +197,14 @@ $(function(){
 })
 
 
-  $('#goWorkout.arrow-left').on('click', function(e){
-    e.preventDefault()
-    mySwiper.swipePrev()
-  })
-  $('#goWorkout.arrow-right').on('click', function(e){
-    e.preventDefault()
-    mySwiper.swipeNext()
-  })
+$('#goWorkout.arrow-left').on('click', function(e){
+  e.preventDefault()
+  mySwiper.swipePrev()
+})
+$('#goWorkout.arrow-right').on('click', function(e){
+  e.preventDefault()
+  mySwiper.swipeNext()
+})
 
 
 
@@ -214,7 +214,7 @@ $(function(){
 
 //ASSIGNWORKOUT SWIPER FUNCTIONALITY
 $(function(){
-  var mySwiper = $('#assignWorkout.swiper-container').swiper({
+  var assignSwiper = $('#assignWorkout.swiper-container').swiper({
     //Your options here:
     pagination: '.pagination',
     paginationClickable: true,
