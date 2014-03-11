@@ -20,6 +20,16 @@
   height: 30px;
 }
 
+#goWorkout.swiper-container{
+  height:100%;
+}
+#goWorkout.swiper-container .swiper-wrapper{
+  height: 80%;
+  overflow: scroll;
+}
+#goWorkout.swiper-container .swiper-wrapper .swiper-slide{
+
+}
 
 /* assignWorkout.css
  * styling for the assignWorkout Page

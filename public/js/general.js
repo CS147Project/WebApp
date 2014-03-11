@@ -4,6 +4,30 @@ var count = 1;
 // Call this function when the page loads (the "ready" event)
 $(document).ready(function() {
 	initializePage();
+
+  $('#createWorkoutForm').validate({
+      rules: {
+         title: {
+          required: true,
+          minlength: 2
+        },
+      
+         description: {
+        }
+
+        //Dynamically Added Exercises
+        //Require dynamically added rules (see addExercise)
+      
+      },
+      highlight: function(element) {
+        $(element).closest('.control-group').removeClass('success').addClass('error');
+      },
+      success: function(element) {
+        element
+        .text('OK!').addClass('valid')
+        .closest('.control-group').removeClass('error').addClass('success');
+      }
+    });
 })
 
 /*
@@ -16,31 +40,6 @@ function initializePage() {
 	//$('#genNav .navbar .btn').click(navigate);
   $('.navExercise').click(submitData);
 
-  // $(".form").validate({
-  //       rules: {
-  //           name:{
-  //               minlength: 3,
-  //               maxlength: 20,
-  //               required: true
-  //           },
-  //           email:{
-  //               minlength: 3,
-  //               maxlength: 20,
-  //               required: true
-  //           },
-  //           title:{
-  //               minlength: 2,
-  //               required: true
-  //           }
-  //       },
-  //       highlight: function (element) {
-  //           $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
-  //       },
-  //       unhighlight: function (element) {
-  //           $(element).closest('.form-group').removeClass('has-error').addClass('has-success');
-  //       }
-  //   });
-
 }
 
 // function navigate(e) {
@@ -49,45 +48,17 @@ function initializePage() {
 //   $(this).addClass('active');
 // }
 
-//Create Workout
-/////////////////////
-// $("#createWorkoutForm").validate({
-//     rules: {
-//         title: {
-//             minlength: 2,
-//             required: true
-//         },
-//         email: {
-//             required: true,
-//             email: true
-//         },
-//         message: {
-//             minlength: 2,
-//             required: true
-//         },
-//         numExercises: {
-//             minlength: 2,
-//             required:true
-//         }
-//     },
-//     highlight: function (element) {
-//         $(element).closest('.control-group').removeClass('success').addClass('error');
-//     },
-//     success: function (element) {
-//         element.text('OK!').addClass('valid')
-//             .closest('.control-group').removeClass('error').addClass('success');
-//     }
-// });
+
 
 function addExercise(e) {
     e.preventDefault();
     console.log("Registered Click");
     var form =   "<div class='text-left' id='newExercise"+count+"'>Exercise "+count+": "+
                     "<button class='btn btn-primary' id='removeExercise"+count+"' type='button'><span class='glyphicon glyphicon-trash glyphicons-lg pull-right'></span></button>"+
-                    "<input type='text' class='form-control' placeholder='Name' name='excersiseName"+count+"'>"+
-                    "<input type='text' class='form-control' placeholder='Number of Sets' name='excersiseSets"+count+"'>"+
-                    "<input type='text' class='form-control' placeholder='Number of Reps' name='excersiseReps"+count+"'>"+
-                    "<input type='text' class='form-control' placeholder='Additional Notes' name='excersiseNotes"+count+"'>"+
+                    "<input type='text' class='form-control' placeholder='Name' id='excersiseName"+count+"' name='excersiseName"+count+"'>"+
+                    "<input type='number' class='form-control' placeholder='Number of Sets' id='excersiseSets"+count+"' name='excersiseSets"+count+"'>"+
+                    "<input type='number' class='form-control' placeholder='Number of Reps' id='excersiseReps"+count+"' name='excersiseReps"+count+"'>"+
+                    "<input type='text' class='form-control' placeholder='Additional Notes' id='excersiseNotes"+count+"' name='excersiseNotes"+count+"'>"+
                     "<p class='text-center'>How do you want this to be recorded?</p>"+
                     "<select name='excersiseRecordType"+count+"' id='excersiseRecordType"+count+"''>"+
                       "<option value='weight'>Weight</option>"+
@@ -105,6 +76,19 @@ function addExercise(e) {
       console.log(e.data.parentObj);
       $(e.data.parentObj).remove();
     });
+
+    //Adding Validation Dynamically:
+    $('#excersiseName'+count).rules("add", {
+      required: true,
+      minlength: 2
+    });
+    $('#excersiseSets'+count).rules("add", {
+      number: true,
+      min:1
+    })
+
+
+    //increment count
     count++;
 }
 
