@@ -6,28 +6,28 @@ $(document).ready(function() {
 	initializePage();
 
   $('#createWorkoutForm').validate({
-      rules: {
-         title: {
-          required: true,
-          minlength: 2
-        },
-      
-         description: {
-        }
-
-        //Dynamically Added Exercises
-        //Require dynamically added rules (see addExercise)
-      
+    rules: {
+       title: {
+        required: true,
+        minlength: 2
       },
-      highlight: function(element) {
-        $(element).closest('.control-group').removeClass('success').addClass('error');
-      },
-      success: function(element) {
-        element
-        .text('OK!').addClass('valid')
-        .closest('.control-group').removeClass('error').addClass('success');
+    
+       description: {
       }
-    });
+
+      //Dynamically Added Exercises
+      //Require dynamically added rules (see addExercise)
+    
+    },
+    highlight: function(element) {
+      $(element).closest('.control-group').removeClass('success').addClass('error');
+    },
+    success: function(element) {
+      element
+      .text('OK!').addClass('valid')
+      .closest('.control-group').removeClass('error').addClass('success');
+    }
+  });
 })
 
 /*

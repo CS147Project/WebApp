@@ -245,6 +245,9 @@ html, body {
     border-radius: 2px;
 }
 
+
+@import url('css/bootstrap-responsive.min.css');
+
 label.valid {
 	width: 24px;
 	height: 24px;
