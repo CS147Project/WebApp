@@ -3,8 +3,10 @@
 <h3>Create a Workout</h3>
 <form id="createWorkoutForm" class="form" role="form" method="post" action="/createWorkout">
     <!-- TITLE WORKOUT -->
-    <input id="title" type="text" class="form-control" placeholder="Workout Title" name="title" required autofocus>
+    <input id="title" type="text" class="form-control" placeholder="Workout Title" name="title">
+
 <!--     <input type="text" class="form-control" placeholder="To be completed by (mm/dd/yy)" name="dueDate"> -->
+
     <!-- WORKOUT DESCRIPTION -->
     <textarea cols="50" rows="3" name="description" placeholder="Workout Description"></textarea>
 
@@ -20,6 +22,4 @@
     <br />
     <button class="btn btn-success btn-lg" type="submit">Save Workout</button>
 </form>
-<script>
-$("#createWorkoutForm").validate();
-</script>
+

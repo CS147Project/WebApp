@@ -90,12 +90,12 @@ sizes, pagination, etc.
   width: 100%;
   height: 90%;
   text-align: center;
+  overflow: scroll;
 
 }
 
 .swiper-slide {
   /* Specify Slides's Size: */
-  overflow: scroll;
   width:100%;
 }
 
