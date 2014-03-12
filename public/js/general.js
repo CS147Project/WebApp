@@ -5,6 +5,7 @@ var count = 1;
 $(document).ready(function() {
 	initializePage();
 
+  //CREATE WORKOUT FORM VALIDATION
   $('#createWorkoutForm').validate({
     rules: {
        title: {
@@ -28,6 +29,40 @@ $(document).ready(function() {
       .closest('.control-group').removeClass('error').addClass('success');
     }
   });
+
+  $('#goExerciseForm').validate({
+    rules: {
+      inputWeight: {
+        required: true,
+        min: 1
+      },
+      inputSpeed: {
+        required: true,
+        min: 1
+      },
+      inputDist: {
+        required: true,
+        min: 1
+      },
+      inputTime: {
+        required: true,
+        min: 1
+      }
+
+      //Dynamically Added Exercises
+      //Require dynamically added rules (see addExercise)
+    
+    },
+    highlight: function(element) {
+      $(element).closest('.control-group').removeClass('success').addClass('error');
+    },
+    success: function(element) {
+      element
+      .text('OK!').addClass('valid')
+      .closest('.control-group').removeClass('error').addClass('success');
+    }
+  });
+
 })
 
 /*
@@ -176,6 +211,7 @@ $(function(){
     loop: false,
     onSlideChangeStart: function(){
         // save current workout data
+        $('#goExerciseForm').validate();
     }
   });
 })
