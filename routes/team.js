@@ -43,7 +43,9 @@ exports.view = function(req, res) {
                             if(j+1 == invites.length) {
                                 res.render('team', {
                                     'teamRequests': teamRequests,
-                                    'players': players
+                                    'players': players,
+                                    'isCoach': true,
+                                    'hasTeam': true
                                 }); 
                             }
                             j++;
@@ -61,7 +63,7 @@ exports.view = function(req, res) {
 
               else {
                 console.log("this coach has no invites");
-                 res.render('team');
+                 res.render('team', {'isCoach': true, 'hasTeam': true});
 }
               var players = [];
                 // models.TeamAthlete
@@ -95,10 +97,27 @@ exports.view = function(req, res) {
         // res.render('team', {
         //     'teamRequests': teamRequests
         // }); 
-
+   
 else {
-    console.log("this coach as no teams");
-    res.render('team');
+ console.log("this coach as no teams");
+    models.User
+    .find({"_id": cid})
+    .exec(afterCoachQuery);
+    function afterCoachQuery(err, team) {
+        if(team[0].isCoach) {
+            res.render('team', {'isCoach': true, 'hasTeam': false});
+        }
+        else {
+         res.render('team', {'isCoach': false});   
+        }
+
+    }
+
+
+
+
+
+    // res.render('team', {'isCoach': false});
 }
 
 }
