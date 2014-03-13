@@ -197,13 +197,17 @@ exports.view = function(req, res){
     }
     models.WorkoutTemplate.find({'creatorid': req.session._id}).sort({'created': -1}).exec(afterQuery);
 	function afterQuery(err, templateWorkouts) {
-        if(err) console.log(err);
-        res.render('workouts', {
-            "userWorkouts": templateWorkouts
-        });    
+        if(err) {console.log(err); return res.send(500);}
+        models.CompletedWorkout.find({'finisherid': req.session._id}).sort({'finished': -1}).exec(afterFindPastWorkouts);
+        function afterFindPastWorkouts(err, pastWorkouts) {
+        if(err) {console.log(err); return res.send(500);}
+            res.render('workouts', {
+                "createdWorkouts": templateWorkouts,
+                "pastWorkouts": pastWorkouts
+            });
+        }  
     }
 }
-
 
 exports.addCompletedWorkout = function(req, res) {  
     console.log("adding completedWorkouts");
@@ -230,7 +234,6 @@ exports.addCompletedWorkout = function(req, res) { 
                 var time = '';
                 if(templateWorkout[0].exercises[i].weight) {
                     weight = exercises_data[templateWorkout[0].exercises[i].name];
-                    console.log("weight", weight);
                 } else if(templateWorkout[0].exercises[i].distance) {
                     distance = exercises_data[templateWorkout[0].exercises[i].name];    
                 } else if(templateWorkout[0].exercises[i].speed) {

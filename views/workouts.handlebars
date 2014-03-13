@@ -9,32 +9,46 @@
 </a>
 
 <div id="selectWorkout" class="panel panel-default">
-    {{#if userWorkouts}}
-      <a href="/goWorkout{{userWorkouts.0._id}}">
+    {{#if createdWorkouts}}
+      <a href="/goWorkout{{createdWorkouts.0._id}}">
         <div id="startWorkout" class="btn btn-primary btn-block btn-large">
           <span class="glyphicon glyphicon-play-circle glyphicons-lg"></span> Start Workout
         </div>
       </a>
+      <div class="panel-heading"> 
+        Created Workouts
+      </div>
+      <table class="table">
+        {{#each createdWorkouts}}
+          <tr id="workout"> <!-- can't be an id for multiple items -->
+            <td id="{{_id}}"><a href="/goWorkout{{_id}}">{{title}}</a></td>
+          </tr>
+        {{/each}}
+      </table>
     {{else}}
       <a href="#">
         <div id="startWorkout" class="btn btn-primary btn-block btn-large disabled">
           <span class="glyphicon glyphicon-play-circle glyphicons-lg"></span> Start Workout
         </div>
       </a>
+      <div class="panel-heading"> 
+        No Created Workouts
+      </div>
     {{/if}}
-    <div class="panel-heading"> 
-      Your Workouts
-    </div>
-
-    {{#if userWorkouts}}
+    {{#if pastWorkouts}}
+      <div class="panel-heading"> 
+        Recently Completed Workouts
+      </div>
       <table class="table">
-        {{#each userWorkouts}}
-          <tr id="workout">
-            <td id="{{_id}}"><a href="/goWorkout{{_id}}">{{title}}</a></td>
+        {{#each pastWorkouts}}
+          <tr id="workout"> <!-- can't be an id for multiple items -->
+            <td id="{{_id}}"><a href="/workoutSummary{{_id}}">{{title}} on {{finished}}</a></td>
           </tr>
         {{/each}}
       </table>
     {{else}}
-        <h4>No workouts</h4>
+      <div class="panel-heading"> 
+        No Past Workouts
+      </div>    
     {{/if}}
 </div>
