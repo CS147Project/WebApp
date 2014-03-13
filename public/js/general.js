@@ -55,6 +55,11 @@ $(document).ready(function() {
     },
     highlight: function(element) {
       $(element).closest('.control-group').removeClass('success').addClass('error');
+      if(workoutSwiper !== NULL){
+        console.log("swiper!");
+        //workoutSwiper.swipeTo
+      }
+        
     },
     success: function(element) {
       element

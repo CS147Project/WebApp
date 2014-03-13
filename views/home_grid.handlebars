@@ -1,7 +1,8 @@
 <!doctype html>
 
-<!-- HOME DISPLAY -->
+<!-- HOME GRID DISPLAY -->
 
+{{#if test}}
 <div id="selectW" class="swiper-container">
     <!-- SWIPER WRAPPER -->
   <div class="swiper-wrapper">
@@ -48,4 +49,61 @@
     </table>
   </div>
 
-<!-- END TASK LIST -->
+{{else}}
+
+
+
+  <div class="row">
+  <div class="col-xs-6">
+    <a href="" id="beginWorkoutBtn" class="btn btn-primary">
+      <img src="img/goworkout-icon.png" alt="Start Workout" class="img-circle">
+      <h4>Start Workout</h4>
+    </a>
+  </div>
+  <div class="col-xs-6">
+    <div id="selectWorkout" class="panel panel-default">
+      <div class="panel-heading"> 
+        Select a Workout
+      </div>
+      <div class="table-responsive">
+        <table class="table">
+          {{#unless userWorkouts}}
+            <tr>
+              <td> You don't have any Workouts yet. </td>
+            </tr>
+          {{/unless}}
+          {{#each userWorkouts}}
+            <tr id="workoutLinks">
+              <a href="/goWorkout{{_id}}" id="{{_id}}" > 
+
+                <p> {{title}}
+             <!--  <td id="{{title}}" type="button" class="btn"> {{title}} </td> --> </p>
+              </a>
+            </tr>
+          {{/each}}
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+  <div class="panel panel-default">
+    <div class="panel-heading"> 
+      To-Do List
+    </div>
+   
+    <table class="table">
+      {{#unless currentTasks}}
+      <tr>
+        <td><center> No Current Tasks! </center></td>
+      </tr>
+      {{/unless}}
+      {{#each currentTasks}}
+      <tr id="workoutLinks" class="btn">
+        <td id="date"> {{datetime}} </td>
+        <td id="title"> {{title}} </td>
+      </tr>
+      {{/each}}
+    </table>
+  </div>
+
+{{/if}}
