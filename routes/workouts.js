@@ -14,19 +14,21 @@ function parseDate(d) {
 }
 
 exports.analytics = function(req, res) { 
-    if(req.session !== undefined && req.session.email !== undefined) {
-    	var completedWorkouts = completedworkouts["completedWorkouts"];
-    	var myWorkouts = [];
-    	for(cw in completedworkouts["completedWorkouts"]) {
-    		if(completedworkouts["completedWorkouts"][cw].aid == req.session.email) {
-    			console.log("pushing workout");
-    			myWorkouts.push(completedworkouts["completedWorkouts"][cw]);
-    		}
-    	}
-        res.render('analytics', {
-            'completedworkouts': myWorkouts
-        });
+    if(req.session == undefined || req.session.email == undefined) {
+        console.log("Please login for this page");
+        return res.redirect('/');
     }
+	var completedWorkouts = completedworkouts["completedWorkouts"];
+	var myWorkouts = [];
+	for(cw in completedworkouts["completedWorkouts"]) {
+		if(completedworkouts["completedWorkouts"][cw].aid == req.session.email) {
+			console.log("pushing workout");
+			myWorkouts.push(completedworkouts["completedWorkouts"][cw]);
+		}
+	}
+    res.render('analytics', {
+        'completedworkouts': myWorkouts
+    });
  }
 
 //returns a collection of exercises, given a workout id
@@ -59,6 +61,10 @@ exports.getAll = function(req, res) {
 }
 
 exports.assignWorkout = function(req, res) {
+    if(req.session == undefined || req.session.email == undefined) {
+        console.log("Please login for this page");
+        return res.redirect('/');
+    }
 	console.log("in assigned oworksout");
 	var wid = req.query.wid;
 	var assignedId = req.query.assignedId;
@@ -210,8 +216,6 @@ exports.addCompletedWorkout = function(req, res) { 
     models.WorkoutTemplate.find({'_id': exercises_data['workout_id']}).exec(afterFindWorkoutTemp);
     function afterFindWorkoutTemp(err, templateWorkout) {
         if(err) {console.log(err); return res.send(500);}
-        console.log("workout found", templateWorkout);
-        console.log("numExercises", templateWorkout[0].exercises.length);
         var CompletedWorkout = new models.CompletedWorkout({
             "finisherid": req.session._id,
             "title": templateWorkout[0].title,
@@ -224,9 +228,9 @@ exports.addCompletedWorkout = function(req, res) { 
                 var distance = '';
                 var speed = '';
                 var time = '';
-
                 if(templateWorkout[0].exercises[i].weight) {
-                    weight = exercises_data[templateWorkout[0].exercises[i].name];    
+                    weight = exercises_data[templateWorkout[0].exercises[i].name];
+                    console.log("weight", weight);
                 } else if(templateWorkout[0].exercises[i].distance) {
                     distance = exercises_data[templateWorkout[0].exercises[i].name];    
                 } else if(templateWorkout[0].exercises[i].speed) {
@@ -234,7 +238,7 @@ exports.addCompletedWorkout = function(req, res) { 
                 } else {
                     time = exercises_data[templateWorkout[0].exercises[i].name];    
                 }
-                var newExercise = new models.ExerciseTemplate({
+                var newExercise = new models.CompletedExercise({
                     "name": templateWorkout[0].exercises[i].name,
                     "sets": templateWorkout[0].exercises[i].sets,
                     "reps": templateWorkout[0].exercises[i].reps,
@@ -246,12 +250,11 @@ exports.addCompletedWorkout = function(req, res) { 
                 CompletedWorkout.exercises.push(newExercise);
             }
         }
-
         CompletedWorkout.save(afterSaving);
-
-        function afterSaving(err) {
+        function afterSaving(err, newWorkout) {
             if(err) {console.log(err); return res.send(500);}
-            res.redirect('workoutdone');
+            req.session.lastWorkout = newWorkout._id;
+            res.redirect('workoutsummary');
         }
     }
 }
