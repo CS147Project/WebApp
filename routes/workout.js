@@ -28,7 +28,7 @@ exports.goWorkout = function(req, res) {
 		models.WorkoutTemplate.find({ '_id': req.params.id}).exec(afterWorkoutQuery);
 		function afterWorkoutQuery(err, templateWorkouts) {
 			if(err) {console.log(err); return res.send(500);}
-            
+
 			for(exercise in templateWorkouts[0].exercises) {
 				if(templateWorkouts[0].exercises[exercise].sets == 0) {
 					templateWorkouts[0].exercises[exercise].sets = undefined;
@@ -121,7 +121,7 @@ exports.summary = function(req, res) {
         console.log("Please login for this page");
         return res.redirect('/');
     }
-    models.CompletedWorkout.find({'_id': req.session.lastWorkout}).exec(afterFindWorkout);
+    models.CompletedWorkout.find({'_id': req.params.id}).exec(afterFindWorkout);
     function afterFindWorkout(err, workout) {
         if(err) {console.log(err); return res.send(500);}
         for(exercise in workout[0].exercises) {

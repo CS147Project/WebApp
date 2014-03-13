@@ -256,8 +256,7 @@ exports.addCompletedWorkout = function(req, res) { 
         CompletedWorkout.save(afterSaving);
         function afterSaving(err, newWorkout) {
             if(err) {console.log(err); return res.send(500);}
-            req.session.lastWorkout = newWorkout._id;
-            res.redirect('workoutsummary');
+            res.redirect('workoutsummary'+newWorkout._id);
         }
     }
 }
