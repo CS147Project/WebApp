@@ -156,34 +156,29 @@ exports.assign = function(req, res){
     function afterIsCoachQuery(err, coach) {
         if(err) {console.log(err); return res.send(500);}
         if(coach[0].isCoach) {
-            console.log("Is a Coach.");
-        } else {
-            res.render('assign', {
-                'msg': 'You need to be a coach to assign workouts. Go to the team page to add a team.'
-            });
-            return;
-        }
-    }
-
-    models.WorkoutTemplate.find({ 'creatorid': req.session._id}).sort({'created': -1}).exec(afterWorkoutQuery);
-    function afterWorkoutQuery(err, templateWorkouts) {
-        if(err) {console.log(err); return res.send(500);}
-        models.TeamCoach.find({'cid': req.session._id}).exec(afterTeamQuery);
-    
-        function afterTeamQuery(err, teamsForCoach) {
-            if(err) {console.log(err); return res.send(500);}
-            var athletes = [];
-            for(team in teamsForCoach) {
-                models.TeamAthlete.find({'tid': teamsForCoach[team]['tid']}).exec(afterAthleteQuery);
-                function afterAthleteQuery(err, athletesForCoach) {
+            models.WorkoutTemplate.find({ 'creatorid': req.session._id}).sort({'created': -1}).exec(afterWorkoutQuery);
+            function afterWorkoutQuery(err, templateWorkouts) {
+                if(err) {console.log(err); return res.send(500);}
+                models.TeamCoach.find({'cid': req.session._id}).exec(afterTeamQuery);
+                function afterTeamQuery(err, teamsForCoach) {
                     if(err) {console.log(err); return res.send(500);}
-                    athletes.push(athletesForCoach);
+                    var athletes = [];
+                    for(team in teamsForCoach) {
+                        models.TeamAthlete.find({'tid': teamsForCoach[team]['tid']}).exec(afterAthleteQuery);
+                        function afterAthleteQuery(err, athletesForCoach) {
+                            if(err) {console.log(err); return res.send(500);}
+                            athletes.push(athletesForCoach);
+                        }
+                    }
+                    res.render('assign', {
+                        'workouts': templateWorkouts,
+                        'players': athletes
+                    });
+                    return;
                 }
-            }
-            res.render('assign', {
-                'workouts': templateWorkouts,
-                'players': athletes
-            });
+            }        
+        } else {
+            res.redirect('workouts');
             return;
         }
     }
@@ -200,11 +195,15 @@ exports.view = function(req, res){
         if(err) {console.log(err); return res.send(500);}
         models.CompletedWorkout.find({'finisherid': req.session._id}).sort({'finished': -1}).exec(afterFindPastWorkouts);
         function afterFindPastWorkouts(err, pastWorkouts) {
-        if(err) {console.log(err); return res.send(500);}
-            res.render('workouts', {
-                "createdWorkouts": templateWorkouts,
-                "pastWorkouts": pastWorkouts
-            });
+            if(err) {console.log(err); return res.send(500);}
+            models.User.find({'_id': req.session._id}).exec(afterFindUser);
+            function afterFindUser(err, user) {
+                res.render('workouts', {
+                    "isCoach": user.isCoach,
+                    "createdWorkouts": templateWorkouts,
+                    "pastWorkouts": pastWorkouts
+                });
+            }
         }  
     }
 }
