@@ -4,36 +4,30 @@
 {{#if isCoach}}
 
 {{#if hasTeam}}
-<h4>Respond to Requests</h4>
-{{#if teamRequests}}
-
-<form class="form" role="form" method="post" action="/respondTeam">
-    <select name = "requestId"> {{_id}}
-    {{#each teamRequests}}
-			<option value = "{{requestId}}"> {{name}}</option>
-			{{/each}}
-    </select>
-<select name = "response" >
-	<option value = "accept"> Accept
-		<option value = "deny"> Deny
-</select>
-    <button class="btn btn-primary" type="submit">Submit</button>
-</form>
+    <h4>Respond to Requests</h4>
+    {{#if teamRequests}}
+        <form class="form" role="form" method="post" action="/respondTeam">
+            <select name="requestId"> {{_id}}
+                {{#each teamRequests}}
+            		<option value="{{requestId}}">{{name}}</option>
+            	{{/each}}
+            </select>
+            <select name="response" >
+            	<option value="accept">Accept</option>
+            	<option value="deny">Deny</option>
+            </select>
+            <button class="btn btn-primary" type="submit">Submit</button>
+        </form>
+    {{else}}
+        <p> You currently do not have any requests to join your team. Give your athletes your email so they can find your team.</p>
+    {{/if}}
 {{else}}
-<p> You currently do not have any requests to join your team</p>
-
-
-{{/if}}
-
-{{else}}
-<h3> Create a Team </h3>
-<form class="form" role="form" method="post" action="/createTeam">
-	<input class="form-control" placeholder="Team Name" name="name" required autofocus>
-	<input class="form-control" placeholder="Sport" name="sport" required autofocus>
-
-	<button class="btn btn-default" type="submit"> Create</button>
-
-</form>
+    <h3> Create a Team </h3>
+    <form class="form" role="form" method="post" action="/createTeam">
+    	<input class="form-control" placeholder="Team Name" name="name" required autofocus>
+    	<input class="form-control" placeholder="Sport" name="sport" required>
+    	<button class="btn btn-default" type="submit"> Create</button>
+    </form>
 {{/if}}
 <!-- {{#if players}}
 <h3>Remove a Player</h3>

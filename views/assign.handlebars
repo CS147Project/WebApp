@@ -12,56 +12,47 @@
   <div class="swiper-wrapper">
       <div id="selectWorkout" class="swiper-slide">
         <!-- Select a Workout -->
-        Select a Workout to Assign:
-        <table class="table table-bordered">
-            {{#unless workouts}}
-              <tr>
-                  <td> No Workouts! </td>
-              </tr>
-              <tr>
-                  <td>
-                      <a href="/startWorkoutCreation">
-                          <button type="button" class="btn btn-danger">Create Workout</button>
-                      </a>
-                  </td>
-              </tr>
-            {{/unless}}
-
+        Select a Workout to Assign: <hr>
+        {{#if workouts}}
+          <select name='workoutSelected' class="form-control">
             {{#each workouts}}
-              <tr class="workout">
-                <td id="{{_id}}" type="button" class="btn"> 
-                  {{title}}
-                </td>
-              </tr>
+              <option value='{{_id}}'>{{title}}</option>"
             {{/each}}
-        </table>
+          </select>
+        {{else}}
+          <h3>No Workouts!</h3>
+          <a href="/startWorkoutCreation">
+              <button type="button" class="btn btn-danger">Create Workout</button>
+          </a>
+        {{/if}}
       </div>
 
       <div class="swiper-slide"> 
         <!-- Select Players -->
         Select Players to Assign Workout
         <table class="table table-bordered">
-            {{#unless players}}
-              <tr>
-                  <td> No Players! </td>
-              </tr>
-              <tr>
-                  <td><a href="/messages">
-                      <button type="button" class="btn btn-danger">Check for Player Requests</button>
-                  </a></td>
-              </tr>
-            {{/unless}}
-
+          {{#if players}}
             {{#each players}}
-            <tr id="player">
-              <td id="{{aid}}" class="btn"> {{aid}} </td>
-            </tr>
+              <tr id="player">
+                <td id="{{aid}}" class="btn"> {{aid}} </td>
+              </tr>
             {{/each}}
+            <a href="#">
+              <button type="button" id="assign" class="btn btn-primary">Assign Workouts</button>
+            </a>
+          {{else}}
+            <tr>
+              <td> No Players! </td>
+            </tr>
+            <tr>
+              <td><a href="/teamPage">
+                <button type="button" class="btn btn-danger">Check for Player Requests</button>
+              </a></td>
+            </tr>
+          {{/if}}
         </table>
 
-        <a href="#">
-            <button type="button" id="assign" class="btn btn-primary">Assign Workouts</button>
-        </a>
+
 
       </div>     
   </div>
