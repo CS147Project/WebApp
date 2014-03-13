@@ -107,6 +107,7 @@ exports.CompletedWorkout = Mongoose.model('CompletedWorkout', CompletedWorkoutSc
 var AssignedWorkoutSchema = new Mongoose.Schema({
   aid: { type: Schema.ObjectId, ref: 'User', required: true },
   wid: { type: Schema.ObjectId, ref: 'WorkoutTemplate', required: true },
+  name: { type: String, required: true},
   assigned: { type : Date, default: Date.now }
 });
 

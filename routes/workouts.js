@@ -70,28 +70,35 @@ exports.assignWorkout = function(req, res) {
     function afterIsCoachQuery(err, coach) {
         if(err) {console.log(err); return res.send(500);}
         if(coach[0].isCoach) {
-            models.TeamCoach.find({'cid': req.session._id}).exec(afterTeamQuery);
-            function afterTeamQuery(err, teamsForCoach) {
+            models.WorkoutTemplate.find({'_id': req.body.wid}).exec(afterWorkoutName);
+            function afterWorkoutName(err, workouts) {
                 if(err) {console.log(err); return res.send(500);}
-                for(team in teamsForCoach) {
-                    models.TeamAthlete.find({'tid': teamsForCoach[team]['tid']}).exec(afterAthleteQuery);
-                    function afterAthleteQuery(err, athletesForCoach) {
-                        if(err) {console.log(err); return res.send(500);}
-                        console.log("athletes", athletesForCoach);
-                        for(athlete in athletesForCoach) {
-                            var newAssignedWorkout = new models.AssignedWorkout({
-                                "aid": athletesForCoach[athlete]['_id'],
-                                "wid": req.body.wid,
-                            });
-                            newAssignedWorkout.save(afterSaving);
+                workoutName = workouts[0].title;
+                console.log("workout name", workoutName);
+                models.TeamCoach.find({'cid': req.session._id}).exec(afterTeamQuery);
+                function afterTeamQuery(err, teamsForCoach) {
+                    if(err) {console.log(err); return res.send(500);}
+                    for(team in teamsForCoach) {
+                        models.TeamAthlete.find({'tid': teamsForCoach[team]['tid']}).exec(afterAthleteQuery);
+                        function afterAthleteQuery(err, athletesForCoach) {
+                            if(err) {console.log(err); return res.send(500);}
+                            console.log("athletes", athletesForCoach);
+                            for(athlete in athletesForCoach) {
+                                var newAssignedWorkout = new models.AssignedWorkout({
+                                    "aid": athletesForCoach[athlete]['aid'],
+                                    "wid": req.body.wid,
+                                    "name": workoutName
+                                });
+                                newAssignedWorkout.save(afterSaving);
 
-                            function afterSaving(err) {
-                                if(err) {console.log(err); return res.send(500);}
+                                function afterSaving(err) {
+                                    if(err) {console.log(err); return res.send(500);}
+                                }
                             }
                         }
                     }
                 }
-            }        
+            }
             res.redirect('workouts');
         } else {
             res.redirect('workouts'); // didn't belong here...
@@ -217,11 +224,17 @@ exports.view = function(req, res){
             function afterFindUser(err, user) {
                 console.log("isCoach", user[0].isCoach);
                 console.log("user", user[0]);
-                res.render('workouts', {
-                    "isCoach": user[0].isCoach,
-                    "createdWorkouts": templateWorkouts,
-                    "pastWorkouts": pastWorkouts
-                });
+                models.AssignedWorkout.find({'aid': req.session._id}).sort({'assigned': -1}).exec(afterFindAssignedWorkouts);
+                function afterFindAssignedWorkouts(err, assignedWorkouts) {
+                    if(err) {console.log(err); return res.send(500);}
+                    console.log("assigned", assignedWorkouts);
+                    res.render('workouts', {
+                        "isCoach": user[0].isCoach,
+                        "createdWorkouts": templateWorkouts,
+                        "pastWorkouts": pastWorkouts,
+                        "assignedWorkouts": assignedWorkouts
+                    });
+                }
             }
         }  
     }
