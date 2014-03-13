@@ -147,7 +147,7 @@ exports.create = function(req, res) { 
     }
 }
 
-exports.assign = function(req, res){
+exports.assign = function(req, res) {
     if(req.session == undefined || req.session.email == undefined) {
         console.log("Please login for this page");
         return res.redirect('/');

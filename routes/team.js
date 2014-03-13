@@ -185,9 +185,6 @@ exports.createTeam = function(req, res) {
     var sport = req.body.sport;
     var name = req.body.name;
     var tid="";
-
-
-
     var team = new models.Team({
         "sport": sport,
         "name": name
@@ -207,15 +204,7 @@ exports.createTeam = function(req, res) {
             console.log("save coach: +" + coach.cid + coach.tid);
             res.redirect("/teamPage");
         }
-
-
-
-
-        
-        
     }
-
-    
 }
 
 exports.getTeamsByUser =function(req, res) {
@@ -250,75 +239,43 @@ exports.sendRequest = function(req, res) {
     console.log("coach email: "+ coachEmail);
     var cid = "";
     var tid = "";
-    models.User
-    .find({"email": coachEmail})
-    .exec(afterQuery);
+    models.User.find({"email": coachEmail}).exec(afterQuery);
 
     //from messages is null -> problems when want length.
     function afterQuery(err, coach) {
         console.log("coach: " + coach);
         if(coach[0] == undefined) {
+            console.log("can't find user.");
             return res.redirect('teamPage'); //redirect somewhere meaningful if email doesn't match the one entered by user
-        } else if(!coach.isCoach) { 
+        } else if(coach[0].isCoach == false) { 
+            console.log("user is not coach.", coach.isCoach);
             return res.redirect('teamPage'); // redirect somewhere id user searched for does exist, but user is not coach
         }
         cid = coach[0]._id;
         console.log("cid: "+ cid);
 
-        models.TeamCoach
-        .find({"cid": cid})
-        .exec(afterTeamQuery);
+        models.TeamCoach.find({"cid": cid}).exec(afterTeamQuery);
         function afterTeamQuery(err, team) {
             if(team!=null) {
-
                 console.log("team: " + team);
                 tid = team[0].tid;
                 console.log("creating req with tid: "+ tid + "aid: " + req.session._id + "cid: " + cid);
                 var invite = new models.Invite({
-
-                 "cid": cid,
-                 "aid": req.session._id,
-                 "tid": tid
-             }) 
+                     "cid": cid,
+                     "aid": req.session._id,
+                     "tid": tid
+                });
                 invite.save(afterSaving);
                 function afterSaving(err, team) {
                     console.log("just saved an invite");
-                    res.redirect("settings");
+                    res.redirect("teamPage");
                 }
-            }
-            else {
+            } else {
                 console.log("this coach has no teams");
-                res.redirect("settings");
+                res.redirect("teamPage");
             }
         }
-
-   // tid = req.body.tid;
-   // if(!onRoster(tid, aid)) {
-   //  var newInvite = {
-
-   //  }
-
-   //      // newInvite = {
-   //      //     "iid": 1,
-   //      //     "aid": aid,
-   //      //     "tid": tid,
-   //      //     "datetime": d
-   //      // }
-
-   //      // invites['allInvites'].push(newInvite);
-   //      console.log(newInvite);
-   //      res.render('home', {
-   //          'msg': 'Your request to join '+getNameForTeamId(tid)+' has been sent!',
-   //          'athlete': isAthlete(req.session.email)
-   //      }); // Can also redirect to 'settings'
-
-   //  } else {
-   //      res.render('settings', {
-   //          'msg': 'There was a problem sending your invite. Please try again.'
-   //      });
-   //  }
     }
-
 }
 
 function removeRequest(aid, tid) {
