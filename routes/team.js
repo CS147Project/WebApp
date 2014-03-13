@@ -81,6 +81,7 @@ exports.view = function(req, res) {
                 //     'teamRequests': teamRequests,
                 //     'players': players
                 // }); 
+
 }
 
 
@@ -94,6 +95,11 @@ exports.view = function(req, res) {
         // res.render('team', {
         //     'teamRequests': teamRequests
         // }); 
+
+else {
+    console.log("this coach as no teams");
+    res.render('team');
+}
 
 }
 //Get TEam Requests with Database
