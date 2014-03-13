@@ -2,55 +2,50 @@
 
 <h2> Team Page </h2>
 {{#if isCoach}}
-
-{{#if hasTeam}}
-    <h4>Respond to Requests</h4>
-    {{#if teamRequests}}
-        <form class="form" role="form" method="post" action="/respondTeam">
-            <select name="requestId"> {{_id}}
-                {{#each teamRequests}}
-            		<option value="{{requestId}}">{{name}}</option>
-            	{{/each}}
-            </select>
-            <select name="response" >
-            	<option value="accept">Accept</option>
-            	<option value="deny">Deny</option>
-            </select>
-            <button class="btn btn-primary" type="submit">Submit</button>
-        </form>
+    {{#if hasTeam}}
+        <h4>Respond to Requests</h4>
+        {{#if teamRequests}}
+            <form class="form" role="form" method="post" action="/respondTeam">
+                <select name="requestId"> {{_id}}
+                    {{#each teamRequests}}
+                		<option value="{{requestId}}">{{name}}</option>
+                	{{/each}}
+                </select>
+                <select name="response" >
+                	<option value="accept">Accept</option>
+                	<option value="deny">Deny</option>
+                </select>
+                <button class="btn btn-primary" type="submit">Submit</button>
+            </form>
+        {{else}}
+            <p> You currently do not have any requests to join your team. Give your athletes your email so they can find your team.</p>
+        {{/if}}
     {{else}}
-        <p> You currently do not have any requests to join your team. Give your athletes your email so they can find your team.</p>
+        <h3> Create a Team </h3>
+        <form class="form" role="form" method="post" action="/createTeam">
+        	<input class="form-control" placeholder="Team Name" name="name" required autofocus>
+        	<input class="form-control" placeholder="Sport" name="sport" required>
+        	<button class="btn btn-default" type="submit"> Create</button>
+        </form>
     {{/if}}
-{{else}}
-    <h3> Create a Team </h3>
-    <form class="form" role="form" method="post" action="/createTeam">
-    	<input class="form-control" placeholder="Team Name" name="name" required autofocus>
-    	<input class="form-control" placeholder="Sport" name="sport" required>
-    	<button class="btn btn-default" type="submit"> Create</button>
+    <!-- {{#if players}}
+    <h3>Remove a Player</h3>
+    <form class="form" role="form" method="post" action="/removeAthlete">
+     <select name = "teamAthleteId"> {{_id}}
+        {{#each players}}
+    			<option value = "{{_id}}"> {{_id}}</option> PLYARE
+    			{{/each}}
+        </select>
+
+    	<button class="btn btn-default" type="submit"> Remove</button>
+
     </form>
-{{/if}}
-<!-- {{#if players}}
-<h3>Remove a Player</h3>
-<form class="form" role="form" method="post" action="/removeAthlete">
- <select name = "teamAthleteId"> {{_id}}
-    {{#each players}}
-			<option value = "{{_id}}"> {{_id}}</option> PLYARE
-			{{/each}}
-    </select>
-
-	<button class="btn btn-default" type="submit"> Remove</button>
-
-</form>
-{{/if}} -->
-
-
-
-
+    {{/if}} -->
 {{else}}
    <form class="form" role="form" method="post" action="/inviteTeam"> 
-    <h4 class="form-signin-heading">Request to Join a Team</h4>
-    <p class="caption">Enter in your coach's email: </p>
-    <input type="email" class="form-control" placeholder="Email address" name="email" required autofocus>
-    <button class="btn btn-primary" type="submit">Send Request</button>
-</form>
+        <h4 class="form-signin-heading">Request to Join a Team</h4>
+        <p class="caption">Enter in your coach's email: </p>
+        <input type="email" class="form-control" placeholder="Email address" name="email" required autofocus>
+        <button class="btn btn-primary" type="submit">Send Request</button>
+    </form>
 {{/if}}

@@ -80,7 +80,7 @@ app.get('/workouts/getAll', workouts.getAll);
 app.get('/workouts/getExercises', workouts.getExercises); //returns [] of exercises for workout
 app.get('/workouts/getUserWorkouts', workouts.getUserWorkouts); //returns workouts assigned to a user
 app.get('/assign', workouts.assign);
-app.post('/workouts/assignWorkout', workouts.assignWorkout);
+app.post('/assignWorkout', workouts.assignWorkout);
 app.post('/addCompletedWorkout', workouts.addCompletedWorkout);
 app.get('/analytics', workouts.analytics);
 

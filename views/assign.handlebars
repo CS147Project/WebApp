@@ -6,56 +6,28 @@
   </button>
 </a> -->
 <center><h2> Assign Workout </h2></center>
-
-<div id="assignWorkout" class="swiper-container">
-    <!-- SWIPER WRAPPER -->
-  <div class="swiper-wrapper">
-      <div id="selectWorkout" class="swiper-slide">
-        <!-- Select a Workout -->
-        Select a Workout to Assign: <hr>
-        {{#if workouts}}
-          <select name='workoutSelected' class="form-control">
-            {{#each workouts}}
-              <option value='{{_id}}'>{{title}}</option>"
-            {{/each}}
-          </select>
-        {{else}}
-          <h3>No Workouts!</h3>
-          <a href="/startWorkoutCreation">
-              <button type="button" class="btn btn-danger">Create Workout</button>
-          </a>
-        {{/if}}
-      </div>
-
-      <div class="swiper-slide"> 
-        <!-- Select Players -->
-        Select Players to Assign Workout
-        <table class="table table-bordered">
-          {{#if players}}
-            {{#each players}}
-              <tr id="player">
-                <td id="{{aid}}" class="btn"> {{aid}} </td>
-              </tr>
-            {{/each}}
-            <a href="#">
-              <button type="button" id="assign" class="btn btn-primary">Assign Workouts</button>
-            </a>
-          {{else}}
-            <tr>
-              <td> No Players! </td>
-            </tr>
-            <tr>
-              <td><a href="/teamPage">
-                <button type="button" class="btn btn-danger">Check for Player Requests</button>
-              </a></td>
-            </tr>
-          {{/if}}
-        </table>
-
-
-
-      </div>     
-  </div>
-  <div class="pagination"></div>
-
-</div>
+<!-- Select a Workout -->
+Select a Workout to Assign for your team:<hr>
+{{#if workouts}}
+  {{#if players}}
+    <form class="form" role="form" method="post" action="/assignWorkout">
+      <input type="hidden" id="tid" name="tid" value="{{tid}}">
+      <select name='wid' class="form-control">
+        {{#each workouts}}
+          <option value='{{_id}}'>{{title}}</option>"
+        {{/each}}
+      </select>
+      <button type="submit" id="assign" class="btn btn-primary">Assign Workouts</button>
+    </form>
+  {{else}}
+    No Players!
+    <a href="">
+      <button type="button" class="btn btn-danger">Check for Player Requests</button>
+    </a>
+  {{/if}}
+{{else}}
+  <h3>No Workouts!</h3>
+  <a href="/startWorkoutCreation">
+    <button type="button" class="btn btn-danger">Create Workout</button>
+  </a>
+{{/if}}

@@ -65,22 +65,38 @@ exports.assignWorkout = function(req, res) {
         console.log("Please login for this page");
         return res.redirect('/');
     }
-	console.log("in assigned oworksout");
-	var wid = req.query.wid;
-	var assignedId = req.query.assignedId;
-	var d = new Date();
-	d = parseDate(d);
+    console.log("in assigned workouts", req.body);
+    models.User.find({'_id': req.session._id}).exec(afterIsCoachQuery);
+    function afterIsCoachQuery(err, coach) {
+        if(err) {console.log(err); return res.send(500);}
+        if(coach[0].isCoach) {
+            models.TeamCoach.find({'cid': req.session._id}).exec(afterTeamQuery);
+            function afterTeamQuery(err, teamsForCoach) {
+                if(err) {console.log(err); return res.send(500);}
+                for(team in teamsForCoach) {
+                    models.TeamAthlete.find({'tid': teamsForCoach[team]['tid']}).exec(afterAthleteQuery);
+                    function afterAthleteQuery(err, athletesForCoach) {
+                        if(err) {console.log(err); return res.send(500);}
+                        console.log("athletes", athletesForCoach);
+                        for(athlete in athletesForCoach) {
+                            var newAssignedWorkout = new models.AssignedWorkout({
+                                "aid": athletesForCoach[athlete]['_id'],
+                                "wid": req.body.wid,
+                            });
+                            newAssignedWorkout.save(afterSaving);
 
-	var aw = {
-		"wid": wid,
-		"assignedId": assignedId,
-		"datetime": d
-	};
-
-	assignedworkout["assignedWorkout"].push(aw);
-
-	res.redirect('home');
-
+                            function afterSaving(err) {
+                                if(err) {console.log(err); return res.send(500);}
+                            }
+                        }
+                    }
+                }
+            }        
+            res.redirect('workouts');
+        } else {
+            res.redirect('workouts'); // didn't belong here...
+        }
+    }
 }
 
 exports.start = function(req, res) {
@@ -172,7 +188,8 @@ exports.assign = function(req, res) {
                     }
                     res.render('assign', {
                         'workouts': templateWorkouts,
-                        'players': athletes
+                        'players': athletes,
+                        'tid': teamsForCoach[0]['tid']
                     });
                     return;
                 }
