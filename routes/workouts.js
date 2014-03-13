@@ -198,8 +198,10 @@ exports.view = function(req, res){
             if(err) {console.log(err); return res.send(500);}
             models.User.find({'_id': req.session._id}).exec(afterFindUser);
             function afterFindUser(err, user) {
+                console.log("isCoach", user[0].isCoach);
+                console.log("user", user[0]);
                 res.render('workouts', {
-                    "isCoach": user.isCoach,
+                    "isCoach": user[0].isCoach,
                     "createdWorkouts": templateWorkouts,
                     "pastWorkouts": pastWorkouts
                 });
