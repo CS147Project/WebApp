@@ -85,9 +85,9 @@ exports.view = function(req, res) {
             res.render('team', {'isCoach': true, 'hasTeam': false});
         }
         else {
-         res.render('team', {'isCoach': false});   
-     }
- }
+           res.render('team', {'isCoach': false});   
+       }
+   }
 }
 }
 //Get TEam Requests with Database
@@ -263,63 +263,43 @@ exports.sendRequest = function(req, res) {
 
                 models.TeamAthlete.find({"aid": req.session._id, "tid": tid}).exec(afterPlayerQuery); 
                 function afterPlayerQuery(err, player) {
-                     if(player[0]==null) {
-                    //         console.log("player at 0 is null");
-                    //     }
-                    //     else {
-                    //         console.log("player at 0 is not null");
-                    //     }
-                    // if(player==null) {
-                    //     console.log("player is null");
+                   if(player[0]==null) {
+                    models.Invite.find({"aid": req.session._id, "tid": tid}).exec(afterInviteQuery); 
+                    function afterInviteQuery(err, invite) {
+                        if(invite[0] == null) {
+                           console.log("creating req with tid: "+ tid + "aid: " + req.session._id + "cid: " + cid);
+                           var invite = new models.Invite({
+                               "cid": cid,
+                               "aid": req.session._id,
+                               "tid": tid
+                           });
+                           invite.save(afterSaving);
+                           function afterSaving(err, team) {
+                            console.log("just saved an invite");
+                            res.redirect("teamPage");
 
 
-                        models.Invite.find({"aid": req.session._id, "tid": tid}).exec(afterInviteQuery); 
-                        function afterInviteQuery(err, invite) {
-                            if(invite[0] == null) {
-                             console.log("creating req with tid: "+ tid + "aid: " + req.session._id + "cid: " + cid);
-                             var invite = new models.Invite({
-                                 "cid": cid,
-                                 "aid": req.session._id,
-                                 "tid": tid
-                             });
-                             invite.save(afterSaving);
-                             function afterSaving(err, team) {
-                                console.log("just saved an invite");
-                                res.redirect("teamPage");
-
-
-                            }
                         }
-                                        else {
-                    res.redirect("teamPage");
-                }
-
+                    }
+                    else {
+                        res.redirect("teamPage");
                     }
 
-
                 }
 
-                                        else {
-                    res.redirect("teamPage");
-                }
 
-                // else {
-                //     res.redirect("teamPage");
-                // }
             }
 
-
-
-
-
-
-
-        } 
-        else {
-            console.log("this coach has no teams");
-            res.redirect("teamPage");
+            else {
+                res.redirect("teamPage");
+            }
         }
+    } 
+    else {
+        console.log("this coach has no teams");
+        res.redirect("teamPage");
     }
+}
 }
 }
 
@@ -361,13 +341,13 @@ var newPlayer = new models.TeamAthlete({
 }) 
 newPlayer.save(afterAddingPlayer);
 function afterAddingPlayer(err, coach) { 
- if(err) { console.log(err); res.send(500);};
- console.log("just added playter");
- models.Invite
- .find({"_id": requestId})
- .remove()
- .exec(afterRemovingInvite);
- function afterRemovingInvite(err) {
+   if(err) { console.log(err); res.send(500);};
+   console.log("just added playter");
+   models.Invite
+   .find({"_id": requestId})
+   .remove()
+   .exec(afterRemovingInvite);
+   function afterRemovingInvite(err) {
     if(err) { console.log(err); res.send(500);};
     "just removed invite";
 
@@ -387,10 +367,10 @@ else {
     .remove()
     .exec(afterRemovingInvite);
     function afterRemovingInvite(err) {
-       if(err) { console.log(err); res.send(500);};
-       console.log("IN REMOVE STATEMENT");
-       res.redirect('teamPage');
-   }
+     if(err) { console.log(err); res.send(500);};
+     console.log("IN REMOVE STATEMENT");
+     res.redirect('teamPage');
+ }
 
 }
 
@@ -404,11 +384,11 @@ else {
 
 
 exports.respondRequestAll = function(req, res) {
- var cid = req.session._id;
- var teamRequests = [];
+   var cid = req.session._id;
+   var teamRequests = [];
 
 
- console.log("cid: "+ cid);
+   console.log("cid: "+ cid);
     //get teamReq with database
     models.TeamCoach
     .find({"cid": cid})
