@@ -1,15 +1,24 @@
 <!doctype html>
+<h3> Help </h3>
 
 {{#if isCoach}} 
-<p>
-Home: View workouts you created
-Messages: Communicate with your players
-Workouts: Create and assign workouts
-Analytics: View your players’ completed workouts
-Profile Picture Button (top left of screen): 
-	Logout: Logout of app
-	Team Page: Create a team, accept player requests
-	Help: This page
+Welcome Coach {{firstName}}
+<hr>
+<p><strong>Home:</strong> View workouts you created</p>
+<p>View the current assigned workouts and recently completed workouts. By sliding to the right you can view the next entry.</p>
+<br />
+<p><strong>Messages:</strong> Communicate with your players</p>
+<p>From here you can message your coach.  Use our dropdown menu to select the coach you would like to send a message to, enter your message into the text box and send!</p>
+<br />
+<p><strong>Workouts:</strong> Create and assign workouts</p>
+<p>From this screen you can see all the workouts you currently have access to. You can also create and assign workouts to specific players or your entire team.</p>
+<br />
+<p><strong>Progress:</strong> View your players’ completed workouts!</p>
+<br />
+<p><strong>Profile Picture Button</strong> (top right of screen): </p>
+<p>&nbsp; <i>Logout:</i> Logout of app</p>
+<p>&nbsp; <i>Team Page:</i> Create a team, accept player requests</p>
+<p>&nbsp; <i>Help:</i> This page :)</p>
 	
 
 </p>
@@ -20,8 +29,24 @@ Profile Picture Button (top left of screen):
 
 
 {{#if isAthlete}}
-Athlete
+Welcome {{firstName}}
+<hr>
+<p><strong>Home:</strong> Quickview of Your To-Do Workouts!</p>
+<p>View your current assigned workouts and recently completed workouts. By sliding to the right you can view the next workout.</p>
+<br />
+<p><strong>Messages:</strong> Communicate with Your Coach</p>
+<p>From here you can message your coach.  Use our dropdown menu to select the coach you would like to send a message to, enter your message into the text box and send!</p>
+<p>When your coach sends you a response, you will be able to view that response from this page as well.</p>
+<br />
+<p><strong>Workouts:</strong> View, Create and Begin Workouts</p>
+<p>From this screen you can see all the workouts you currently have access to. Newly assigned workouts will appear at the top.</p>
+<br />
+<p><strong>Progress:</strong> View your past workouts!</p>
+<br />
 
-
+<p><strong>Profile Picture Button:</strong> (top right of screen): </p>
+<p>&nbsp; <i>Logout:</i> Logout of app</p>
+<p>&nbsp; <i>Team Page:</i> Join a team using your coach's e-mail addres</p>
+<p>&nbsp; <i>Help:</i> This page :)</p>
 
 {{/if}}
