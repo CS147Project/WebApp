@@ -3,32 +3,47 @@
 <!-- HOME DISPLAY -->
 
 <div id="selectW" class="swiper-container selectW-img">
+  <div class="selectHeader">
+    <h4> Select a Workout: </h4>
+  </div>
     <!-- SWIPER WRAPPER -->
   <div class="swiper-wrapper">
-      {{#each userWorkouts}}
+
+    {{#each userWorkouts}}
       <!-- SLIDE -->
       <div class="swiper-slide"> 
         <!-- FORM FOR SINGLE EXERCISE -->
         <div class="workoutSlide">
-          <div class="pull-right">
-            <a href="/goWorkout{{_id}}" id="workoutLinks" class="btn btn-primary">
-              <img src="img/goworkout-icon.png" alt="Start Workout" class="img-circle" height="50">
-            </a>
-          </div>
-
           <div>
-          <h5>Workout Title:</h5>
           <h4>{{title}}</h4>
-          <br />
-          <h4>Exercise Summary:</h4>
-            {{#each userWorkouts.exercises}}
-              <p>{{exercise}}</p>
+          <hr />
+          <h4>Workout Summary:</h4>
+            {{#each exercises}}
+              <p>{{name}}</p>
             {{/each}}
           </div>
         </div>
+        <div class="pull-right">
+          <a href="/goWorkout{{_id}}" id="workoutLinks" class="btn btn-primary">
+            <img src="img/goworkout-icon.png" alt="Start Workout" class="img-circle" height="50">
+          </a>
+        </div>
+        <!-- END OF SLIDE -->
       </div> 
-      <!-- END OF SLIDE -->
-      {{/each}}
+    {{/each}}
+
+    {{#unless userWorkouts}}
+      <div class="swiper-slide"> 
+        <div class="workoutSlide">
+          <h4>No Pending Workouts</h4>
+          <hr>
+          <button type="button" class="btn btn-default btn-block">Create a Workout!</button>
+          <br />
+          <button type="button" class="btn btn-default btn-block">Go to workouts</button>
+        </div>
+      </div> 
+    {{/unless}}
+
   </div>
   <div class="pagination"></div>
 </div>

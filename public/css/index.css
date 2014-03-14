@@ -156,22 +156,41 @@ html, body {
 	margin: 0px;
 }
 #selectW.swiper-container{
-	height:50%;
+	height:75%;
+	overflow: hidden;
+}
+#selectW .swiper-wrapper {
+	height: 100%;
+	overflow: hidden;
 }
 
-.selectW-img {
-	background-image: url('../img/scroll-bg/runner-1.png');
-	background-size:auto 100%;
+#selectW .swiper-slide {
+	height: 100%;
+	overflow: hidden;
 }
 
-.workoutSlide {
+#selectW .selectHeader {
+	color: white;
+	text-align: left;
+	margin: 0px 0px 0px 5px;
+}
+
+#selectW .workoutSlide {
 	width: 50%;
-	height: 90%;
+	height: 75%;
 	margin: 5px;
 	float:right;
 	color: #ffffff;
     background-color: rgba(0, 0, 0,0.6);
     overflow:scroll;
+    border-radius: 10px;
+}
+
+.selectW-img {
+	background-image: url('../img/scroll-bg/runner-1.png');
+	background-size:auto 100%;
+	overflow: hidden;
+	height:inherit;
 }
 
 
@@ -183,6 +202,7 @@ html, body {
 	bottom: 0px;
 	background-image: url("../img/footer-bg.png");
 	background-size: 110% 110%;
+	background-color: #42847c;
 }
 
 .navbar {
