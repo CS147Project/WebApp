@@ -20,23 +20,91 @@ exports.analytics = function(req, res) { 
         console.log("Please login for this page");
         return res.redirect('/');
     }
-	
- models.CompletedWorkout.find({'finisherid': req.session._id}).sort({'finished': -1}).exec(afterCompletedWorkoutQuery);
-    function afterCompletedWorkoutQuery(err, completedWorkouts) {
+    var cid = req.session._id;
+
+    models.TeamCoach
+    .find({"cid": cid})
+    .exec(afterTeamQuery);
+    function afterTeamQuery(err, team) {
+       if(team!=null && team.length>0) {
+        var tid = team[0].tid;
         var cws = [];
-        for(var i = 0; i<completedWorkouts.length; i++) {
-            var cw = {
-                "title": completedWorkouts[i]['title'],
-                "finished": parseDate(completedWorkouts[i]['finished']),
+            //IDK why TID is undefined in the following line!!!
+            
+            models.TeamAthlete
+            .find({"tid": tid}).exec(afterFindingTeamAthletes);
+            function afterFindingTeamAthletes(err, teamAthletes) {
+                var athleteId=[];
+                for(var i=0; i<teamAthletes.length; i++) {
+                    athleteId.push(teamAthletes[i].aid);
+                    console.log("found an athlete with id: "+ teamAthletes[i].aid);
+                }
+
+
+
+                models.CompletedWorkout.find().sort({'finished': -1}).exec(afterWorkoutQuery)
+                function afterWorkoutQuery(err, workouts) {
+                    for(var i=0; i<workouts.length; i++) {
+                        console.log("goign throguht workouts");
+                        for(var j=0; j<athleteId.length; j++) {
+                            console.log("j: "+ athleteId[j] + " i: "+ workouts[i].finisherid);
+                   //         if(athleteId[j] === workouts[i].finisherid) {
+                                if(athleteId[j].equals(workouts[i].finisherid)) {
+               //   if(athleteId.indexOf(workouts[i].finisherid) > -1) {
+                   //     if(athleteId.contains(workouts[0].finisherid)) {
+                                console.log("found a player who completedWorkouts");
+                                var cw = {
+                                    "title": workouts[i]['title'],
+                                    "finished": parseDate(workouts[i]['finished'])
+                                }
+                                cws.push(cw);
+
+
+                            }
+
+
+
+                   }
+               }
+               res.render('analytics', {
+                'completedWorkouts': cws, 
+                'isCoach': true });
+
+           }
+
+
+
+       }
+
+
+   }
+
+   else {
+            models.CompletedWorkout.find({'finisherid': req.session._id}).sort({'finished': -1}).exec(afterCompletedWorkoutQuery);
+        function afterCompletedWorkoutQuery(err, completedWorkouts) {
+            var cws = [];
+            for(var i = 0; i<completedWorkouts.length; i++) {
+                var cw = {
+                    "title": completedWorkouts[i]['title'],
+                    "finished": parseDate(completedWorkouts[i]['finished']),
+                }
+                cws.push(cw);
+
             }
-            cws.push(cw);
 
-        }
+            res.render('analytics', {
+                'completedWorkouts': cws,
+                'isCoach': false
+            });
+}
+     // res.render('analytics', {
+     //    'completedWorkouts': cws,
+     //    'isCoach': false });
+ }
 
-    res.render('analytics', {
-        'completedWorkouts': cws
-    });
-    }
+
+
+}
 
  }
 
@@ -57,7 +125,7 @@ exports.getAll = function(req, res) {
 	res.json(workouts["templateWorkouts"]);
 }
 
- exports.getUserWorkouts = function(req, res) {
+exports.getUserWorkouts = function(req, res) {
 	var aid = req.query.aid;
 	var userWorkouts = [];
 
@@ -224,7 +292,7 @@ exports.view = function(req, res){
         return res.redirect('/');
     }
     models.WorkoutTemplate.find({'creatorid': req.session._id}).sort({'created': -1}).exec(afterQuery);
-	function afterQuery(err, templateWorkouts) {
+    function afterQuery(err, templateWorkouts) {
         if(err) {console.log(err); return res.send(500);}
         models.CompletedWorkout.find({'finisherid': req.session._id}).sort({'finished': -1}).exec(afterFindPastWorkouts);
         function afterFindPastWorkouts(err, pastWorkouts) {

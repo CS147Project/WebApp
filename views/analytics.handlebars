@@ -1,6 +1,24 @@
 <!doctype html>
 
 <div id="content" class="content">
+
+{{#if isCoach}}
+<h3> My Team's Completed Workouts </h3>
+
+{{#if completedWorkouts}}
+	{{#each completedWorkouts}}
+		<p> {{title}} ({{finished}})<br> </p>
+	{{/each}}
+{{else}}
+	No Completed Workouts!
+{{/if}}
+</div>
+
+
+
+{{else}}
+
+
 <h3> My Completed Workouts </h3>
 
 {{#if completedWorkouts}}
@@ -11,3 +29,9 @@
 	No Completed Workouts!
 {{/if}}
 </div>
+
+
+{{/if}}
+
+
+
