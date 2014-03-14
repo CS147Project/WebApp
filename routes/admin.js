@@ -97,6 +97,10 @@ exports.loginHandler = function(req, res) { 
  }
 
 exports.help = function(req, res) {
+    if(req.session == undefined || req.session.email == undefined) {
+        console.log("Please login for this page");
+        return res.redirect('/');
+    }
     models.User.find({'_id': req.session._id}).exec(afterQuery);
     function afterQuery(err, account) {
         if(err) {console.log(err); res.send(500);}
