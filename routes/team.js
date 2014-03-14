@@ -23,6 +23,7 @@ exports.view = function(req, res) {
     .find({"cid": cid})
     .exec(afterTeamQuery);
     function afterTeamQuery(err, team) {
+         if(err) {console.log(err); return res.send(500);}
         if(team!=null && team.length>0) {
             //IDK why TID is undefined in the following line!!!
             var tid = team[0].tid;
@@ -30,11 +31,13 @@ exports.view = function(req, res) {
             models.Invite
             .find({"tid": tid}).exec(afterInviteQuery);
             function afterInviteQuery(err, invites) {
+                 if(err) {console.log(err); return res.send(500);}
                 if(invites!=null && invites.length>0) {
                     var j =0;
                     for(var i=0; i<invites.length; i++) {
                         models.User.find({"_id": invites[i].aid}).exec(afterUserQuery);
                         function afterUserQuery(err, user) {
+                             if(err) {console.log(err); return res.send(500);}
                             console.log("I: " + i);
                             console.log("j: " + j);
                             console.log("full name: "+ user[0].firstName + " " + user[0].lastName);
@@ -81,6 +84,7 @@ exports.view = function(req, res) {
     .find({"_id": cid})
     .exec(afterCoachQuery);
     function afterCoachQuery(err, user) {
+         if(err) {console.log(err); return res.send(500);}
         if(user[0].isCoach) {
             res.render('team', {'isCoach': true, 'hasTeam': false});
         }
@@ -201,6 +205,7 @@ exports.createTeam = function(req, res) {
         })
         coach.save(afterSavingCoach);
         function afterSavingCoach(err, coach) {
+             if(err) {console.log(err); return res.send(500);}
             console.log("save coach: +" + coach.cid + coach.tid);
             res.redirect("/teamPage");
         }
@@ -256,16 +261,19 @@ exports.sendRequest = function(req, res) {
 
         models.TeamCoach.find({"cid": cid}).exec(afterTeamQuery);
         function afterTeamQuery(err, team) {
-            if(team!=null) {
+             if(err) {console.log(err); return res.send(500);}
+            if(team!=null && team[0]!=null) {
                 console.log("team: " + team);
                 tid = team[0].tid;
 
 
                 models.TeamAthlete.find({"aid": req.session._id, "tid": tid}).exec(afterPlayerQuery); 
                 function afterPlayerQuery(err, player) {
+                     if(err) {console.log(err); return res.send(500);}
                    if(player[0]==null) {
                     models.Invite.find({"aid": req.session._id, "tid": tid}).exec(afterInviteQuery); 
                     function afterInviteQuery(err, invite) {
+                         if(err) {console.log(err); return res.send(500);}
                         if(invite[0] == null) {
                            console.log("creating req with tid: "+ tid + "aid: " + req.session._id + "cid: " + cid);
                            var invite = new models.Invite({
@@ -275,6 +283,7 @@ exports.sendRequest = function(req, res) {
                            });
                            invite.save(afterSaving);
                            function afterSaving(err, team) {
+                             if(err) {console.log(err); return res.send(500);}
                             console.log("just saved an invite");
                             res.redirect("teamPage");
 
@@ -399,6 +408,7 @@ exports.respondRequestAll = function(req, res) {
         .exec(afterFoundAllInvites);
 
         function afterFoundAllInvites(err, invites) {
+             if(err) {console.log(err); return res.send(500);}
             for(var i=0; i<invites.length; i++) {
                 var newPlayer = new models.TeamAthlete({
                     "aid": invites[i].aid,

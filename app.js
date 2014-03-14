@@ -57,6 +57,7 @@ app.get('/signup', admin.signup);
 app.get('/addUser', admin.addUser);
 app.get('/settings', settings.index);
 app.get('/logout', admin.logout);
+app.get('/help', admin.help);
 app.get('/home', home.view);
 app.get('/home_grid', home.viewGrid);
 

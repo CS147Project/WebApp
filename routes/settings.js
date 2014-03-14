@@ -8,7 +8,6 @@ var teamsFns = require("./team");
 
 
 exports.index = function(req, res) {
-
     if(req.session == undefined || req.session.email == undefined) {
         console.log("Please login for this page");
         return res.redirect('/');

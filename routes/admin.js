@@ -96,6 +96,17 @@ exports.loginHandler = function(req, res) { 
     }
  }
 
+exports.help = function(req, res) {
+    models.User.find({'_id': req.session._id}).exec(afterQuery);
+    function afterQuery(err, account) {
+        if(err) {console.log(err); res.send(500);}
+        res.render('help', {
+            'isCoach': account[0].isCoach,
+            'isAthlete': account[0].isAthlete
+        });
+    }
+}
+
 exports.addUser = function(req, res) { 
     console.log("Query", req.query);
     var crypto = require('crypto'); //used for hashing passwords
