@@ -262,7 +262,7 @@ exports.sendRequest = function(req, res) {
         models.TeamCoach.find({"cid": cid}).exec(afterTeamQuery);
         function afterTeamQuery(err, team) {
              if(err) {console.log(err); return res.send(500);}
-            if(team!=null) {
+            if(team!=null && team[0]!=null) {
                 console.log("team: " + team);
                 tid = team[0].tid;
 
