@@ -2,42 +2,39 @@
 
 <!-- HOME DISPLAY -->
 
+<div id="selectW" class="swiper-container selectW-img">
+    <!-- SWIPER WRAPPER -->
+  <div class="swiper-wrapper">
+      {{#each userWorkouts}}
+      <!-- SLIDE -->
+      <div class="swiper-slide"> 
+        <!-- FORM FOR SINGLE EXERCISE -->
+        <div class="workoutSlide">
+          <div class="pull-right">
+            <a href="/goWorkout{{_id}}" id="workoutLinks" class="btn btn-primary">
+              <img src="img/goworkout-icon.png" alt="Start Workout" class="img-circle" height="50">
+            </a>
+          </div>
 
-
-  <div class="row">
-  <div class="col-xs-6">
-    <a href="" id="beginWorkoutBtn" class="btn btn-primary">
-      <img src="img/goworkout-icon.png" alt="Start Workout" class="img-circle">
-      <h4>Start Workout</h4>
-    </a>
+          <div>
+          <h5>Workout Title:</h5>
+          <h4>{{title}}</h4>
+          <br />
+          <h4>Exercise Summary:</h4>
+            {{#each userWorkouts.exercises}}
+              <p>{{exercise}}</p>
+            {{/each}}
+          </div>
+        </div>
+      </div> 
+      <!-- END OF SLIDE -->
+      {{/each}}
   </div>
-  <div class="col-xs-6">
-    <div id="selectWorkout" class="panel panel-default">
-      <div class="panel-heading"> 
-        Select a Workout
-      </div>
-      <div class="table-responsive">
-        <table class="table">
-          {{#unless userWorkouts}}
-            <tr>
-              <td> You don't have any Workouts yet. </td>
-            </tr>
-          {{/unless}}
-          {{#each userWorkouts}}
-            <tr id="workoutLinks">
-              <a href="/goWorkout{{_id}}" id="{{_id}}" > 
-
-                <p> {{title}}
-             <!--  <td id="{{title}}" type="button" class="btn"> {{title}} </td> --> </p>
-              </a>
-            </tr>
-          {{/each}}
-        </table>
-      </div>
-    </div>
-  </div>
+  <div class="pagination"></div>
 </div>
-  <div class="panel panel-default">
+
+  
+<!--   <div class="panel panel-default">
     <div class="panel-heading"> 
       To-Do List
     </div>
@@ -55,4 +52,16 @@
       </tr>
       {{/each}}
     </table>
-  </div>
+  </div> -->
+
+
+<!--   <form>
+    <input data-type="search" id="filterControlgroup-input">
+</form>
+<div data-role="controlgroup" data-filter="true" data-input="#filterControlgroup-input">
+    <a href="#" class="ui-btn ui-btn-a ui-shadow ui-corner-all">Button 1</a>
+    <a href="#" class="ui-btn ui-shadow ui-corner-all">Button 2</a>
+    <a href="#" class="ui-btn ui-shadow ui-corner-all" data-filtertext="some text">Button 3</a>
+    <a href="#" class="ui-btn ui-shadow ui-corner-all">Button 4</a>
+    <a href="#" class="ui-btn ui-shadow ui-corner-all">Button 5</a>
+</div> -->

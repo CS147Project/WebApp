@@ -156,9 +156,26 @@ html, body {
 	margin: 0px;
 }
 #selectW.swiper-container{
-	height:75%;
+	height:50%;
 }
 
+.selectW-img {
+	background-image: url('../img/scroll-bg/runner-1.png');
+	background-size:auto 100%;
+}
+
+.workoutSlide {
+	width: 50%;
+	height: 90%;
+	margin: 5px;
+	float:right;
+	color: #ffffff;
+    background-color: rgba(0, 0, 0,0.6);
+    overflow:scroll;
+}
+
+
+/* FOOTER STYLES*/
 .footer {
 	position: static;
 	height: 60px;
@@ -182,6 +199,7 @@ html, body {
 	padding-bottom: 0px;
 	display: inline-block;
 	width: 20%;
+	color: black;
 }
 
 .navbar li a:hover {
@@ -206,23 +224,6 @@ html, body {
 	margin: 0px 0px -1px 0px;
 	padding: 0px;
 	height:25px;
-}
-
-#profileNav {
-	position: relative;
-	clear:both;
-	height:35px;
-	top:0px;
-}
-
-#profileNav ul li a .active{
-	background: #4C8BA0;
-}
-
-#profileNav ul li a img{
-	margin: 0px 0px -15px 0px;
-	padding: 0px;
-	height: 30px;
 }
 
 #startWorkout {

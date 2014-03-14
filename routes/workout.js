@@ -1,13 +1,17 @@
-
 var exercises = require("../json/exercises.json");
 var workouts = require("./workouts.js");
 var currWorkout = require("../json/currentWorkout.json");
 var models = require('../models');
 
 exports.start = function(req, res) {  // Doesn't seem to be used anywhere
-currWorkout["exercises"] = exercises["exercises"];
-req.session.wid = req.query.id;
-res.render('startWorkout', exercises);
+    if(req.session == undefined || req.session.email == undefined) {
+        console.log("Please login for this page");
+        return res.redirect('/');
+    }
+
+	currWorkout["exercises"] = exercises["exercises"];
+	req.session.wid = req.query.id;
+	res.render('startWorkout', exercises);
 }
 
 exports.goWorkout = function(req, res) {
@@ -24,6 +28,7 @@ exports.goWorkout = function(req, res) {
 		models.WorkoutTemplate.find({ '_id': req.params.id}).exec(afterWorkoutQuery);
 		function afterWorkoutQuery(err, templateWorkouts) {
 			if(err) {console.log(err); return res.send(500);}
+
 			for(exercise in templateWorkouts[0].exercises) {
 				if(templateWorkouts[0].exercises[exercise].sets == 0) {
 					templateWorkouts[0].exercises[exercise].sets = undefined;
@@ -43,6 +48,10 @@ exports.goWorkout = function(req, res) {
 }
 
 exports.goWorkout_alt = function(req, res) {
+    if(req.session == undefined || req.session.email == undefined) {
+        console.log("Please login for this page");
+        return res.redirect('/');
+    }
 	console.log("go workout alt");
 	console.log("id", req.params.id);
     models.WorkoutTemplate.find({ '_id': req.params.id}).exec(afterWorkoutQuery);
@@ -56,6 +65,10 @@ exports.goWorkout_alt = function(req, res) {
 }
 
 exports.submit = function(req, res){
+    if(req.session == undefined || req.session.email == undefined) {
+        console.log("Please login for this page");
+        return res.redirect('/');
+    }
     console.log("Body", req.body);
     var form_data = req.body;
     var numExercises = form_data.numExercises;
@@ -101,15 +114,38 @@ exports.submit = function(req, res){
         if(err) {console.log(err); return res.send(500);}
         res.redirect('workouts');
     }
-
-
 }
 
-exports.done = function(req, res) {
-	res.render('workoutdone');
+exports.summary = function(req, res) {
+    if(req.session == undefined || req.session.email == undefined) {
+        console.log("Please login for this page");
+        return res.redirect('/');
+    }
+    models.CompletedWorkout.find({'_id': req.params.id}).exec(afterFindWorkout);
+    function afterFindWorkout(err, workout) {
+        if(err) {console.log(err); return res.send(500);}
+        for(exercise in workout[0].exercises) {
+            if(workout[0].exercises[exercise].sets == 0) {
+                workout[0].exercises[exercise].sets = undefined;
+            }
+            if(workout[0].exercises[exercise].reps == 0) {
+                workout[0].exercises[exercise].reps = undefined;
+            }
+        }
+        console.log("workout", workout[0]);
+        console.log("exercises", workout[0].exercises);
+        res.render('workoutsummary', {
+            'workout': workout[0],
+            'exercises': workout[0].exercises
+        });
+    }
 }
 
 exports.save = function(req, res){
+    if(req.session == undefined || req.session.email == undefined) {
+        console.log("Please login for this page");
+        return res.redirect('/');
+    }
 	var form_data = req.body;
 	console.log(form_data);
 

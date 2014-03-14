@@ -74,7 +74,7 @@ exports.logout = function(req, res) { 
         console.log("Or not...");
     }
     console.log("session stuffs", req.session);
-    res.redirect('login');
+    res.render('login', {layout: false});
 }
 
 exports.loginHandler = function(req, res) { 

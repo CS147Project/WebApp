@@ -135,12 +135,12 @@ function addExercise(e) {
 // Home_Grid Swiper
 // SWIPER FUNCTIONALITY
 $(function(){
-  var mySwiper = $('#selectW.swiper-container').swiper({
+  var selectWSwiper = $('#selectW.swiper-container').swiper({
     //Your options here:
     pagination: '.pagination',
     paginationClickable: true,
     mode:'horizontal',
-    slidesPerView: 2,
+    slidesPerView: 1,
     onSlideChangeStart: function(){
         // save current workout data
     }

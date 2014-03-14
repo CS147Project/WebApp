@@ -1,0 +1,39 @@
+<!doctype html>
+{{#if workout}}
+    <h4>Congrats, you finished your workout!</h4>
+    <h3>Workout Summary</h3>
+    <h3>{{workout.title}}</h3>
+    <h5>{{workout.finished}}</h5>
+    <p>{{workout.description}}</p>
+    <p class="caption">Exercises</p>
+    {{#each exercises}}
+        <h5>{{name}}:                   
+            {{#if sets}}
+                {{#if reps}}
+                    {{sets}} sets x {{reps}} reps
+                {{else}}
+                    {{sets}} sets
+                {{/if}}
+            {{else}}
+                {{#if reps}}
+                    {{reps}} reps
+                {{/if}}
+            {{/if}}
+            @
+            {{#if weight}}
+                {{weight}}
+            {{/if}}
+            {{#if speed}}
+                {{speed}}
+            {{/if}}
+            {{#if distance}}
+                {{distance}}
+            {{/if}}
+            {{#if time}}
+                {{time}}
+            {{/if}}
+        </h5>
+    {{/each}}
+{{else}}
+    We couldn't find your workout. If you look at the analytics tab, you should be able to find all your workouts.
+{{/if}}
