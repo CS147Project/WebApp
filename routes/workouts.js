@@ -55,7 +55,8 @@ exports.analytics = function(req, res) { 
                                 console.log("found a player who completedWorkouts");
                                 var cw = {
                                     "title": workouts[i]['title'],
-                                    "finished": parseDate(workouts[i]['finished'])
+                                    "finished": parseDate(workouts[i]['finished']),
+                                    "name": workouts[i]['name']
                                 }
                                 cws.push(cw);
 
@@ -323,13 +324,21 @@ exports.addCompletedWorkout = function(req, res) { 
         console.log("Please login for this page");
         return res.redirect('/');
     }
+    var id =req.session._id;
     console.log("Body", req.body);
     var exercises_data = req.body;
     models.WorkoutTemplate.find({'_id': exercises_data['workout_id']}).exec(afterFindWorkoutTemp);
     function afterFindWorkoutTemp(err, templateWorkout) {
         if(err) {console.log(err); return res.send(500);}
+        models.User
+    .find({"_id": id})
+    .exec(foundUser);
+    function foundUser (err, user) {
+
+if(err) {console.log(err); return res.send(500);}
         var CompletedWorkout = new models.CompletedWorkout({
             "finisherid": req.session._id,
+            "name": user[0].firstName + " " + user[0].lastName,
             "title": templateWorkout[0].title,
             "description": templateWorkout[0].description,
             "exercises": []
@@ -367,4 +376,13 @@ exports.addCompletedWorkout = function(req, res) { 
             res.redirect('workoutsummary'+newWorkout._id);
         }
     }
+
+
+
+    }
+
+
+
+
+        
 }

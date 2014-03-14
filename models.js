@@ -96,6 +96,7 @@ exports.CompletedExercise = Mongoose.model('CompletedExercise', CompletedExercis
 
 var CompletedWorkoutSchema = new Mongoose.Schema({
   finisherid: { type: Schema.ObjectId, ref: 'User', required: true },
+  name: { type: String, required: true},
   finished: { type : Date, default: Date.now },
   title: { type: String, required: true },
   description: { type: String, required: false},
