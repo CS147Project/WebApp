@@ -1,14 +1,16 @@
 <!doctype html>
 
 <a href="/startWorkoutCreation">
-  <button type="button" class="btn btn-default">Create Workout</button>
+  <button type="button" class="btn btn-default btn-lg btn-block">Create Workout</button>
 </a>
 
 {{#if isCoach}}
   <a href="/assign">
-    <button type="button" class="btn btn-default">Assign Workout</button>
+    <button type="button" class="btn btn-default btn-lg btn-block">Assign Workout</button>
   </a>
 {{/if}}
+
+
 <div id="selectWorkout" class="panel panel-default">
     {{#if createdWorkouts}}
       <a href="/goWorkout{{createdWorkouts.0._id}}">
