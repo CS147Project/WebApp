@@ -116,6 +116,10 @@ function getCoachesByTeams(teams) {
 }
 
 exports.create = function(req, res) {
+	if(req.session == undefined || req.session.email == undefined) {
+        console.log("Please login for this page");
+        return res.redirect('/');
+    }
 	var id = req.session._id;
 
 	var d = new Date();
@@ -196,6 +200,10 @@ exports.create = function(req, res) {
 }
 
 exports.create2 = function(req, res) {
+	if(req.session == undefined || req.session.email == undefined) {
+        console.log("Please login for this page");
+        return res.redirect('/');
+    }
 	var id = req.session._id;
 
 	var d = new Date();
@@ -237,8 +245,10 @@ exports.create2 = function(req, res) {
 }
 
 exports.get = function(req, res) {
-	
-
+    if(req.session == undefined || req.session.email == undefined) {
+        console.log("Please login for this page");
+        return res.redirect('/');
+    }
 	console.log("in messages!");
 	console.log("still in messages");
 	var id = req.session._id;
@@ -305,7 +315,7 @@ exports.get = function(req, res) {
 
 	//from messages is null -> problems when want length.
 	function toMessages(err, fromMessages) {
-		 if(err) {console.log(err); return res.send(500);}
+		if(err) {console.log(err); return res.send(500);}
 		for(var i = 0; i < fromMessages.length; i++) {
 			console.log("to", fromMessages[i].toid);
 			var fullName;
@@ -316,11 +326,10 @@ exports.get = function(req, res) {
 				"created": parseDate(fromMessages[i]['created']),
 				"toName": fromMessages[i]['toName'],
 				"fromName": fromMessages[i]['fromName']
-				}
-				allMessages.push(messageToSend);
+			}
+			allMessages.push(messageToSend);
+		}
 	}
-}
-
 	var allFriends = [];
 	var allTeams = [];
 	models.User.find().exec(foundAllUsers);
