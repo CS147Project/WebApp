@@ -140,6 +140,7 @@ exports.create = function(req, res) {
 
 	//from messages is null -> problems when want length.
 	function foundUser(err, user) {
+		 if(err) {console.log(err); return res.send(500);}
 		var userName = user[0].firstName;
 		console.log("sender Name: "+ userName);
 
@@ -210,6 +211,7 @@ exports.create2 = function(req, res) {
 
 	//from messages is null -> problems when want length.
 	function foundUser(err, user) {
+		 if(err) {console.log(err); return res.send(500);}
 		var message = new models.Message( {
 //note: fromid and toid need to be )id, not e-mails!!!!
 		"text": req.query.text,
@@ -278,6 +280,7 @@ exports.get = function(req, res) {
 
 	//from messages is null -> problems when want length.
 	function fromMessages(err, fromMessages) {
+		 if(err) {console.log(err); return res.send(500);}
 		console.log("fromMessages", fromMessages);
 		for(var i = 0; i < fromMessages.length; i++) {
 			console.log("fromMessages", fromMessages[i].toid);
@@ -302,6 +305,7 @@ exports.get = function(req, res) {
 
 	//from messages is null -> problems when want length.
 	function toMessages(err, fromMessages) {
+		 if(err) {console.log(err); return res.send(500);}
 		for(var i = 0; i < fromMessages.length; i++) {
 			console.log("to", fromMessages[i].toid);
 			var fullName;
@@ -321,6 +325,7 @@ exports.get = function(req, res) {
 	var allTeams = [];
 	models.User.find().exec(foundAllUsers);
 	function foundAllUsers(err, allUsers) {
+		 if(err) {console.log(err); return res.send(500);}
 		console.log("found all users.");
 		console.log("all users: "+ allUsers.length);
 		for(var i=0; i<allUsers.length; i++) {

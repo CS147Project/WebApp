@@ -26,6 +26,7 @@ exports.analytics = function(req, res) { 
     .find({"cid": cid})
     .exec(afterTeamQuery);
     function afterTeamQuery(err, team) {
+         if(err) {console.log(err); return res.send(500);}
        if(team!=null && team.length>0) {
         var tid = team[0].tid;
         var cws = [];
@@ -34,6 +35,7 @@ exports.analytics = function(req, res) { 
             models.TeamAthlete
             .find({"tid": tid}).exec(afterFindingTeamAthletes);
             function afterFindingTeamAthletes(err, teamAthletes) {
+                 if(err) {console.log(err); return res.send(500);}
                 var athleteId=[];
                 for(var i=0; i<teamAthletes.length; i++) {
                     athleteId.push(teamAthletes[i].aid);
@@ -44,6 +46,7 @@ exports.analytics = function(req, res) { 
 
                 models.CompletedWorkout.find().sort({'finished': -1}).exec(afterWorkoutQuery)
                 function afterWorkoutQuery(err, workouts) {
+                     if(err) {console.log(err); return res.send(500);}
                     for(var i=0; i<workouts.length; i++) {
                         console.log("goign throguht workouts");
                         for(var j=0; j<athleteId.length; j++) {
@@ -83,6 +86,7 @@ exports.analytics = function(req, res) { 
    else {
             models.CompletedWorkout.find({'finisherid': req.session._id}).sort({'finished': -1}).exec(afterCompletedWorkoutQuery);
         function afterCompletedWorkoutQuery(err, completedWorkouts) {
+             if(err) {console.log(err); return res.send(500);}
             var cws = [];
             for(var i = 0; i<completedWorkouts.length; i++) {
                 var cw = {
@@ -189,6 +193,7 @@ exports.start = function(req, res) {
         console.log("Please login for this page");
         return res.redirect('/');
     }
+     if(err) {console.log(err); return res.send(500);}
     res.render('createWorkout');
 }
 
@@ -300,6 +305,7 @@ exports.view = function(req, res){
             if(err) {console.log(err); return res.send(500);}
             models.User.find({'_id': req.session._id}).exec(afterFindUser);
             function afterFindUser(err, user) {
+                 if(err) {console.log(err); return res.send(500);}
                 console.log("isCoach", user[0].isCoach);
                 console.log("user", user[0]);
                 models.AssignedWorkout.find({'aid': req.session._id}).sort({'assigned': -1}).exec(afterFindAssignedWorkouts);
