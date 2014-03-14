@@ -13,8 +13,6 @@ function parseDate(d) {
 	return newDate;
 }
 
-
-
 exports.analytics = function(req, res) { 
     if(req.session == undefined || req.session.email == undefined) {
         console.log("Please login for this page");
@@ -293,7 +291,7 @@ exports.assign = function(req, res) {
 
 exports.view = function(req, res){
     console.log(req.session.email);
-    if(req.session._id == undefined) {
+    if(req.session == undefined || req.session.email == undefined) {
         console.log("Please login for this page");
         return res.redirect('/');
     }
@@ -341,7 +339,7 @@ exports.addCompletedWorkout = function(req, res) { 
     .exec(foundUser);
     function foundUser (err, user) {
 
-if(err) {console.log(err); return res.send(500);}
+    if(err) {console.log(err); return res.send(500);}
         var CompletedWorkout = new models.CompletedWorkout({
             "finisherid": req.session._id,
             "name": user[0].firstName + " " + user[0].lastName,
@@ -382,13 +380,5 @@ if(err) {console.log(err); return res.send(500);}
             res.redirect('workoutsummary'+newWorkout._id);
         }
     }
-
-
-
     }
-
-
-
-
-        
 }
