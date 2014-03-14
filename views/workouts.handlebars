@@ -52,4 +52,22 @@
         No Past Workouts
       </div>    
     {{/if}}
+    {{#unless isCoach}}
+      {{#if assignedWorkouts}}
+        <div class="panel-heading"> 
+          Assigned Workouts
+        </div>
+        <table class="table">
+          {{#each assignedWorkouts}}
+            <tr id="workout"> <!-- can't be an id for multiple items -->
+              <td id="{{_id}}"><a href="/goWorkout{{_id}}">{{name}} on {{assigned}}</a></td>
+            </tr>
+          {{/each}}
+        </table>
+      {{else}}
+        <div class="panel-heading"> 
+          No Assigned Workouts
+        </div>
+      {{/if}}
+    {{/unless}}
 </div>
