@@ -55,8 +55,8 @@ $(document).ready(function() {
     },
     highlight: function(element) {
       $(element).closest('.control-group').removeClass('success').addClass('error');
-      if(workoutSwiper !== NULL){
-        console.log("swiper!");
+      if(workoutSwiper == NULL){
+        console.log("swiper NULL!@#)$(!");
         //workoutSwiper.swipeTo
       }
         
@@ -75,7 +75,7 @@ $(document).ready(function() {
  */
 function initializePage() {
   $('#selectWorkout tr#workout').first().addClass('success');
-  $('#genNav .navbar .btn').first().addClass('active');
+  //$('#genNav .navbar .btn').first().addClass('active');
   $("#addExercise").click(addExercise);
 	//$('#genNav .navbar .btn').click(navigate);
   $('.navExercise').click(submitData);
@@ -122,10 +122,6 @@ function addExercise(e) {
       required: true,
       minlength: 2
     });
-    $('#excersiseSets'+count).rules("add", {
-      number: true,
-      min:1
-    })
 
 
     //increment count
