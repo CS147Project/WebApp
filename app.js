@@ -67,6 +67,7 @@ app.get('/teamPage', team.view);
 
 app.get('/messages', messages.get);
 app.get('/messages/create', messages.create);
+app.get('/messages/create2', messages.create2);
 
 app.get('/goWorkout:id', workout.goWorkout);
 app.get('/goWorkout_alt:id', workout.goWorkout_alt);
