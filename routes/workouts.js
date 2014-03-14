@@ -193,7 +193,7 @@ exports.start = function(req, res) {
         console.log("Please login for this page");
         return res.redirect('/');
     }
-     if(err) {console.log(err); return res.send(500);}
+     
     res.render('createWorkout');
 }
 
