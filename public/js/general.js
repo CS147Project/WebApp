@@ -5,6 +5,7 @@ var count = 1;
 $(document).ready(function() {
 	initializePage();
 
+  //CREATE WORKOUT FORM VALIDATION
   $('#createWorkoutForm').validate({
     rules: {
        title: {
@@ -28,6 +29,45 @@ $(document).ready(function() {
       .closest('.control-group').removeClass('error').addClass('success');
     }
   });
+
+  $('#goExerciseForm').validate({
+    rules: {
+      inputWeight: {
+        required: true,
+        min: 1
+      },
+      inputSpeed: {
+        required: true,
+        min: 1
+      },
+      inputDist: {
+        required: true,
+        min: 1
+      },
+      inputTime: {
+        required: true,
+        min: 1
+      }
+
+      //Dynamically Added Exercises
+      //Require dynamically added rules (see addExercise)
+    
+    },
+    highlight: function(element) {
+      $(element).closest('.control-group').removeClass('success').addClass('error');
+      if(workoutSwiper == NULL){
+        console.log("swiper NULL!@#)$(!");
+        //workoutSwiper.swipeTo
+      }
+        
+    },
+    success: function(element) {
+      element
+      .text('OK!').addClass('valid')
+      .closest('.control-group').removeClass('error').addClass('success');
+    }
+  });
+
 })
 
 /*
@@ -35,7 +75,7 @@ $(document).ready(function() {
  */
 function initializePage() {
   $('#selectWorkout tr#workout').first().addClass('success');
-  $('#genNav .navbar .btn').first().addClass('active');
+  //$('#genNav .navbar .btn').first().addClass('active');
   $("#addExercise").click(addExercise);
 	//$('#genNav .navbar .btn').click(navigate);
   $('.navExercise').click(submitData);
@@ -82,10 +122,6 @@ function addExercise(e) {
       required: true,
       minlength: 2
     });
-    $('#excersiseSets'+count).rules("add", {
-      number: true,
-      min:1
-    })
 
 
     //increment count
@@ -95,12 +131,12 @@ function addExercise(e) {
 // Home_Grid Swiper
 // SWIPER FUNCTIONALITY
 $(function(){
-  var mySwiper = $('#selectW.swiper-container').swiper({
+  var selectWSwiper = $('#selectW.swiper-container').swiper({
     //Your options here:
     pagination: '.pagination',
     paginationClickable: true,
     mode:'horizontal',
-    slidesPerView: 2,
+    slidesPerView: 1,
     onSlideChangeStart: function(){
         // save current workout data
     }
@@ -176,6 +212,7 @@ $(function(){
     loop: false,
     onSlideChangeStart: function(){
         // save current workout data
+        $('#goExerciseForm').validate();
     }
   });
 })
