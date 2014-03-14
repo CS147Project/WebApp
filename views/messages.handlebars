@@ -56,10 +56,12 @@ To:
 
 
 
-	<form class="form-signin" role="form" method="get" action="/messages/create">
+	<form class="form-signin" role="form" method="get" action="/messages/create2">
 
 		<input type="text" class="form-control" placeholder="Message..." name="text" required autofocus>
 		<input type = "hidden" name="toid" value= {{fromid}}>
+		<input type = "hidden" name="toName" value= {{fromName}}>
+		<input type = "hidden" name="fromName" value= {{toName}}>
 		<input type = "hidden" name = "fromid" value = {{toid}}>
 
 

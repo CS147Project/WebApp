@@ -62,7 +62,7 @@
         <table class="table">
           {{#each assignedWorkouts}}
             <tr id="workout"> <!-- can't be an id for multiple items -->
-              <td id="{{_id}}"><a href="/goWorkout{{_id}}">{{name}} on {{assigned}}</a></td>
+              <td id="{{wid}}"><a href="/goWorkout{{wid}}">{{name}} on {{assigned}}</a></td>
             </tr>
           {{/each}}
         </table>

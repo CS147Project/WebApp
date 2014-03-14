@@ -13,22 +13,100 @@ function parseDate(d) {
 	return newDate;
 }
 
+
+
 exports.analytics = function(req, res) { 
     if(req.session == undefined || req.session.email == undefined) {
         console.log("Please login for this page");
         return res.redirect('/');
     }
-	var completedWorkouts = completedworkouts["completedWorkouts"];
-	var myWorkouts = [];
-	for(cw in completedworkouts["completedWorkouts"]) {
-		if(completedworkouts["completedWorkouts"][cw].aid == req.session.email) {
-			console.log("pushing workout");
-			myWorkouts.push(completedworkouts["completedWorkouts"][cw]);
-		}
-	}
-    res.render('analytics', {
-        'completedworkouts': myWorkouts
-    });
+    var cid = req.session._id;
+
+    models.TeamCoach
+    .find({"cid": cid})
+    .exec(afterTeamQuery);
+    function afterTeamQuery(err, team) {
+       if(team!=null && team.length>0) {
+        var tid = team[0].tid;
+        var cws = [];
+            //IDK why TID is undefined in the following line!!!
+            
+            models.TeamAthlete
+            .find({"tid": tid}).exec(afterFindingTeamAthletes);
+            function afterFindingTeamAthletes(err, teamAthletes) {
+                var athleteId=[];
+                for(var i=0; i<teamAthletes.length; i++) {
+                    athleteId.push(teamAthletes[i].aid);
+                    console.log("found an athlete with id: "+ teamAthletes[i].aid);
+                }
+
+
+
+                models.CompletedWorkout.find().sort({'finished': -1}).exec(afterWorkoutQuery)
+                function afterWorkoutQuery(err, workouts) {
+                    for(var i=0; i<workouts.length; i++) {
+                        console.log("goign throguht workouts");
+                        for(var j=0; j<athleteId.length; j++) {
+                            console.log("j: "+ athleteId[j] + " i: "+ workouts[i].finisherid);
+                   //         if(athleteId[j] === workouts[i].finisherid) {
+                                if(athleteId[j].equals(workouts[i].finisherid)) {
+               //   if(athleteId.indexOf(workouts[i].finisherid) > -1) {
+                   //     if(athleteId.contains(workouts[0].finisherid)) {
+                                console.log("found a player who completedWorkouts");
+                                var cw = {
+                                    "title": workouts[i]['title'],
+                                    "finished": parseDate(workouts[i]['finished']),
+                                    "name": workouts[i]['name']
+                                }
+                                cws.push(cw);
+
+
+                            }
+
+
+
+                   }
+               }
+               res.render('analytics', {
+                'completedWorkouts': cws, 
+                'isCoach': true });
+
+           }
+
+
+
+       }
+
+
+   }
+
+   else {
+            models.CompletedWorkout.find({'finisherid': req.session._id}).sort({'finished': -1}).exec(afterCompletedWorkoutQuery);
+        function afterCompletedWorkoutQuery(err, completedWorkouts) {
+            var cws = [];
+            for(var i = 0; i<completedWorkouts.length; i++) {
+                var cw = {
+                    "title": completedWorkouts[i]['title'],
+                    "finished": parseDate(completedWorkouts[i]['finished']),
+                }
+                cws.push(cw);
+
+            }
+
+            res.render('analytics', {
+                'completedWorkouts': cws,
+                'isCoach': false
+            });
+}
+     // res.render('analytics', {
+     //    'completedWorkouts': cws,
+     //    'isCoach': false });
+ }
+
+
+
+}
+
  }
 
 //returns a collection of exercises, given a workout id
@@ -48,7 +126,7 @@ exports.getAll = function(req, res) {
 	res.json(workouts["templateWorkouts"]);
 }
 
- exports.getUserWorkouts = function(req, res) {
+exports.getUserWorkouts = function(req, res) {
 	var aid = req.query.aid;
 	var userWorkouts = [];
 
@@ -215,7 +293,7 @@ exports.view = function(req, res){
         return res.redirect('/');
     }
     models.WorkoutTemplate.find({'creatorid': req.session._id}).sort({'created': -1}).exec(afterQuery);
-	function afterQuery(err, templateWorkouts) {
+    function afterQuery(err, templateWorkouts) {
         if(err) {console.log(err); return res.send(500);}
         models.CompletedWorkout.find({'finisherid': req.session._id}).sort({'finished': -1}).exec(afterFindPastWorkouts);
         function afterFindPastWorkouts(err, pastWorkouts) {
@@ -246,13 +324,21 @@ exports.addCompletedWorkout = function(req, res) { 
         console.log("Please login for this page");
         return res.redirect('/');
     }
+    var id =req.session._id;
     console.log("Body", req.body);
     var exercises_data = req.body;
     models.WorkoutTemplate.find({'_id': exercises_data['workout_id']}).exec(afterFindWorkoutTemp);
     function afterFindWorkoutTemp(err, templateWorkout) {
         if(err) {console.log(err); return res.send(500);}
+        models.User
+    .find({"_id": id})
+    .exec(foundUser);
+    function foundUser (err, user) {
+
+if(err) {console.log(err); return res.send(500);}
         var CompletedWorkout = new models.CompletedWorkout({
             "finisherid": req.session._id,
+            "name": user[0].firstName + " " + user[0].lastName,
             "title": templateWorkout[0].title,
             "description": templateWorkout[0].description,
             "exercises": []
@@ -290,4 +376,13 @@ exports.addCompletedWorkout = function(req, res) { 
             res.redirect('workoutsummary'+newWorkout._id);
         }
     }
+
+
+
+    }
+
+
+
+
+        
 }

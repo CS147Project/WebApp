@@ -194,6 +194,46 @@ exports.create = function(req, res) {
 	//res.redirect('messages');
 }
 
+exports.create2 = function(req, res) {
+	var id = req.session._id;
+
+	var d = new Date();
+	d = parseDate(d);
+	console.log("from2: "+ req.query.fromid + " text: " + req.query.text);
+
+	
+	try {
+
+	models.User
+	.find({"_id": id})
+	.exec(foundUser);
+
+	//from messages is null -> problems when want length.
+	function foundUser(err, user) {
+		var message = new models.Message( {
+//note: fromid and toid need to be )id, not e-mails!!!!
+		"text": req.query.text,
+		"fromid": req.query.fromid,
+		"toid": req.query.toid,
+		"toName": req.query.toName,
+		"fromName": req.query.fromName
+	})
+		message.save(afterSaving);
+		function afterSaving(err) {
+			if(err) { console.log(err); res.send(500);};
+			res.redirect('messages');
+		}
+
+	}
+
+
+} catch(e)  {
+	console.error("parsing error: ", e);
+	res.redirect('messages');
+}
+
+}
+
 exports.get = function(req, res) {
 	
 
@@ -211,23 +251,23 @@ exports.get = function(req, res) {
 	}	
 	var teams = [];
 	var friends = [];
-	if(!isCoach(uid)) {
+	// if(!isCoach(uid)) {
 		
-		teams=getTeamsByUser(uid);
-		if(teams.length>0) {
-			console.log(" teams length: " + teams.length + " team 1 id: "+ teams[0]);
-		}
-		else {
-			console.log(" no teams!!!");
-		}
-		friends = getCoachesByTeams(teams);
-	}
-	else {
-		console.log("is coache!!!!");
-		teams = findTeamsForCoach(uid);
-		friends = getPlayersByTeams(teams);
+	// 	teams=getTeamsByUser(uid);
+	// 	if(teams.length>0) {
+	// 		console.log(" teams length: " + teams.length + " team 1 id: "+ teams[0]);
+	// 	}
+	// 	else {
+	// 		console.log(" no teams!!!");
+	// 	}
+	// 	friends = getCoachesByTeams(teams);
+	// }
+	// else {
+	// 	console.log("is coache!!!!");
+	// 	teams = findTeamsForCoach(uid);
+	// 	friends = getPlayersByTeams(teams);
 
-	}
+	// }
 
 	//Using DB:
 	var allMessages = [];
@@ -286,6 +326,11 @@ exports.get = function(req, res) {
 		for(var i=0; i<allUsers.length; i++) {
 			allFriends.push(allUsers[i]);
 		}
+		console.log("all Friends num: "+ allFriends.length);
+	console.log("all Messages for this user: " + allMessages.length);
+	res.render('messages', {
+		'messages': allMessages, 'friends': allFriends, 'userId': id
+	});
 	}
 
 
@@ -322,11 +367,13 @@ exports.get = function(req, res) {
 	// }
 
 	// with database
-	console.log("all Friends num: "+ allFriends.length);
-	console.log("all Messages for this user: " + allMessages.length);
-	res.render('messages', {
-		'messages': allMessages, 'friends': allFriends, 'userId': id
-	});
+	// console.log("all Friends num: "+ allFriends.length);
+	// console.log("all Messages for this user: " + allMessages.length);
+	// res.render('messages', {
+	// 	'messages': allMessages, 'friends': allFriends, 'userId': id
+	// });
+
+
 
 		// res.render('messages', {
 		// 	'messages': userMessages, 'friends': friends
