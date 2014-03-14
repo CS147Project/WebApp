@@ -13,22 +13,31 @@ function parseDate(d) {
 	return newDate;
 }
 
+
+
 exports.analytics = function(req, res) { 
     if(req.session == undefined || req.session.email == undefined) {
         console.log("Please login for this page");
         return res.redirect('/');
     }
-	var completedWorkouts = completedworkouts["completedWorkouts"];
-	var myWorkouts = [];
-	for(cw in completedworkouts["completedWorkouts"]) {
-		if(completedworkouts["completedWorkouts"][cw].aid == req.session.email) {
-			console.log("pushing workout");
-			myWorkouts.push(completedworkouts["completedWorkouts"][cw]);
-		}
-	}
+	
+ models.CompletedWorkout.find({'finisherid': req.session._id}).sort({'finished': -1}).exec(afterCompletedWorkoutQuery);
+    function afterCompletedWorkoutQuery(err, completedWorkouts) {
+        var cws = [];
+        for(var i = 0; i<completedWorkouts.length; i++) {
+            var cw = {
+                "title": completedWorkouts[i]['title'],
+                "finished": parseDate(completedWorkouts[i]['finished']),
+            }
+            cws.push(cw);
+
+        }
+
     res.render('analytics', {
-        'completedworkouts': myWorkouts
+        'completedWorkouts': cws
     });
+    }
+
  }
 
 //returns a collection of exercises, given a workout id

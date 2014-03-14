@@ -3,9 +3,9 @@
 <div id="content" class="content">
 <h3> My Completed Workouts </h3>
 
-{{#if compledWorkouts}}
-	{{#each completedworkouts}}
-		<p> {{datetime}}: workout id: {{wid}}<br> </p>
+{{#if completedWorkouts}}
+	{{#each completedWorkouts}}
+		<p> {{title}} ({{finished}})<br> </p>
 	{{/each}}
 {{else}}
 	No Completed Workouts!
