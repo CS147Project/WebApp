@@ -116,6 +116,11 @@ exports.submit = function(req, res){
     }
 }
 
+function parseDate(d) {
+    var newDate = "" + (d.getMonth()+1) + "/" + d.getDate() + "/" + d.getFullYear() + "";
+    return newDate;
+}
+
 exports.summary = function(req, res) {
     if(req.session == undefined || req.session.email == undefined) {
         console.log("Please login for this page");
@@ -136,6 +141,7 @@ exports.summary = function(req, res) {
         console.log("exercises", workout[0].exercises);
         res.render('workoutsummary', {
             'workout': workout[0],
+            'finished': parseDate(workout[0]['finished']),
             'exercises': workout[0].exercises
         });
     }
